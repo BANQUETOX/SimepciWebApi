@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO;
 
-namespace DataAccess.Crud
+namespace DTO
 {
-    public class UserCrud //: CrudFactory
+    public class CitasPaciente
     {
+        public int idCita {  get; set; }
+        public int idPaciente { get; set; }
     }
 }

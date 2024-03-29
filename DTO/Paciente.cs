@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppLogic
+namespace DTO
 {
-    public class UserManager
+    public class Paciente : BaseClass
     {
+        public int IdUsuario { get; set; }
     }
 }
