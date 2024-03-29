@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Dao;
@@ -59,6 +60,24 @@ namespace DataAccess.Crud
         public override void Update(BaseClass dto)
         {
             throw new NotImplementedException();
+        }
+
+        public T Login<T>(string correo, string password)
+        {
+            List<T> resultList = new List<T>();
+            SqlOperation operation = usuarioMapper.GetRetrieveAllStatement();
+
+            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+
+            if (dataResults.Count > 0)
+            {
+                var dtoList = usuarioMapper.BuildObjects(dataResults);
+                foreach (var dto in dtoList)
+                {
+                    resultList.Add((T)Convert.ChangeType(dto, typeof(T)));
+                }
+            }
+            return resultList[0];
         }
     }
 }

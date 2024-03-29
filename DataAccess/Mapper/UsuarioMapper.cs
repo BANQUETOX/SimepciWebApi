@@ -88,6 +88,17 @@ namespace DataAccess.Mapper
             throw new NotImplementedException();
         }
 
+
+        public SqlOperation Login(string correo, string password)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_LOGIN";
+            operation.AddVarcharParam("correo", correo);
+            operation.AddVarcharParam("password", password);
+            return operation;
+
+        }
+
         internal int CalcularEdad(DateTime fechaNacimiento)
         {
             DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Today);

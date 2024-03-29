@@ -12,8 +12,6 @@ namespace AppLogic
     {
         UsuarioCrud usuarioCrud = new UsuarioCrud();
 
-
-
         public string CreateUsuario(Usuario usuario)
         {
             usuarioCrud.Create(usuario);
@@ -24,6 +22,14 @@ namespace AppLogic
         {
             List<Usuario> list = usuarioCrud.RetrieveAll<Usuario>();
             return list;
+        }
+
+        public Usuario Login(string correo, string password)
+        {
+            Usuario usuario = usuarioCrud.Login<Usuario>(correo, password);
+            return usuario; 
+            
+
         }
     }
 }
