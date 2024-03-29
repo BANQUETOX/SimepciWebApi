@@ -60,5 +60,11 @@ namespace DataAccess.Crud
         {
             throw new NotImplementedException();
         }
+
+        public void UpdatePassword(string correoUsuario, string newPassword)
+        {
+            SqlOperation operation = usuarioMapper.GetUpdatePasswordStatement(correoUsuario,newPassword);
+            dao.ExecuteStoredProcedure(operation);
+        }
     }
 }

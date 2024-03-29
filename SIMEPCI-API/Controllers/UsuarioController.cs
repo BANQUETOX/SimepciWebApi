@@ -34,5 +34,12 @@ namespace SIMEPCI_API.Controllers
             return usuarioManager.CreateUsuario(usuario);
 
         }
+
+        [HttpPost]
+        public void ActualizarPassword(string correoUsuario, string newpassword)
+        {
+            UsuarioManager usuarioManager=new UsuarioManager();
+            usuarioManager.actualizarPassword(correoUsuario, newpassword);
+        }
     }
 }

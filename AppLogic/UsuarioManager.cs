@@ -25,5 +25,10 @@ namespace AppLogic
             List<Usuario> list = usuarioCrud.RetrieveAll<Usuario>();
             return list;
         }
+
+        public void actualizarPassword(string correoUsuario, string newPassword)
+        {
+            usuarioCrud.UpdatePassword(correoUsuario,newPassword);
+        }
     }
 }

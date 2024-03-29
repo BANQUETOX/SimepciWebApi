@@ -18,10 +18,10 @@ namespace DataAccess.Mapper
             user.nombre = row["Nombre"].ToString();
             user.primerApellido = row["PrimerApellido"].ToString();
             user.segundoApellido = row["SegundoApellido"].ToString();
-            user.cedula = int.Parse(row["Cedula"].ToString());
+            user.cedula = row["Cedula"].ToString();
             user.fechaNacimiento = DateTime.Parse(row["FechaNacimiento"].ToString());
             user.edad = CalcularEdad(user.fechaNacimiento); 
-            user.telefono = int.Parse(row["Telefono"].ToString());
+            user.telefono = row["Telefono"].ToString();
             user.correo = row["Correo"].ToString();
             user.direccion = row["Direccion"].ToString();
             user.fotoPerfil = row["FotoPerfil"].ToString(); 
@@ -53,9 +53,9 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("nombre", usuario.nombre);
             operation.AddVarcharParam("primerApellido", usuario.primerApellido);
             operation.AddVarcharParam("segundoApellido", usuario.segundoApellido);
-            operation.AddIntegerParam("cedula", usuario.cedula);
+            operation.AddVarcharParam("cedula", usuario.cedula);
             operation.AddDatetimeParam("fechaNacimiento", usuario.fechaNacimiento);
-            operation.AddIntegerParam("telefono", usuario.telefono);
+            operation.AddVarcharParam("telefono", usuario.telefono);
             operation.AddVarcharParam("correo",usuario.correo);
             operation.AddVarcharParam("direccion", usuario.direccion);
             operation.AddVarcharParam("fotoPerfil",usuario.fotoPerfil);
@@ -86,6 +86,15 @@ namespace DataAccess.Mapper
         public SqlOperation GetUpdateStatement(BaseClass dto)
         {
             throw new NotImplementedException();
+        }
+
+        public SqlOperation GetUpdatePasswordStatement(string correoUsuario,string newPassword)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_PASSWORD";
+            operation.AddVarcharParam("correoUsuario",correoUsuario);
+            operation.AddVarcharParam("newPassword", newPassword);
+            return operation;
         }
 
         internal int CalcularEdad(DateTime fechaNacimiento)
