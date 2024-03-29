@@ -65,7 +65,7 @@ namespace DataAccess.Crud
         public T Login<T>(string correo, string password)
         {
             List<T> resultList = new List<T>();
-            SqlOperation operation = usuarioMapper.GetRetrieveAllStatement();
+            SqlOperation operation = usuarioMapper.Login(correo,password);
 
             List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
 
