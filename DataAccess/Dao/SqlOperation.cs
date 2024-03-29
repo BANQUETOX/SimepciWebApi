@@ -31,5 +31,11 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, parameterValue));
         }
+
+
+        public void AddBooleanParam(string parameterName, bool parameterValue)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, parameterValue));
+        }
     }
 }
