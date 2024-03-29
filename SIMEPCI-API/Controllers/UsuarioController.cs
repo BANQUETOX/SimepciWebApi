@@ -34,5 +34,13 @@ namespace SIMEPCI_API.Controllers
             return usuarioManager.CreateUsuario(usuario);
 
         }
+
+        [HttpGet]
+        public Usuario Login(string correo, string password)
+        {
+            UsuarioManager usuarioManager = new UsuarioManager();
+            return usuarioManager.Login(correo,password);
+
+        }
     }
 }
