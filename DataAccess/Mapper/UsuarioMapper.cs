@@ -30,6 +30,25 @@ namespace DataAccess.Mapper
             return user;
         }
 
+        public BaseClass BuildEmptyObject()
+        {
+            Usuario user = new Usuario();
+            user.Id = 0;
+            user.nombre = string.Empty;
+            user.primerApellido = string.Empty;
+            user.segundoApellido = string.Empty;
+            user.cedula = 0;
+            user.fechaNacimiento = DateTime.MinValue;
+            user.edad = 0;
+            user.telefono = 0;
+            user.correo = string.Empty;
+            user.direccion = string.Empty;
+            user.fotoPerfil = string.Empty;
+            user.activo = false;
+            user.password = string.Empty;
+            return user;
+        }
+
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
         {
             List<BaseClass> results = new List<BaseClass>();

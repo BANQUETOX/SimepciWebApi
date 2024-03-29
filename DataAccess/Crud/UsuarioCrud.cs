@@ -77,6 +77,12 @@ namespace DataAccess.Crud
                     resultList.Add((T)Convert.ChangeType(dto, typeof(T)));
                 }
             }
+            else
+            {
+                var dtoUsuario = usuarioMapper.BuildEmptyObject();
+                resultList.Add((T)Convert.ChangeType(dtoUsuario, typeof(T)));
+            }
+
             return resultList[0];
         }
     }
