@@ -62,6 +62,7 @@ namespace DataAccess.Crud
             throw new NotImplementedException();
         }
 
+
         public T Login<T>(string correo, string password)
         {
             List<T> resultList = new List<T>();
@@ -85,5 +86,13 @@ namespace DataAccess.Crud
 
             return resultList[0];
         }
+
+
+        public void UpdatePassword(string correoUsuario, string newPassword)
+        {
+            SqlOperation operation = usuarioMapper.GetUpdatePasswordStatement(correoUsuario,newPassword);
+            dao.ExecuteStoredProcedure(operation);
+        }
+
     }
 }

@@ -24,6 +24,7 @@ namespace AppLogic
             return list;
         }
 
+
         public Usuario Login(string correo, string password)
         {
             Usuario usuario = usuarioCrud.Login<Usuario>(correo, password);
@@ -31,5 +32,11 @@ namespace AppLogic
             
 
         }
+
+        public void actualizarPassword(string correoUsuario, string newPassword)
+        {
+            usuarioCrud.UpdatePassword(correoUsuario,newPassword);
+        }
+
     }
 }
