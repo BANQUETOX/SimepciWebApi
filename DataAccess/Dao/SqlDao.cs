@@ -10,7 +10,7 @@ namespace DataAccess.Dao
 {
     public class SqlDao
     {
-        private string connectionString = "Server=tcp:simepci.database.windows.net,1433;Initial Catalog=SIMEPCI-DB;Persist Security Info=False;User ID=softsolutionadmin;Password= SIMEPCI@2024 ;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private string connectionString = "Server=tcp:serverbaratoest.database.windows.net,1433;Initial Catalog=TesteoBarato;Persist Security Info=False;User ID=banqueta;Password= aafc@7913;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         //Singleton instance
         private static SqlDao instance = new SqlDao();
         //Singleton Access Point
