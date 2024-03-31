@@ -37,10 +37,10 @@ namespace DataAccess.Mapper
             user.nombre = string.Empty;
             user.primerApellido = string.Empty;
             user.segundoApellido = string.Empty;
-            user.cedula = 0;
+            user.cedula = string.Empty;
             user.fechaNacimiento = DateTime.MinValue;
             user.edad = 0;
-            user.telefono = 0;
+            user.telefono = string.Empty;
             user.correo = string.Empty;
             user.direccion = string.Empty;
             user.fotoPerfil = string.Empty;
