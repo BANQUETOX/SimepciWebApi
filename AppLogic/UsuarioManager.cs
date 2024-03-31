@@ -24,6 +24,11 @@ namespace AppLogic
             return list;
         }
 
+        public Usuario GetUsuarioByEmail(string correo)
+        {
+            return  usuarioCrud.GetUsuarioByEmail(correo);
+        }
+
 
         public Usuario Login(string correo, string password)
         {
@@ -37,6 +42,5 @@ namespace AppLogic
         {
             usuarioCrud.UpdatePassword(correoUsuario,newPassword);
         }
-
     }
 }

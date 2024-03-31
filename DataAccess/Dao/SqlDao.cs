@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using DTO;
 
 namespace DataAccess.Dao
 {
     public class SqlDao
     {
-        private string connectionString = "Server=tcp:simepci.database.windows.net,1433;Initial Catalog=SIMEPCI-DB1;Persist Security Info=False;User ID=softsolutionadmin;Password= SIMEPCI@2024 ;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        //private string connectionString = "Server=tcp:simepci.database.windows.net,1433;Initial Catalog=SIMEPCI-DB1;Persist Security Info=False;User ID=softsolutionadmin;Password=SIMEPCI@2024;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+          public string connectionString = "Server=tcp:simepciserver.database.windows.net,1433;Initial Catalog=simepci;Persist Security Info=False;User ID=simepciadmin;Password=aafc@7913;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;\r\n";
 
         //Singleton instance
         private static SqlDao instance = new SqlDao();
@@ -34,10 +36,12 @@ namespace DataAccess.Dao
 
             SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = operation.ProcedureName;
+            SqlCommand command = new()
+            {
+                Connection = connection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = operation.ProcedureName
+            };
 
             foreach (SqlParameter param in operation.parameters)
             {
@@ -51,7 +55,7 @@ namespace DataAccess.Dao
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -95,5 +99,8 @@ namespace DataAccess.Dao
                 throw ex;
             }
         }
+
+        
+     
     }
 }

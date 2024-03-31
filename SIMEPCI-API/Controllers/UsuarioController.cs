@@ -2,9 +2,13 @@
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AppLogic;
+using Microsoft.AspNetCore.Cors;
+using System.Data.SqlTypes;
 
 namespace SIMEPCI_API.Controllers
 {
+    [EnableCors("Simepci-web-policy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -33,7 +37,15 @@ namespace SIMEPCI_API.Controllers
 
         public string CreateUsuario(Usuario usuario)
         {
-            return usuarioManager.CreateUsuario(usuario);
+            string result = "";
+            try
+            {
+                result = usuarioManager.CreateUsuario(usuario);
+            }
+            catch(Exception e) {
+                Console.WriteLine(e.ToString());
+            }
+            return result;
 
         }
 
@@ -51,6 +63,5 @@ namespace SIMEPCI_API.Controllers
             UsuarioManager usuarioManager=new UsuarioManager();
             usuarioManager.actualizarPassword(correoUsuario, newpassword);
         }
-
     }
 }

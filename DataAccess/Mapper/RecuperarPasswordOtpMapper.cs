@@ -20,7 +20,15 @@ namespace DataAccess.Mapper
 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            throw new NotImplementedException();
+            List<BaseClass> results = new List<BaseClass>();
+
+            foreach (var row in rowList)
+            {
+                var passwordDto = BuildObject(row);
+                results.Add(passwordDto);
+            }
+
+            return results;
         }
 
         public SqlOperation GetCreateStatement(BaseClass dto)
@@ -29,6 +37,15 @@ namespace DataAccess.Mapper
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_INSERT_RECUPERAR_PASSWORD_OTP";
             operation.AddVarcharParam("codigo",recuperarPasswordOtp.codigo);
+            
+            return operation;
+        }
+
+        public SqlOperation GetByCodeStatement(string code)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_PASSWORD_OTP_CODE";
+            operation.AddVarcharParam("codigo",code);
             return operation;
         }
 

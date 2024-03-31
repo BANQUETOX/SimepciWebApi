@@ -19,10 +19,43 @@ namespace DataAccess.Crud
             mapper =new RecuperarPasswordOtpMapper();
             sqlDao = new SqlDao();
         }
-        public override void Create(BaseClass dto)
+        public override void  Create(BaseClass dto)
         {
             SqlOperation operation = mapper.GetCreateStatement(dto);
             sqlDao.ExecuteStoredProcedure(operation);
+
+        }
+
+        public int CreateWithRetrieve(BaseClass dto)
+        {
+            SqlOperation operation = mapper.GetCreateStatement(dto);
+            var passwordOtpId = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+
+
+            return int.Parse(passwordOtpId.First()["Id"].ToString());
+
+        }
+
+        public RecuperarPasswordOtp GetPasswordOtpByCode(string code)
+        {
+            SqlOperation operation = mapper.GetByCodeStatement(code);
+            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            Console.WriteLine(dataResults);
+            List<RecuperarPasswordOtp> resultList = new List<RecuperarPasswordOtp>();
+
+
+
+            if (dataResults.Count > 0)
+            {
+                var dtoList = mapper.BuildObjects(dataResults);
+                foreach (var passwordOtp in dtoList)
+                {
+                    resultList.Add((RecuperarPasswordOtp)Convert.ChangeType(passwordOtp, typeof(RecuperarPasswordOtp)));
+                }
+            }
+            Console.WriteLine(resultList);
+            Console.WriteLine(resultList[0].codigo);
+            return resultList[0];
 
         }
 
