@@ -56,6 +56,33 @@ namespace AppLogic
             return emailSendOperation.Value.Status.ToString();
         }
 
+        public async Task<string>SendPasswordOtp(string emailAddress)
+        {
+            UsuarioManager usuarioManager = new UsuarioManager();
+            RecuperarPasswordOtpManager  recuperarPasswordOtpManager = new RecuperarPasswordOtpManager();
+            UsuarioPasswordOtpsManager relationManager = new UsuarioPasswordOtpsManager();
+
+            string codigoOtp = generarCodigoOTP();
+            int idPassword = recuperarPasswordOtpManager.CrearPasswordOtp(codigoOtp);
+            //RecuperarPasswordOtp recuperarPasswordOtp = recuperarPasswordOtpManager.GetRecuperarPasswordOtpByCode(codigoOtp);
+            Usuario usuario = usuarioManager.GetUsuarioByEmail(emailAddress);
+            relationManager.CrearUsuarioPasswordOtps(usuario.Id,idPassword);
+
+            EmailContent emailContent = new EmailContent("Verificacion para creacion de su cuenta en SIMEPCI"); //Subject
+            emailContent.PlainText = $"Hemos recibido su solicitud de cambio de contraseña, su codigo de verificacion es: {codigoOtp} por favor ingreselo en el campo correspondiente para reestablecer su contraseña";
+
+            List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+            EmailMessage emailMessage = new EmailMessage("DoNotReply@c6177939-dc50-4b52-ab89-5776a86e9be3.azurecomm.net", emailRecipients, emailContent);
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                                                    WaitUntil.Completed,
+                                                                emailMessage, CancellationToken.None);
+            EmailSendResult statusMonitor = emailSendOperation.Value;
+
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+            return emailSendOperation.Value.Status.ToString();
+        }
 
         internal static string generarCodigoOTP()
         {

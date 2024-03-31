@@ -63,6 +63,23 @@ namespace DataAccess.Crud
         }
 
 
+        public Usuario GetUsuarioByEmail(string correo)
+        {
+            SqlOperation operation = usuarioMapper.GetUserByEmailStatement(correo);
+            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = null;
+            if (dataResults.Count > 0)
+            {
+                var dtoList = usuarioMapper.BuildObjects(dataResults);
+                foreach (var dto in dtoList)
+                {
+                    usuario = (Usuario)Convert.ChangeType(dto, typeof(Usuario));
+                }
+            }
+            return usuario;
+        }
+
+
         public T Login<T>(string correo, string password)
         {
             List<T> resultList = new List<T>();

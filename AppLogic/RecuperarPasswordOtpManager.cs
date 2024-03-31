@@ -17,11 +17,17 @@ namespace AppLogic
         }
 
 
-        public void CrearPasswordOtp(string codigo)
+        public int CrearPasswordOtp(string codigo)
         {
             RecuperarPasswordOtp recuperarPasswordOtp = new RecuperarPasswordOtp();
             recuperarPasswordOtp.codigo = codigo;
-            otpCrud.Create(recuperarPasswordOtp);
+            return otpCrud.CreateWithRetrieve(recuperarPasswordOtp);
+            
+        }
+
+        public RecuperarPasswordOtp GetRecuperarPasswordOtpByCode(string code)
+        {
+            return otpCrud.GetPasswordOtpByCode(code);
         }
     }
 }

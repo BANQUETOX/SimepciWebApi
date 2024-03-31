@@ -97,6 +97,13 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUserByEmailStatement(string correo) {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_EMAIL";
+            operation.AddVarcharParam("correo", correo);
+            return operation;
+        }
+
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
             throw new NotImplementedException();
