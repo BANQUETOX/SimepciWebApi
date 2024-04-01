@@ -41,11 +41,11 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetByCodeStatement(string code)
+        public SqlOperation GetByUserIdStatement(int idUsuario)
         {
             SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "SP_GET_PASSWORD_OTP_CODE";
-            operation.AddVarcharParam("codigo",code);
+            operation.ProcedureName = "SP_GET_PASSWORD_OTP_EMAIL";
+            operation.AddIntegerParam("idUsuario",idUsuario);
             return operation;
         }
 

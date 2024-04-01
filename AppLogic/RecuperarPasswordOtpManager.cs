@@ -25,9 +25,18 @@ namespace AppLogic
             
         }
 
-        public RecuperarPasswordOtp GetRecuperarPasswordOtpByCode(string code)
+        public bool ValidarPasswordOtp(string correo, string otpInput)
         {
-            return otpCrud.GetPasswordOtpByCode(code);
+            string otp = GetLastPasswordOtpByEmail(correo);
+            return otp.Equals(otpInput);
         }
+
+
+        public string GetLastPasswordOtpByEmail(string correo) {
+
+            return otpCrud.GetPasswordOtpByEmail(correo);
+        }
+
+        
     }
 }

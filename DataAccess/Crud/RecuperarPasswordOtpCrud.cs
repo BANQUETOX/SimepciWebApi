@@ -3,6 +3,7 @@ using DataAccess.Mapper;
 using DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,26 +37,16 @@ namespace DataAccess.Crud
 
         }
 
-        public RecuperarPasswordOtp GetPasswordOtpByCode(string code)
+        public string GetPasswordOtpByEmail(string correo)
         {
-            SqlOperation operation = mapper.GetByCodeStatement(code);
-            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
-            Console.WriteLine(dataResults);
-            List<RecuperarPasswordOtp> resultList = new List<RecuperarPasswordOtp>();
-
-
-
-            if (dataResults.Count > 0)
-            {
-                var dtoList = mapper.BuildObjects(dataResults);
-                foreach (var passwordOtp in dtoList)
-                {
-                    resultList.Add((RecuperarPasswordOtp)Convert.ChangeType(passwordOtp, typeof(RecuperarPasswordOtp)));
-                }
-            }
-            Console.WriteLine(resultList);
-            Console.WriteLine(resultList[0].codigo);
-            return resultList[0];
+            UsuarioCrud usuarioCrud = new UsuarioCrud();    
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
+            SqlOperation operation = mapper.GetByUserIdStatement(usuario.Id);
+            var dataResult = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+         
+           
+       
+            return dataResult.First()["codigo"].ToString();
 
         }
 
