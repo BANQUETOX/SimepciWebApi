@@ -13,13 +13,14 @@ namespace AppLogic
 {
     public class EmailManager
     {
-        string connectionString = "endpoint=https://simepci.unitedstates.communication.azure.com/;accesskey=jyGY8IJnn0WeVwvPDk+o4Kxx4PJY6Hh4ENLtlcLuXUsTSEto9Q6uG7ARgjRvXs6Vek8rd0nNxWjzomr20M95vA==";
+        string connectionString;
         EmailClient emailClient;
+        string sender = "DoNotReply@b1248de0-1af0-462b-8f90-5c62032638df.azurecomm.net";
         private const string caracteresPermitidosOtp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         public EmailManager()
         {
-            connectionString = "endpoint=https://simepci.unitedstates.communication.azure.com/;accesskey=jyGY8IJnn0WeVwvPDk+o4Kxx4PJY6Hh4ENLtlcLuXUsTSEto9Q6uG7ARgjRvXs6Vek8rd0nNxWjzomr20M95vA==";
+            connectionString = "endpoint=https://simepci-email-service.unitedstates.communication.azure.com/;accesskey=HsnnZIFJsRBmRc67ESCA8qjLmgnUiTSV6ugMk1RuV5EDudQt6ewcR5R5LfXJgAnXVn+FaN89IwQc1FaO/yrOZA==";
             emailClient = new EmailClient(connectionString);
 
         }
@@ -37,15 +38,15 @@ namespace AppLogic
 
             loginOtp.correoUsuario = emailAddress;
             loginOtp.codigoOtp = codigoOtp;
-            loginOtpManager.CrearOtp(loginOtp);
 
 
             EmailContent emailContent = new EmailContent("Verificacion para creacion de su cuenta en SIMEPCI"); //Subject
             emailContent.PlainText = $"Hemos recibido su solicitud, su codigo de verificacion es: {codigoOtp} por favor ingreselo en el campo correspondiente para crear su cuenta"; //Contenido del correo
+            loginOtpManager.CrearOtp(loginOtp);
             
             List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
             EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
-            EmailMessage emailMessage = new EmailMessage("DoNotReply@c6177939-dc50-4b52-ab89-5776a86e9be3.azurecomm.net", emailRecipients, emailContent);
+            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                                                     WaitUntil.Completed,
                                                                 emailMessage, CancellationToken.None);
@@ -73,7 +74,7 @@ namespace AppLogic
 
             List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
             EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
-            EmailMessage emailMessage = new EmailMessage("DoNotReply@c6177939-dc50-4b52-ab89-5776a86e9be3.azurecomm.net", emailRecipients, emailContent);
+            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                                                     WaitUntil.Completed,
                                                                 emailMessage, CancellationToken.None);
