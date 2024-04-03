@@ -26,6 +26,7 @@ namespace DataAccess.Mapper
             user.direccion = row["Direccion"].ToString();
             user.fotoPerfil = row["FotoPerfil"].ToString(); 
             user.activo = bool.Parse(row["Activo"].ToString());
+            user.sexo = row["Sexo"].ToString();
             user.password = row["Password"].ToString();
             return user;
         }
@@ -46,6 +47,7 @@ namespace DataAccess.Mapper
             user.fotoPerfil = string.Empty;
             user.activo = false;
             user.password = string.Empty;
+            user.sexo= string.Empty;    
             return user;
         }
 
@@ -80,6 +82,7 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("fotoPerfil",usuario.fotoPerfil);
             operation.AddBooleanParam("activo", usuario.activo);
             operation.AddVarcharParam("password", usuario.password);
+            operation.AddVarcharParam("sexo",usuario.sexo);
 
 
             return operation;

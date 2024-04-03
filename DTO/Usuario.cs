@@ -21,6 +21,8 @@ namespace DTO
         public string fotoPerfil { get; set; }
         public bool activo { get; set; }
 
+        public string sexo {  get; set; }
+
         public string password { get; set; }
     }
 }
