@@ -17,10 +17,10 @@ namespace SIMEPCI_API.Controllers
         public List<Rol> GetAllRols()
         {
             List<Rol> result = new List<Rol>();
+            RolManager rolManager = new RolManager();
 
             try
             {
-            RolManager rolManager = new RolManager();
                 result = rolManager.GetAllRols(); 
 
             }

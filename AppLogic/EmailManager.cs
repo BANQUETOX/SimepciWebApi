@@ -8,6 +8,7 @@ using Azure;
 using Azure.Communication.Email;
 using DataAccess.Crud;
 using DTO;
+using DTO.Usuarios;
 
 namespace AppLogic
 {
@@ -65,8 +66,15 @@ namespace AppLogic
 
             string codigoOtp = generarCodigoOTP();
             int idPassword = recuperarPasswordOtpManager.CrearPasswordOtp(codigoOtp);
-            //RecuperarPasswordOtp recuperarPasswordOtp = recuperarPasswordOtpManager.GetRecuperarPasswordOtpByCode(codigoOtp);
+            if (!usuarioManager.verificarCorreo(emailAddress))
+            {
+                return "Correo Invalido";
+            }
             Usuario usuario = usuarioManager.GetUsuarioByEmail(emailAddress);
+            if (usuario == null)
+            {
+                return "Usuario no encontrado";
+            }
             relationManager.CrearUsuarioPasswordOtps(usuario.Id,idPassword);
 
             EmailContent emailContent = new EmailContent("Verificacion para creacion de su cuenta en SIMEPCI"); //Subject

@@ -1,10 +1,10 @@
 ﻿using AppLogic;
-using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AppLogic;
 using Microsoft.AspNetCore.Cors;
 using System.Data.SqlTypes;
+using DTO.Usuarios;
 
 namespace SIMEPCI_API.Controllers
 {
@@ -18,8 +18,8 @@ namespace SIMEPCI_API.Controllers
             usuarioManager = new UsuarioManager();
         }
         [HttpGet]
-        public List<Usuario> GetAllUsers() {
-            List<Usuario> result = new List<Usuario>();
+        public List<UsuarioGet> GetAllUsers() {
+            List<UsuarioGet> result = new List<UsuarioGet>();
 
             try
             {
@@ -35,8 +35,10 @@ namespace SIMEPCI_API.Controllers
 
         [HttpPost]
 
-        public string CreateUsuario(Usuario usuario)
+        public string CreateUsuario(UsuarioInsert usuarioInsert)
         {
+            Usuario usuario = usuarioManager.castUsuarioInsert(usuarioInsert);
+
             string result = "";
             try
             {
@@ -52,16 +54,30 @@ namespace SIMEPCI_API.Controllers
         [HttpGet]
         public Usuario Login(string correo, string password)
         {
-            UsuarioManager usuarioManager = new UsuarioManager();
-            return usuarioManager.Login(correo,password);
+          Usuario usuario = new Usuario();
+            try
+            {
+                usuario = usuarioManager.Login(correo, password);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return usuario;
 
         }
 
         [HttpPost]
         public void ActualizarPassword(string correoUsuario, string newpassword)
         {
-            UsuarioManager usuarioManager=new UsuarioManager();
+            try
+            {
             usuarioManager.actualizarPassword(correoUsuario, newpassword);
+            }
+            catch(Exception ex )
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

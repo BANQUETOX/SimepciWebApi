@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DataAccess.Dao;
 using DataAccess.Mapper;
 using DTO;
+using DTO.Usuarios;
 
 namespace DataAccess.Crud
 {
