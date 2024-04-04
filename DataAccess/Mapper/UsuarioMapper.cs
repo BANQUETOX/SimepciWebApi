@@ -4,6 +4,7 @@ using DTO;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,6 +136,39 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "SP_UPDATE_PASSWORD";
             operation.AddVarcharParam("correoUsuario",correoUsuario);
             operation.AddVarcharParam("newPassword", newPassword);
+            return operation;
+        }
+
+        public SqlOperation GetDesactivarUsuarioStatement(string correo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_USUARIO_ESTADO_INACTIVO";
+            operation.AddVarcharParam("correoUsuario", correo);
+            return operation;
+        }
+
+        public SqlOperation GetActivarUsuarioStatement(string correo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_USUARIO_ESTADO_ACTIVO";
+            operation.AddVarcharParam("correoUsuario", correo);
+            return operation;
+        }
+
+        public SqlOperation GetRolesUsuarioStatement(string correo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_ROLES";
+            operation.AddVarcharParam("correoUsuario", correo);
+            return operation;
+        }
+
+        public SqlOperation GetAsignarRolStatement(int idUsuario,int idRol)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_INSERT_USUARIO_ROL";
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            operation.AddIntegerParam("idRol",idRol);
             return operation;
         }
 

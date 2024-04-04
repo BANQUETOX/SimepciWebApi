@@ -33,6 +33,37 @@ namespace SIMEPCI_API.Controllers
             return result;
         }
 
+        [HttpGet]
+        public Usuario Login(string correo, string password)
+        {
+            Usuario usuario = new Usuario();
+            try
+            {
+                usuario = usuarioManager.Login(correo, password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return usuario;
+
+        }
+
+        [HttpGet]
+        public List<string> GetRolesUsuario(string correoUsuario)
+        {
+            List<string> result = new List<string>();
+            try
+            {
+                result = usuarioManager.GetRolesUsuario(correoUsuario);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return result;
+        }
+
         [HttpPost]
 
         public string CreateUsuario(UsuarioInsert usuarioInsert)
@@ -44,40 +75,80 @@ namespace SIMEPCI_API.Controllers
             {
                 result = usuarioManager.CreateUsuario(usuario);
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 Console.WriteLine(e.ToString());
             }
             return result;
 
         }
 
-        [HttpGet]
-        public Usuario Login(string correo, string password)
+        [HttpPost]
+        public string AsignarRolUsuario(string correoUsuario, int idRol)
         {
-          Usuario usuario = new Usuario();
+            string result;
             try
             {
-                usuario = usuarioManager.Login(correo, password);
+                result = usuarioManager.AsignarRolUsuario(correoUsuario, idRol);
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
+            catch (Exception ex) { 
+                result = ex.ToString();
             }
-            return usuario;
-
+            return result;
         }
 
-        [HttpPost]
+        
+
+
+
+
+        [HttpPatch]
         public void ActualizarPassword(string correoUsuario, string newpassword)
         {
             try
             {
-            usuarioManager.actualizarPassword(correoUsuario, newpassword);
+                usuarioManager.actualizarPassword(correoUsuario, newpassword);
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
         }
+
+      
+ 
+
+        [HttpPatch]
+        public string DesactivarUsuario(string correoUsuario)
+        {
+            string resultado;
+            try
+            {
+              resultado =  usuarioManager.desactivarUsuario(correoUsuario);
+            }
+            catch (Exception ex)
+            {
+                resultado =ex.ToString();
+            }
+            return resultado;
+        }
+
+        [HttpPatch]
+        public string ActivarUsuario(string correoUsuario)
+        {
+            string resultado;
+            try
+            {
+                resultado = usuarioManager.activarUsuario(correoUsuario);
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.ToString();
+            }
+            return resultado;
+        }
+
+        
+
+
     }
 }

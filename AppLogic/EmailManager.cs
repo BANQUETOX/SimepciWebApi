@@ -18,11 +18,13 @@ namespace AppLogic
         EmailClient emailClient;
         string sender = "DoNotReply@b1248de0-1af0-462b-8f90-5c62032638df.azurecomm.net";
         private const string caracteresPermitidosOtp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        UsuarioManager usuarioManager;
 
         public EmailManager()
         {
             connectionString = "endpoint=https://simepci-email-service.unitedstates.communication.azure.com/;accesskey=HsnnZIFJsRBmRc67ESCA8qjLmgnUiTSV6ugMk1RuV5EDudQt6ewcR5R5LfXJgAnXVn+FaN89IwQc1FaO/yrOZA==";
             emailClient = new EmailClient(connectionString);
+            usuarioManager = new UsuarioManager();
 
         }
 
@@ -31,6 +33,11 @@ namespace AppLogic
         public async Task<string> SendOtp(string emailAddress) 
                                                                  
         {
+            if (usuarioManager.GetUsuarioByEmail(emailAddress) != null)
+            {
+                return "El correo ya ha sido registrado";
+            }
+
             RegistroOtpManager loginOtpManager = new RegistroOtpManager();
             RegistroOtp loginOtp = new RegistroOtp();
             
@@ -60,7 +67,7 @@ namespace AppLogic
 
         public async Task<string>SendPasswordOtp(string emailAddress)
         {
-            UsuarioManager usuarioManager = new UsuarioManager();
+         
             RecuperarPasswordOtpManager  recuperarPasswordOtpManager = new RecuperarPasswordOtpManager();
             UsuarioPasswordOtpsManager relationManager = new UsuarioPasswordOtpsManager();
 

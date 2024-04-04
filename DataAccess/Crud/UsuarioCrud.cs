@@ -81,28 +81,38 @@ namespace DataAccess.Crud
         }
 
 
-        public T Login<T>(string correo, string password)
+        public Usuario Login(string correo, string password)
         {
-            List<T> resultList = new List<T>();
             SqlOperation operation = usuarioMapper.Login(correo,password);
-
             List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = new Usuario();
 
             if (dataResults.Count > 0)
             {
-                var dtoList = usuarioMapper.BuildObjects(dataResults);
-                foreach (var dto in dtoList)
-                {
-                    resultList.Add((T)Convert.ChangeType(dto, typeof(T)));
-                }
+                 usuario = (Usuario)usuarioMapper.BuildObject(dataResults[0]);
+                
             }
             else
             {
-                var dtoUsuario = usuarioMapper.BuildEmptyObject();
-                resultList.Add((T)Convert.ChangeType(dtoUsuario, typeof(T)));
+                usuario = (Usuario)usuarioMapper.BuildEmptyObject();
+                
             }
 
-            return resultList[0];
+            return usuario;
+        }
+
+        public string DesactivarUsuario(string correo)
+        {
+            SqlOperation operation = usuarioMapper.GetDesactivarUsuarioStatement(correo);
+            dao.ExecuteStoredProcedureWithQuery(operation);
+            return "El usuario a sido desactivado";
+        }
+
+        public string ActivarUsuario(string correo)
+        {
+            SqlOperation operation = usuarioMapper.GetActivarUsuarioStatement(correo);
+            dao.ExecuteStoredProcedureWithQuery(operation);
+            return "El usuario a sido activado";
         }
 
 
@@ -110,6 +120,27 @@ namespace DataAccess.Crud
         {
             SqlOperation operation = usuarioMapper.GetUpdatePasswordStatement(correoUsuario,newPassword);
             dao.ExecuteStoredProcedure(operation);
+        }
+
+        public List<string> GetRolesUsuario(string correoUsuario)
+        {
+            SqlOperation operation = usuarioMapper.GetRolesUsuarioStatement(correoUsuario);
+            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+            List<string> roles = new List<string>();
+            foreach(var rol in dataResults)
+            {
+                roles.Add(rol["Nombre"].ToString());
+            }
+            return roles;
+
+        }
+
+        public string AsignarRolUsuario(int idUsuario, int idRol)
+        {
+            SqlOperation operation = usuarioMapper.GetAsignarRolStatement(idUsuario, idRol);
+            dao.ExecuteStoredProcedure(operation);
+            return "El rol a sido asignado";
+
         }
 
     }

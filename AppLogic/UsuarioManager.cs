@@ -50,7 +50,7 @@ namespace AppLogic
 
         public Usuario Login(string correo, string password)
         {
-            Usuario usuario = usuarioCrud.Login<Usuario>(correo, password);
+            Usuario usuario = usuarioCrud.Login(correo, password);
             return usuario; 
             
 
@@ -67,6 +67,30 @@ namespace AppLogic
             return Regex.IsMatch(correo, patronCorreo);
         }
 
+
+        public string desactivarUsuario(string correo)
+        {
+            string resultado = usuarioCrud.DesactivarUsuario(correo);
+            return resultado;
+        }
+
+        public string activarUsuario(string correo)
+        {
+            string resultado = usuarioCrud.ActivarUsuario(correo);
+            return resultado;
+        }
+
+        public List<string> GetRolesUsuario(string correo)
+        {
+            List<string> roles = usuarioCrud.GetRolesUsuario(correo);
+            return roles;
+        }
+
+        public string AsignarRolUsuario(string correoUsuario,int idRol)
+        {
+            Usuario usuario = GetUsuarioByEmail(correoUsuario);
+            return usuarioCrud.AsignarRolUsuario(usuario.Id,idRol);
+        }
         public Usuario castUsuarioInsert(UsuarioInsert usuarioInsert)
         {
             Usuario usuario = new Usuario();
