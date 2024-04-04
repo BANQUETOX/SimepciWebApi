@@ -16,7 +16,15 @@ namespace SIMEPCI_API.Controllers
         public List<Sede> GetAllSedes()
         {
             List<Sede> sedes = new List<Sede>();
+            try
+            {
             sedes = sedeCrud.RetrieveAll<Sede>();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return sedes;
         }
 

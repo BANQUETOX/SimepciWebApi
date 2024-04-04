@@ -1,6 +1,7 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
 using DTO;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Data;

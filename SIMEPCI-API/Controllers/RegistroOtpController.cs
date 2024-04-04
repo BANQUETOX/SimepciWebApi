@@ -22,8 +22,17 @@ namespace SIMEPCI_API.Controllers
         [HttpPost]
         public string CrearRegistroOtp(string correoUsuario)
         {
+            string emailStatus = "";
             EmailManager emailManager = new EmailManager();
-            string emailStatus = emailManager.SendOtp(correoUsuario).GetAwaiter().GetResult();
+            try
+            {
+             emailStatus = emailManager.SendOtp(correoUsuario).GetAwaiter().GetResult();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return emailStatus;
         }
     }

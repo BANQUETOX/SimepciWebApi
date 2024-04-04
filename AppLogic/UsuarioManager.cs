@@ -1,9 +1,10 @@
 ﻿using DataAccess.Crud;
-using DTO;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AppLogic
@@ -12,21 +13,38 @@ namespace AppLogic
     {
         UsuarioCrud usuarioCrud = new UsuarioCrud();
 
-        public string CreateUsuario(Usuario usuario)
+        public string CreateUsuario(Usuario usuario) 
         {
+            string correo = usuario.correo;
+            if (!verificarCorreo(correo))
+            {
+                return "Formato de correo invalido";
+            }
+            else if (GetUsuarioByEmail(correo) != null ) {
+                return "El correo ya ha sido registrado";
+            }
+           
             usuarioCrud.Create(usuario);
             return "Usuario creado";
         }
 
-        public List<Usuario> GetAllUsuarios()
+        public List<UsuarioGet> GetAllUsuarios()
         {
             List<Usuario> list = usuarioCrud.RetrieveAll<Usuario>();
-            return list;
+            List<UsuarioGet> listResult = new List<UsuarioGet>();
+            foreach (Usuario usuario in list)
+            {
+                UsuarioGet usuarioGet = castUsuarioGet(usuario);
+                listResult.Add(usuarioGet);
+                
+            }
+            return listResult;
         }
 
         public Usuario GetUsuarioByEmail(string correo)
         {
-            return  usuarioCrud.GetUsuarioByEmail(correo);
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
+            return  usuario;
         }
 
 
@@ -41,6 +59,48 @@ namespace AppLogic
         public void actualizarPassword(string correoUsuario, string newPassword)
         {
             usuarioCrud.UpdatePassword(correoUsuario,newPassword);
+        }
+
+        public bool verificarCorreo(string correo)
+        {
+            string patronCorreo = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            return Regex.IsMatch(correo, patronCorreo);
+        }
+
+        public Usuario castUsuarioInsert(UsuarioInsert usuarioInsert)
+        {
+            Usuario usuario = new Usuario();
+            usuario.nombre = usuarioInsert.nombre;
+            usuario.primerApellido = usuarioInsert.primerApellido;
+            usuario.segundoApellido = usuarioInsert.segundoApellido;
+            usuario.cedula = usuarioInsert.cedula;
+            usuario.fechaNacimiento = usuarioInsert.fechaNacimiento;
+            usuario.telefono = usuarioInsert.telefono;
+            usuario.correo = usuarioInsert.correo;
+            usuario.direccion = usuarioInsert.direccion;
+            usuario.fotoPerfil = usuarioInsert.fotoPerfil;
+            usuario.activo = true;
+            usuario.sexo = usuarioInsert.sexo;
+            usuario.password = usuarioInsert.password;
+            return usuario;
+
+        }
+
+        public UsuarioGet castUsuarioGet(Usuario usuarioBase) { 
+            UsuarioGet usuario = new UsuarioGet();
+            usuario.nombre = usuarioBase.nombre;
+            usuario.primerApellido = usuarioBase.primerApellido;
+            usuario.segundoApellido = usuarioBase.segundoApellido;
+            usuario.cedula = usuarioBase.cedula;
+            usuario.fechaNacimiento = usuarioBase.fechaNacimiento;
+            usuario.edad = usuarioBase.edad;
+            usuario.telefono = usuarioBase.telefono;
+            usuario.correo = usuarioBase.correo;
+            usuario.direccion = usuarioBase.direccion;
+            usuario.fotoPerfil = usuarioBase.fotoPerfil;
+            usuario.activo = usuarioBase.activo;
+            usuario.sexo = usuarioBase.sexo;
+            return usuario;
         }
     }
 }
