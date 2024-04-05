@@ -1,4 +1,5 @@
-﻿using DataAccess.Crud;
+﻿using Azure.Core;
+using DataAccess.Crud;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,10 @@ namespace AppLogic
 
         public string actualizarPassword(string correoUsuario, string newPassword)
         {
+            if (GetUsuarioByEmail(correoUsuario) != null)
+            {
+                return "Usuario inexistente";
+            }
             usuarioCrud.UpdatePassword(correoUsuario,newPassword);
             return "Dato actualizado exitosamente";
         }
