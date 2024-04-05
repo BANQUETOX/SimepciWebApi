@@ -59,7 +59,7 @@ namespace AppLogic
 
         public string actualizarPassword(string correoUsuario, string newPassword)
         {
-            if (GetUsuarioByEmail(correoUsuario) != null)
+            if (GetUsuarioByEmail(correoUsuario) == null)
             {
                 return "Usuario inexistente";
             }
