@@ -34,9 +34,9 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public Usuario Login(string correo, string password)
+        public UsuarioGet Login(string correo, string password)
         {
-            Usuario usuario = new Usuario();
+            UsuarioGet usuario = new UsuarioGet();
             try
             {
                 usuario = usuarioManager.Login(correo, password);

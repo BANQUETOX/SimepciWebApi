@@ -48,11 +48,20 @@ namespace AppLogic
             return  usuario;
         }
 
-
-        public Usuario Login(string correo, string password)
+        
+        public UsuarioGet Login(string correo, string password)
         {
-            Usuario usuario = usuarioCrud.Login(correo, password);
-            return usuario; 
+            Usuario usuario;
+            try
+            {
+                usuario = usuarioCrud.Login(correo, password);
+            }
+            catch (Exception ex)
+            {
+                usuario = new Usuario();
+            }
+            
+            return castUsuarioGet(usuario); ; 
             
 
         }
