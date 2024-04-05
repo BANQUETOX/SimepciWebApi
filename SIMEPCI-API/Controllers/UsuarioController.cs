@@ -102,16 +102,18 @@ namespace SIMEPCI_API.Controllers
 
 
         [HttpPatch]
-        public void ActualizarPassword(string correoUsuario, string newpassword)
+        public string ActualizarPassword(string correoUsuario, string newpassword)
         {
+            string result;
             try
             {
-                usuarioManager.actualizarPassword(correoUsuario, newpassword);
+                result = usuarioManager.actualizarPassword(correoUsuario, newpassword);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+               result=ex.ToString();    
             }
+            return result;
         }
 
       

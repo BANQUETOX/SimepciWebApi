@@ -56,9 +56,10 @@ namespace AppLogic
 
         }
 
-        public void actualizarPassword(string correoUsuario, string newPassword)
+        public string actualizarPassword(string correoUsuario, string newPassword)
         {
             usuarioCrud.UpdatePassword(correoUsuario,newPassword);
+            return "Dato actualizado exitosamente";
         }
 
         public bool verificarCorreo(string correo)
