@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class RolMapper : IObjectMapper, ICrudStatements
+    public class RolMapper : IObjectMapper
     {
         public BaseClass BuildObject(Dictionary<string, object> row)
         {
@@ -58,5 +58,32 @@ namespace DataAccess.Mapper
         {
             throw new NotImplementedException();
         }
+
+        public SqlOperation GetAsignarRolStatement(int idUsuario, int idRol)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_INSERT_USUARIO_ROL";
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            operation.AddIntegerParam("idRol", idRol);
+            return operation;
+        }
+
+        public SqlOperation GetRemoverRolStatement(int idUsuario, int idRol)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_DELETE_ROL_USUARIO";
+            operation.AddIntegerParam("idRol", idRol);
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            return operation;
+        }
+
+        public SqlOperation GetRolesUsuarioStatement(string correo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_ROLES";
+            operation.AddVarcharParam("correoUsuario", correo);
+            return operation;
+        }
+
     }
 }

@@ -155,22 +155,10 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetRolesUsuarioStatement(string correo)
-        {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "SP_GET_USUARIO_ROLES";
-            operation.AddVarcharParam("correoUsuario", correo);
-            return operation;
-        }
+       
+       
 
-        public SqlOperation GetAsignarRolStatement(int idUsuario,int idRol)
-        {
-            SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "SP_INSERT_USUARIO_ROL";
-            operation.AddIntegerParam("idUsuario", idUsuario);
-            operation.AddIntegerParam("idRol",idRol);
-            return operation;
-        }
+      
 
         internal int CalcularEdad(DateTime fechaNacimiento)
         {

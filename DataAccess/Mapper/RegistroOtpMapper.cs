@@ -3,6 +3,7 @@ using DataAccess.Mapper.Interfaces;
 using DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -35,6 +36,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+
+        public SqlOperation GetDeleteOtpStatement(string corrreo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_DELETE_REGISTRO_OTP";
+            operation.AddVarcharParam("correoUsuario",corrreo);
+            return operation ;
+        }
         public SqlOperation GetDeleteStatement(BaseClass dto)
         {
             throw new NotImplementedException();

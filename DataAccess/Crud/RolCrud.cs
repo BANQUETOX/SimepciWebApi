@@ -56,5 +56,34 @@ namespace DataAccess.Crud
         {
             throw new NotImplementedException();
         }
+
+        public string AsignarRolUsuario(int idUsuario, int idRol)
+        {
+            SqlOperation operation = rolMapper.GetAsignarRolStatement(idUsuario, idRol);
+            dao.ExecuteStoredProcedure(operation);
+            return "El rol a sido asignado";
+
+        }
+
+        public string RemoverRolUsuario(int idUsuario, int idRol)
+        {
+            SqlOperation operation = rolMapper.GetRemoverRolStatement(idUsuario, idRol);
+            dao.ExecuteStoredProcedure(operation);
+            return "El rol a sido removido";
+
+        }
+
+        public List<string> GetRolesUsuario(string correoUsuario)
+        {
+            SqlOperation operation = rolMapper.GetRolesUsuarioStatement(correoUsuario);
+            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+            List<string> roles = new List<string>();
+            foreach (var rol in dataResults)
+            {
+                roles.Add(rol["Nombre"].ToString());
+            }
+            return roles;
+
+        }
     }
 }

@@ -49,20 +49,7 @@ namespace SIMEPCI_API.Controllers
 
         }
 
-        [HttpGet]
-        public List<string> GetRolesUsuario(string correoUsuario)
-        {
-            List<string> result = new List<string>();
-            try
-            {
-                result = usuarioManager.GetRolesUsuario(correoUsuario);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            return result;
-        }
+        
 
         [HttpPost]
 
@@ -82,19 +69,7 @@ namespace SIMEPCI_API.Controllers
 
         }
 
-        [HttpPost]
-        public string AsignarRolUsuario(string correoUsuario, int idRol)
-        {
-            string result;
-            try
-            {
-                result = usuarioManager.AsignarRolUsuario(correoUsuario, idRol);
-            }
-            catch (Exception ex) { 
-                result = ex.ToString();
-            }
-            return result;
-        }
+      
 
         
 

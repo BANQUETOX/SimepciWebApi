@@ -13,6 +13,7 @@ namespace AppLogic
     public class UsuarioManager
     {
         UsuarioCrud usuarioCrud = new UsuarioCrud();
+        RolCrud rolCrud = new RolCrud();
 
         public string CreateUsuario(Usuario usuario) 
         {
@@ -26,6 +27,7 @@ namespace AppLogic
             }
            
             usuarioCrud.Create(usuario);
+            rolCrud.AsignarRolUsuario(usuario.Id,5);
             return "Usuario creado";
         }
 
@@ -95,17 +97,9 @@ namespace AppLogic
             return resultado;
         }
 
-        public List<string> GetRolesUsuario(string correo)
-        {
-            List<string> roles = usuarioCrud.GetRolesUsuario(correo);
-            return roles;
-        }
+       
 
-        public string AsignarRolUsuario(string correoUsuario,int idRol)
-        {
-            Usuario usuario = GetUsuarioByEmail(correoUsuario);
-            return usuarioCrud.AsignarRolUsuario(usuario.Id,idRol);
-        }
+       
         public Usuario castUsuarioInsert(UsuarioInsert usuarioInsert)
         {
             Usuario usuario = new Usuario();

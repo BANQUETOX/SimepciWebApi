@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Crud
 {
-    public class RegistroOtpCrud : CrudFactory
+    public class RegistroOtpCrud 
     {
         RegistroOtpMapper mapper = new RegistroOtpMapper();
         SqlDao sqlDao = SqlDao.GetInstance();
-        public override void Create(BaseClass dto)
+        public void Create(BaseClass dto)
         {
             SqlOperation operation = mapper.GetCreateStatement(dto);
             sqlDao.ExecuteStoredProcedure(operation);
@@ -27,25 +27,11 @@ namespace DataAccess.Crud
             return registroOtp;
            
         }
-
-        public override void Delete(BaseClass dto)
+        public void Delete(string correo)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = mapper.GetDeleteOtpStatement(correo);
+            sqlDao.ExecuteStoredProcedure(operation);
         }
-
-        public override List<T> RetrieveAll<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override T RetrieveById<T>(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
 }

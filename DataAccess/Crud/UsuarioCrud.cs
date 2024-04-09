@@ -122,26 +122,9 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
         }
 
-        public List<string> GetRolesUsuario(string correoUsuario)
-        {
-            SqlOperation operation = usuarioMapper.GetRolesUsuarioStatement(correoUsuario);
-            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
-            List<string> roles = new List<string>();
-            foreach(var rol in dataResults)
-            {
-                roles.Add(rol["Nombre"].ToString());
-            }
-            return roles;
+       
 
-        }
-
-        public string AsignarRolUsuario(int idUsuario, int idRol)
-        {
-            SqlOperation operation = usuarioMapper.GetAsignarRolStatement(idUsuario, idRol);
-            dao.ExecuteStoredProcedure(operation);
-            return "El rol a sido asignado";
-
-        }
+       
 
     }
 }
