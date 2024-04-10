@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class SedeMapper : ICrudStatements, IObjectMapper
+    public class SedeMapper 
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public Sede BuildObject(Dictionary<string, object> row)
         {
             Sede sede = new Sede();
             sede.nombre = row["Nombre"].ToString();
@@ -19,28 +19,17 @@ namespace DataAccess.Mapper
             sede.fechaCreacion = DateTime.Parse(row["FechaCreacion"].ToString());
             sede.ubicacion = row["Ubicacion"].ToString();
             sede.foto = row["Foto"].ToString();
-            sede.referencias = row["Referencias"].ToString();
             return sede;
         }
 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
+        public List<Sede> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            List<BaseClass> listaSedes = new List<BaseClass>();
+            List<Sede> listaSedes = new List<Sede>();
             foreach (var row in rowList) { 
                 var sede = BuildObject(row);
                 listaSedes.Add(sede);
             }
             return listaSedes;
-        }
-
-        public SqlOperation GetCreateStatement(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SqlOperation GetDeleteStatement(BaseClass dto)
-        {
-            throw new NotImplementedException();
         }
 
         public SqlOperation GetRetrieveAllStatement()
@@ -50,14 +39,19 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetRetrieveByIdStatement(int id)
+        public SqlOperation GetCreateStatement(Sede sede)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_INSERT_SEDE";
+            operation.AddVarcharParam("nombre", sede.nombre);
+            operation.AddVarcharParam("descripcion", sede.descripcion);
+            operation.AddVarcharParam("ubicacion",sede.ubicacion);
+            operation.AddVarcharParam("foto", sede.foto);
+            operation.AddDatetimeParam("fechaCreacion", sede.fechaCreacion);
+            return operation;
         }
 
-        public SqlOperation GetUpdateStatement(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

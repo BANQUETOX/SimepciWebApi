@@ -13,10 +13,26 @@ namespace AppLogic
         SedeCrud sedeCrud = new SedeCrud();
 
 
-        public List<Rol> GetAllRols()
+        public List<Sede> GetAllSedes()
         {
-            List<Rol> list = sedeCrud.RetrieveAll<Rol>();
+            List<Sede> list = sedeCrud.RetrieveAll<Sede>();
             return list;
+        }
+
+        public string CrearSede(Sede sede)
+        {
+            string result;
+            try
+            {
+                sedeCrud.Create(sede);
+                result = "Sede creada";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
+            
         }
     }
 }

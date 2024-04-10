@@ -13,7 +13,8 @@ namespace AppLogic
     public class UsuarioManager
     {
         UsuarioCrud usuarioCrud = new UsuarioCrud();
-        RolCrud rolCrud = new RolCrud();
+        RolManager rolManager = new RolManager();
+
 
         public string CreateUsuario(Usuario usuario) 
         {
@@ -27,7 +28,7 @@ namespace AppLogic
             }
            
             usuarioCrud.Create(usuario);
-            rolCrud.AsignarRolUsuario(usuario.Id,5);
+            rolManager.AsignarRolUsuario(usuario,5);
             return "Usuario creado";
         }
 

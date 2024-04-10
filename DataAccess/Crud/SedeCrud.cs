@@ -9,32 +9,34 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Crud
 {
-    public class SedeCrud : CrudFactory
+    public class SedeCrud 
     {
         SedeMapper sedeMapper;
+        SqlDao sqlDao;
 
         public SedeCrud() : base()
         {
             sedeMapper = new SedeMapper();
-            dao = SqlDao.GetInstance();
+            sqlDao = SqlDao.GetInstance();
         }
 
-        public override void Create(BaseClass dto)
+        public void Create(Sede sede)
+        {
+            SqlOperation operation = sedeMapper.GetCreateStatement(sede);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+
+        public void Delete(BaseClass dto)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<T> RetrieveAll<T>()
+        public List<T> RetrieveAll<T>()
         {
             List<T> resultList = new List<T>();
             SqlOperation operation = sedeMapper.GetRetrieveAllStatement();
 
-            List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
+            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
 
             if (dataResults.Count > 0)
             {
@@ -47,12 +49,7 @@ namespace DataAccess.Crud
             return resultList;
         }
 
-        public override T RetrieveById<T>(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(BaseClass dto)
+        public  T RetrieveById<T>(int id)
         {
             throw new NotImplementedException();
         }

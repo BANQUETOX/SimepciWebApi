@@ -1,8 +1,9 @@
 ﻿using DataAccess.Crud;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DTO;
 using Microsoft.AspNetCore.Cors;
+using DTO;
+using AppLogic;
 namespace SIMEPCI_API.Controllers
 {
     [EnableCors("Simepci-web-policy")]
@@ -11,14 +12,14 @@ namespace SIMEPCI_API.Controllers
     public class SedeController : ControllerBase
     {
 
-        SedeCrud sedeCrud = new SedeCrud();
+        SedeManager sedeManager = new SedeManager();
         [HttpGet]
         public List<Sede> GetAllSedes()
         {
             List<Sede> sedes = new List<Sede>();
             try
             {
-            sedes = sedeCrud.RetrieveAll<Sede>();
+            sedes = sedeManager.GetAllSedes();
 
             }
             catch (Exception ex)
@@ -26,6 +27,22 @@ namespace SIMEPCI_API.Controllers
                 Console.WriteLine(ex.Message);
             }
             return sedes;
+        }
+
+        [HttpPost]
+        public string CrearSede(Sede sede)
+        {
+            string result;
+            try
+            {
+
+              result = sedeManager.CrearSede(sede);
+            }
+            catch (Exception ex)
+            {
+                result=ex.Message;
+            }
+            return result;
         }
 
     }

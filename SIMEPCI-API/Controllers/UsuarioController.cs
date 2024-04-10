@@ -13,10 +13,8 @@ namespace SIMEPCI_API.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        UsuarioManager usuarioManager;
-        public UsuarioController() {
-            usuarioManager = new UsuarioManager();
-        }
+        UsuarioManager usuarioManager = new UsuarioManager();
+        
         [HttpGet]
         public List<UsuarioGet> GetAllUsers() {
             List<UsuarioGet> result = new List<UsuarioGet>();
@@ -47,6 +45,15 @@ namespace SIMEPCI_API.Controllers
             }
             return usuario;
 
+        }
+
+        [HttpGet]
+        public UsuarioGet GetUsuarioByCorreo(string correo)
+        {
+            UsuarioGet usuario;
+            Usuario fullUsuario = usuarioManager.GetUsuarioByEmail(correo);
+            usuario = usuarioManager.castUsuarioGet(fullUsuario);
+            return usuario;
         }
 
         

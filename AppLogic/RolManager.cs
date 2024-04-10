@@ -12,7 +12,12 @@ namespace AppLogic
     public class RolManager
     {
         RolCrud rolCrud = new RolCrud();
-        UsuarioManager usuarioManager = new UsuarioManager();
+        AdministradorManager administradorManager = new AdministradorManager();
+        DoctorManager doctorManager = new DoctorManager();
+        EnfermeroManager enfermeroManager = new EnfermeroManager();
+        SecretarioManager secretarioManager = new SecretarioManager();
+        PacienteManager pacienteManager = new PacienteManager();
+
 
        
 
@@ -22,15 +27,61 @@ namespace AppLogic
             return list;
         }
 
-        public string AsignarRolUsuario(string correoUsuario, int idRol)
+        public string AsignarRolUsuario(Usuario usuario, int idRol)
         {
-            Usuario usuario = usuarioManager.GetUsuarioByEmail(correoUsuario);
+            if (idRol > 5)
+            {
+                return "idRol Invalido";
+            }
+            if (idRol == 1)
+            {
+                administradorManager.CrearAdministrador(usuario.Id);
+            }
+            else if (idRol == 2)
+            {
+                doctorManager.CrearDoctor(usuario.Id);
+            }
+            else if (idRol == 3)
+            {
+                secretarioManager.CrearSecretario(usuario.Id);
+            }
+            else if (idRol == 4)
+            {
+                enfermeroManager.CrearEnfermero(usuario.Id);
+            }
+            else if (idRol == 5) 
+            {
+                pacienteManager.CrearPaciente(usuario.Id);
+            }
             return rolCrud.AsignarRolUsuario(usuario.Id, idRol);
         }
 
-        public string RemoverRolUsuario(string correoUsuario, int idRol)
+        public string RemoverRolUsuario(Usuario usuario, int idRol)
         {
-            Usuario usuario = usuarioManager.GetUsuarioByEmail(correoUsuario);
+            if (idRol > 5)
+            {
+                return "idRol Invalido";
+            }
+            if (idRol == 1)
+            {
+                administradorManager.EliminarAdministrador(usuario.Id);
+            }
+            else if (idRol == 2)
+            {
+                doctorManager.EliminarDoctor(usuario.Id);
+            }
+            else if (idRol == 3)
+            {
+                secretarioManager.EliminarSecretario(usuario.Id);
+            }
+            else if (idRol == 4)
+            {
+                enfermeroManager.EliminarEnfermero(usuario.Id);
+            }
+            else if (idRol == 5) 
+            {
+                pacienteManager.EliminarPaciente(usuario.Id);
+            }
             return rolCrud.RemoverRolUsuario(usuario.Id, idRol);
         }
 

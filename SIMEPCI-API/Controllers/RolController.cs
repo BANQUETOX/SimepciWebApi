@@ -4,6 +4,8 @@ using DTO;
 using AppLogic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cors;
+using DTO.Usuarios;
+
 
 
 namespace SIMEPCI_API.Controllers
@@ -32,36 +34,6 @@ namespace SIMEPCI_API.Controllers
             return result;
         }
 
-        [HttpPost]
-        public string AsignarRolUsuario(string correoUsuario, int idRol)
-        {
-            string result;
-            try
-            {
-                result = rolManager.AsignarRolUsuario(correoUsuario, idRol);
-            }
-            catch (Exception ex)
-            {
-                result = ex.ToString();
-            }
-            return result;
-        }
-
-        [HttpPost]
-        public string RemoverRolUsuario(string correoUsuario, int idRol)
-        {
-            string result;
-            try
-            {
-                result = rolManager.RemoverRolUsuario(correoUsuario, idRol);
-            }
-            catch (Exception ex)
-            {
-                result = ex.ToString();
-            }
-            return result;
-        }
-
         [HttpGet]
         public List<string> GetRolesUsuario(string correoUsuario)
         {
@@ -76,6 +48,38 @@ namespace SIMEPCI_API.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public string AsignarRolUsuario(Usuario usuario, int idRol)
+        {
+            string result;
+            try
+            {
+                result = rolManager.AsignarRolUsuario(usuario, idRol);
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public string RemoverRolUsuario(Usuario usuario, int idRol)
+        {
+            string result;
+            try
+            {
+                result = rolManager.RemoverRolUsuario(usuario, idRol);
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+            return result;
+        }
+
+      
 
     }
 }
