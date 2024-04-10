@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 
 namespace AppLogic
 {
@@ -12,9 +13,9 @@ namespace AppLogic
         DoctorCrud doctorCrud = new DoctorCrud();
 
 
-        public void CrearDoctor(int idUsuario)
+        public void CrearDoctor(Doctor doctor)
         {
-            doctorCrud.Create(idUsuario);
+            doctorCrud.Create(doctor);
         }
 
         public void EliminarDoctor(int idUsuario)

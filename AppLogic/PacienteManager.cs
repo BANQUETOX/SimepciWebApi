@@ -1,4 +1,6 @@
 ﻿using DataAccess.Crud;
+using DTO;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +24,12 @@ namespace AppLogic
         {
             pacienteCrud.Delete(idUsuario);
         }
+
+        public List<Paciente> GetAllPacientes()
+        {
+            List<Paciente> list = pacienteCrud.RetrieveAll<Paciente>();
+            return list;
+        }
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AppLogic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using AppLogic;
 using Microsoft.AspNetCore.Cors;
 using System.Data.SqlTypes;
 using DTO.Usuarios;
@@ -56,7 +55,14 @@ namespace SIMEPCI_API.Controllers
             return usuario;
         }
 
-        
+        [HttpGet]
+        public UsuarioGet GetUsuarioById(int id)
+        {
+            
+            return usuarioManager.GetUsuarioById(id);
+        }
+
+
 
         [HttpPost]
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DTO;
 namespace DataAccess.Crud
 {
     public class DoctorCrud
@@ -19,9 +19,9 @@ namespace DataAccess.Crud
             sqlDao = new SqlDao();
         }
 
-        public void Create(int userId)
+        public void Create(Doctor doctor)
         {
-            SqlOperation operation = mapper.GetCreateStatement(userId);
+            SqlOperation operation = mapper.GetCreateStatement(doctor);
             sqlDao.ExecuteStoredProcedure(operation);
 
         }

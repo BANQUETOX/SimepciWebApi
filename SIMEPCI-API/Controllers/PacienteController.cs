@@ -1,4 +1,6 @@
 ﻿using AppLogic;
+using Azure.Core;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +12,10 @@ namespace SIMEPCI_API.Controllers
     {
         PacienteManager manager = new PacienteManager();
 
-        [HttpPost]
-        public void CrearPaciente(int idUsuario)
+        [HttpGet]
+        public List<Paciente> GetAllPacientes()
         {
-            manager.CrearPaciente(idUsuario);
-        }
-
-        [HttpPost]
-        public void EliminarPaciente(int idUsuario)
-        {
-            manager.EliminarPaciente(idUsuario);
+           return manager.GetAllPacientes();
         }
     }
 }

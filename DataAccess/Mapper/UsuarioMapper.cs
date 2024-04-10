@@ -111,7 +111,10 @@ namespace DataAccess.Mapper
 
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_ID";
+            operation.AddIntegerParam("id", id);    
+            return operation;
         }
 
         public SqlOperation GetUpdateStatement(BaseClass dto)

@@ -28,7 +28,9 @@ namespace AppLogic
             }
            
             usuarioCrud.Create(usuario);
-            rolManager.AsignarRolUsuario(usuario,5);
+
+            Usuario fullUsuario = usuarioCrud.GetUsuarioByEmail(usuario.correo);
+            rolManager.AsignarRolUsuario(fullUsuario.Id,5);
             return "Usuario creado";
         }
 
@@ -51,20 +53,29 @@ namespace AppLogic
             return  usuario;
         }
 
+        public UsuarioGet GetUsuarioById(int id) { 
+            Usuario usuario = usuarioCrud.RetrieveById(id);
+            UsuarioGet usuarioGet = castUsuarioGet(usuario);
+            return usuarioGet;
+        }
+
         
         public UsuarioGet Login(string correo, string password)
         {
-            Usuario usuario;
+            UsuarioGet result;
+           
             try
             {
-                usuario = usuarioCrud.Login(correo, password);
+                Usuario usuario = usuarioCrud.Login(correo, password);
+                result = castUsuarioGet(usuario);
+                result.roles = rolManager.GetRolesUsuario(usuario.correo);
             }
             catch (Exception ex)
             {
-                usuario = new Usuario();
+                result = new UsuarioGet();
             }
             
-            return castUsuarioGet(usuario); ; 
+            return result ; 
             
 
         }

@@ -5,6 +5,7 @@ using AppLogic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cors;
 using DTO.Usuarios;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 
 
@@ -50,12 +51,12 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpPost]
-        public string AsignarRolUsuario(Usuario usuario, int idRol)
+        public string AsignarRolUsuario(int idUsuario, int idRol)
         {
             string result;
             try
             {
-                result = rolManager.AsignarRolUsuario(usuario, idRol);
+                result = rolManager.AsignarRolUsuario(idUsuario, idRol);
             }
             catch (Exception ex)
             {
@@ -65,18 +66,36 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpPost]
-        public string RemoverRolUsuario(Usuario usuario, int idRol)
+        public string RemoverRolUsuario(int idUsuario, int idRol)
         {
             string result;
             try
             {
-                result = rolManager.RemoverRolUsuario(usuario, idRol);
+                result = rolManager.RemoverRolUsuario(idUsuario, idRol);
             }
             catch (Exception ex)
             {
                 result = ex.ToString();
             }
             return result;
+        }
+
+        [HttpPost]
+        public string AsignarRolDoctor(DoctorInsert doctor)
+        {
+            string result;
+            try
+            {
+
+             rolManager.AsignarRolDoctor(doctor);
+                result = "Doctor creado";
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+            return result;
+
         }
 
       

@@ -31,5 +31,24 @@ namespace DataAccess.Crud
             SqlOperation operation = mapper.GetDeleteStatement(userId);
             sqlDao.ExecuteStoredProcedure(operation);
         }
+
+        public  List<T> RetrieveAll<T>()
+        {
+
+            List<T> resultList = new List<T>();
+            SqlOperation operation = mapper.GetRetrieveAllStatement();
+
+            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+
+            if (dataResults.Count > 0)
+            {
+                var dtoList = mapper.BuildObjects(dataResults);
+                foreach (var dto in dtoList)
+                {
+                    resultList.Add((T)Convert.ChangeType(dto, typeof(T)));
+                }
+            }
+            return resultList;
+        }
     }
 }

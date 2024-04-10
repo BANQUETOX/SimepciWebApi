@@ -23,6 +23,8 @@ namespace DTO.Usuarios
 
         public string sexo { get; set; }
 
+        public List<string> roles { get; set; }
+
 
     }
 }

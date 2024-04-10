@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -11,30 +12,31 @@ using DTO.Usuarios;
 
 namespace DataAccess.Crud
 {
-    public class UsuarioCrud : CrudFactory
+    public class UsuarioCrud 
     {
 
         UsuarioMapper usuarioMapper;
+        SqlDao dao;
 
-        public UsuarioCrud() : base()
+        public UsuarioCrud() 
         {
             usuarioMapper = new UsuarioMapper();
             dao = SqlDao.GetInstance();
         }
 
-        public override void Create(BaseClass dto)
+        public  void Create(BaseClass dto)
         {
             SqlOperation operation = usuarioMapper.GetCreateStatement(dto);
             dao.ExecuteStoredProcedure(operation);
 
         }
 
-        public override void Delete(BaseClass dto)
+        public  void Delete(BaseClass dto)
         {
             throw new NotImplementedException();
         }
 
-        public override List<T> RetrieveAll<T>()
+        public  List<T> RetrieveAll<T>()
         {
 
             List<T> resultList = new List<T>();
@@ -53,12 +55,17 @@ namespace DataAccess.Crud
             return resultList;
         }
 
-        public override T RetrieveById<T>(int id)
+        public  Usuario RetrieveById(int id)
         {
-            throw new NotImplementedException();
+            
+            SqlOperation operation = usuarioMapper.GetRetrieveByIdStatement(id);
+            var result = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            return usuario;
+            
         }
 
-        public override void Update(BaseClass dto)
+        public  void Update(BaseClass dto)
         {
             throw new NotImplementedException();
         }

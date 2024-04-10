@@ -13,10 +13,13 @@ namespace DataAccess.Mapper
     {
         public BaseClass BuildObject(Dictionary<string, object> row)
         {
-            Paciente paciente = new Paciente();
-            paciente.Id = int.Parse(row["Id"].ToString());
-            paciente.IdUsuario = int.Parse(row["IdUsuario"].ToString());
-            return paciente;
+            Doctor doctor = new Doctor();
+            doctor.Id = int.Parse(row["Id"].ToString());
+            doctor.idUsuario = int.Parse(row["IdUsuario"].ToString());
+            doctor.idEspecialidad = int.Parse(row["IdEspecialidad"].ToString());
+            doctor.idSede = int.Parse(row["IdSede"].ToString());
+            doctor.horario = int.Parse(row["Horario"].ToString());
+            return doctor;
         }
 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
@@ -24,11 +27,13 @@ namespace DataAccess.Mapper
             throw new NotImplementedException();
         }
 
-        public SqlOperation GetCreateStatement(int idUsuario)
+        public SqlOperation GetCreateStatement(Doctor doctor)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_INSERT_DOCTOR";
-            operation.AddIntegerParam("idUsuario", idUsuario);
+            operation.AddIntegerParam("idUsuario", doctor.idUsuario);
+            operation.AddIntegerParam("idEspecialidad",doctor.idEspecialidad);
+            operation.AddIntegerParam("idSede",doctor.idSede);
             return operation;
 
         }

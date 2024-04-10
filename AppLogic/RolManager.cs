@@ -27,7 +27,7 @@ namespace AppLogic
             return list;
         }
 
-        public string AsignarRolUsuario(Usuario usuario, int idRol)
+        public string AsignarRolUsuario(int idUsuario, int idRol)
         {
             if (idRol > 5)
             {
@@ -35,28 +35,28 @@ namespace AppLogic
             }
             if (idRol == 1)
             {
-                administradorManager.CrearAdministrador(usuario.Id);
+                administradorManager.CrearAdministrador(idUsuario);
             }
             else if (idRol == 2)
             {
-                doctorManager.CrearDoctor(usuario.Id);
+                return "Rol no asignable en este metodo";
             }
             else if (idRol == 3)
             {
-                secretarioManager.CrearSecretario(usuario.Id);
+                secretarioManager.CrearSecretario(idUsuario);
             }
             else if (idRol == 4)
             {
-                enfermeroManager.CrearEnfermero(usuario.Id);
+                enfermeroManager.CrearEnfermero(idUsuario);
             }
             else if (idRol == 5) 
             {
-                pacienteManager.CrearPaciente(usuario.Id);
+                pacienteManager.CrearPaciente(idUsuario);
             }
-            return rolCrud.AsignarRolUsuario(usuario.Id, idRol);
+            return rolCrud.AsignarRolUsuario(idUsuario, idRol);
         }
 
-        public string RemoverRolUsuario(Usuario usuario, int idRol)
+        public string RemoverRolUsuario(int idUsuario, int idRol)
         {
             if (idRol > 5)
             {
@@ -64,25 +64,25 @@ namespace AppLogic
             }
             if (idRol == 1)
             {
-                administradorManager.EliminarAdministrador(usuario.Id);
+                administradorManager.EliminarAdministrador(idUsuario);
             }
             else if (idRol == 2)
             {
-                doctorManager.EliminarDoctor(usuario.Id);
+                doctorManager.EliminarDoctor(idUsuario);
             }
             else if (idRol == 3)
             {
-                secretarioManager.EliminarSecretario(usuario.Id);
+                secretarioManager.EliminarSecretario(idUsuario);
             }
             else if (idRol == 4)
             {
-                enfermeroManager.EliminarEnfermero(usuario.Id);
+                enfermeroManager.EliminarEnfermero(idUsuario);
             }
             else if (idRol == 5) 
             {
-                pacienteManager.EliminarPaciente(usuario.Id);
+                pacienteManager.EliminarPaciente(idUsuario);
             }
-            return rolCrud.RemoverRolUsuario(usuario.Id, idRol);
+            return rolCrud.RemoverRolUsuario(idUsuario, idRol);
         }
 
         public List<string> GetRolesUsuario(string correo)
@@ -90,5 +90,16 @@ namespace AppLogic
             List<string> roles = rolCrud.GetRolesUsuario(correo);
             return roles;
         }
+
+        public void AsignarRolDoctor(DoctorInsert doctorInsert)
+        {
+            Doctor doctor = new Doctor();
+            doctor.idUsuario = doctorInsert.idUsuario;  
+            doctor.idEspecialidad = doctorInsert.idEspecialidad;
+            doctor.horario = doctorInsert.horario;  
+            doctor.idSede = doctorInsert.idSede;
+            doctorManager.CrearDoctor(doctor);
+        }
+        
     }
 }
