@@ -30,7 +30,7 @@ namespace AppLogic
             usuarioCrud.Create(usuario);
 
             Usuario fullUsuario = usuarioCrud.GetUsuarioByEmail(usuario.correo);
-            rolManager.AsignarRolUsuario(fullUsuario.Id,5);
+            rolManager.AsignarRolUsuario(fullUsuario.correo,5);
             return "Usuario creado";
         }
 
@@ -49,6 +49,7 @@ namespace AppLogic
 
         public Usuario GetUsuarioByEmail(string correo)
         {
+            
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
             return  usuario;
         }
@@ -68,7 +69,6 @@ namespace AppLogic
             {
                 Usuario usuario = usuarioCrud.Login(correo, password);
                 result = castUsuarioGet(usuario);
-                result.roles = rolManager.GetRolesUsuario(usuario.correo);
             }
             catch (Exception ex)
             {
@@ -145,6 +145,7 @@ namespace AppLogic
             usuario.fotoPerfil = usuarioBase.fotoPerfil;
             usuario.activo = usuarioBase.activo;
             usuario.sexo = usuarioBase.sexo;
+            usuario.roles = rolManager.GetRolesUsuario(usuarioBase.correo);
             return usuario;
         }
     }

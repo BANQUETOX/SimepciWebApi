@@ -16,5 +16,12 @@ namespace SIMEPCI_API.Controllers
         {
             return citaManager.CrearCita(cita);
         }
+
+        [HttpGet]
+        public List<Cita> GetCitasReservadas(int idEspecialidad, int idSede)
+        {
+            return citaManager.CitasReservadas(idEspecialidad,idSede);
+
+        }
     }
 }

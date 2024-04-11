@@ -26,5 +26,13 @@ namespace DataAccess.Crud
             sqlDao.ExecuteStoredProcedure(operation);
             
         }
+
+        public List<Cita> GetCitasReservadas(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
+            List<Cita> citas = new List<Cita>();
+            SqlOperation operation = citaMapper.GetCitasReservadas(fechaInico,fechaFinal, idEspecialidad, idSede);
+            var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return citaMapper.BuildObjects(results); ;
+
+        }
     }
 }

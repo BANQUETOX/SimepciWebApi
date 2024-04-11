@@ -21,7 +21,15 @@ namespace DataAccess.Mapper
 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            throw new NotImplementedException();
+            List<BaseClass> results = new List<BaseClass>();
+
+            foreach (var row in rowList)
+            {
+                var user = BuildObject(row);
+                results.Add(user);
+            }
+
+            return results;
         }
 
         public SqlOperation GetCreateStatement(BaseClass dto)
@@ -33,8 +41,6 @@ namespace DataAccess.Mapper
             sqlOperation.AddIntegerParam("idRecuperarPasswordOtp", usuarioPasswordsOtps.idRecuperarPasswordOtp);
             return sqlOperation;
         }
-
-        
 
         public SqlOperation GetDeleteStatement(BaseClass dto)
         {

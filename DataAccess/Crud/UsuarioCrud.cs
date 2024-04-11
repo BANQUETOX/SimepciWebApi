@@ -75,15 +75,7 @@ namespace DataAccess.Crud
         {
             SqlOperation operation = usuarioMapper.GetUserByEmailStatement(correo);
             List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
-            Usuario usuario = null;
-            if (dataResults.Count > 0)
-            {
-                var dtoList = usuarioMapper.BuildObjects(dataResults);
-                foreach (var dto in dtoList)
-                {
-                    usuario = (Usuario)Convert.ChangeType(dto, typeof(Usuario));
-                }
-            }
+            Usuario usuario = (Usuario)usuarioMapper.BuildObject(dataResults[0]); 
             return usuario;
         }
 

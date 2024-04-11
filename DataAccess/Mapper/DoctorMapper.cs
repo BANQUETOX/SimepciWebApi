@@ -34,6 +34,7 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idUsuario", doctor.idUsuario);
             operation.AddIntegerParam("idEspecialidad",doctor.idEspecialidad);
             operation.AddIntegerParam("idSede",doctor.idSede);
+            operation.AddIntegerParam("horario",doctor.horario);
             return operation;
 
         }

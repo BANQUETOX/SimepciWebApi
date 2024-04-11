@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class CitaMapper : IObjectMapper
+    public class CitaMapper 
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public Cita BuildObject(Dictionary<string, object> row)
         {
             Cita cita = new Cita();
+            cita.Id = int.Parse(row["Id"].ToString());
             cita.idPaciente = int.Parse(row["IdPaciente"].ToString());
             cita.idDoctor = int.Parse(row["IdDoctor"].ToString());
             cita.horaInicio = DateTime.Parse(row["HoraInicio"].ToString());
@@ -24,9 +25,9 @@ namespace DataAccess.Mapper
             return cita;
         }
 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
+        public List<Cita> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            List<BaseClass> results = new List<BaseClass>();
+            List<Cita> results = new List<Cita>();
 
             foreach (var row in rowList)
             {
@@ -67,6 +68,18 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "SP_DELETE_CITA";
             operation.AddIntegerParam("id", id);
             return operation;
+        }
+
+        public SqlOperation GetCitasReservadas(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITAS_FECHA";
+            operation.AddDatetimeParam("fechaInicio", fechaInico);
+            operation.AddDatetimeParam("fechaFinal",fechaFinal);
+            operation.AddIntegerParam("idEspecialidad", idEspecialidad);
+            operation.AddIntegerParam("idSede", idSede);
+            return operation;
+
+        
         }
     }
 }

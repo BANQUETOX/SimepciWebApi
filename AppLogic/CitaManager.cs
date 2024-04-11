@@ -42,6 +42,18 @@ namespace AppLogic
             return cita;
         }
 
+
+        public List<Cita> CitasReservadas(int idEspecialidad, int idSede) {
+            DateTime fechaInicio = DateTime.Now;
+            DateTime fechaFinal = DateTime.Now;
+            fechaFinal = fechaFinal.AddDays(10);
+            return citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
+        }
+        public List<Cita> CitasDisponibles() { 
+            List<Cita> citasDisponibles = new List<Cita>(); 
+            return citasDisponibles;
+        }
+
         public bool validarFechaCita(DateTime horaInicio, DateTime horaFinal)
         {
             if (horaInicio.Date != horaFinal.Date)

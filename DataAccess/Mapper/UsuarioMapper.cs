@@ -122,7 +122,6 @@ namespace DataAccess.Mapper
             throw new NotImplementedException();
         }
 
-
         public SqlOperation Login(string correo, string password)
         {
             SqlOperation operation = new SqlOperation();
@@ -157,11 +156,6 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("correoUsuario", correo);
             return operation;
         }
-
-       
-       
-
-      
 
         internal int CalcularEdad(DateTime fechaNacimiento)
         {

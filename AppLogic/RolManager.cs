@@ -27,8 +27,20 @@ namespace AppLogic
             return list;
         }
 
-        public string AsignarRolUsuario(int idUsuario, int idRol)
+        public string AsignarRolUsuario(string correoUsuario, int idRol)
         {
+            int idUsuario;
+            try {
+                UsuarioCrud usuarioCrud = new UsuarioCrud();
+                Usuario usuarioEncontrado = usuarioCrud.GetUsuarioByEmail(correoUsuario);
+                idUsuario = usuarioEncontrado.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return ex.Message;
+            }
+
             if (idRol > 5)
             {
                 return "idRol Invalido";

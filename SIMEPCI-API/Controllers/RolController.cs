@@ -51,12 +51,12 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpPost]
-        public string AsignarRolUsuario(int idUsuario, int idRol)
+        public string AsignarRolUsuario(string correoUsuario, int idRol)
         {
             string result;
             try
             {
-                result = rolManager.AsignarRolUsuario(idUsuario, idRol);
+                result = rolManager.AsignarRolUsuario(correoUsuario, idRol);
             }
             catch (Exception ex)
             {
