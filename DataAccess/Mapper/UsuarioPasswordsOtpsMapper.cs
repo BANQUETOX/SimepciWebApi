@@ -11,7 +11,7 @@ namespace DataAccess.Mapper
 {
     public class UsuarioPasswordsOtpsMapper : ICrudStatements, IObjectMapper
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public  BaseClass BuildObject(Dictionary<string, object> row)
         {
             UsuarioPasswordsOtps usuarioPasswordsOtps = new UsuarioPasswordsOtps();
             usuarioPasswordsOtps.idUsuario = int.Parse(row["IdUsuario"].ToString());

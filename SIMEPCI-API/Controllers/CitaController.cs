@@ -14,13 +14,32 @@ namespace SIMEPCI_API.Controllers
         [HttpPost]
         public string CrearCita(CitaInsert cita)
         {
-            return citaManager.CrearCita(cita);
+            string result;
+            try
+            {
+
+                result = citaManager.CrearCita(cita);
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;  
         }
 
         [HttpGet]
         public List<Cita> GetCitasReservadas(int idEspecialidad, int idSede)
         {
-            return citaManager.CitasReservadas(idEspecialidad,idSede);
+            List<Cita> result;
+            try
+            {
+                result = citaManager.CitasReservadas(idEspecialidad,idSede);
+            }
+            catch (Exception ex)
+            {
+                result = new List<Cita>();
+            }
+            return result;  
 
         }
     }

@@ -12,7 +12,7 @@ namespace AppLogic
     {
         RecetaCrud crud = new RecetaCrud();
 
-        public void CrearReceta(RecetaInput recetaInput)
+        public string CrearReceta(RecetaInput recetaInput)
         {
             Receta receta = new Receta();
             receta.idPaciente = recetaInput.idPaciente;
@@ -23,6 +23,7 @@ namespace AppLogic
             receta.diasDosis = recetaInput.diasDosis;
             receta.recomendaciones = recetaInput.recomendaciones;
             crud.Create(receta);
+            return "Receta Creada";
         }
 
         public List<Receta> GetRecetasPaciente(int idPaciete) {

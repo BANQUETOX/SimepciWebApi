@@ -12,9 +12,19 @@ namespace SIMEPCI_API.Controllers
         ExamenMedicoManager manager = new ExamenMedicoManager();
 
         [HttpPost]
-        public void CrearExamenMedico(ExamenMedicoInsert examenMedico)
+        public string CrearExamenMedico(ExamenMedicoInsert examenMedico)
         {
-            manager.CrearExamenMedico(examenMedico);
+            string result;
+            try
+            {
+
+              result = manager.CrearExamenMedico(examenMedico);
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
         }
 
         [HttpGet]

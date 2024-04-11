@@ -12,14 +12,34 @@ namespace SIMEPCI_API.Controllers
         RecetaManager manager = new RecetaManager();
 
         [HttpPost]
-        public void CreateReceta(RecetaInput recetaInput)
+        public string CreateReceta(RecetaInput recetaInput)
         {
-            manager.CrearReceta(recetaInput);
+            string result;
+            try
+            {
+
+              result = manager.CrearReceta(recetaInput);
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
         }
         [HttpGet]
         public List<Receta> GetRecetasPaciente(int idPaciente)
         {
-            return manager.GetRecetasPaciente(idPaciente);
+            List<Receta> result;
+            try
+            {
+
+             result = manager.GetRecetasPaciente(idPaciente);
+            }
+            catch (Exception ex)
+            {
+                result = new List<Receta>();
+            }
+            return result;
         }
     }
 }

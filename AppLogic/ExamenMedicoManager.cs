@@ -12,13 +12,14 @@ namespace AppLogic
     {
         ExamenMedicoCrud crud = new ExamenMedicoCrud();
 
-        public void CrearExamenMedico(ExamenMedicoInsert examenMedicoInsert)
+        public string CrearExamenMedico(ExamenMedicoInsert examenMedicoInsert)
         {
             ExamenMedico examenMedico = new ExamenMedico();
             examenMedico.idPaciente = examenMedicoInsert.idPaciente;
             examenMedico.idTipoExamenMedico = examenMedicoInsert.idTipoExamenMedico;
             examenMedico.resultado = examenMedicoInsert.resultado;
             crud.Create(examenMedico);
+            return "Examen Medico creado";
         }
 
         public List<ExamenMedico> GetExamenMedicosPaciente(int idPaciente)
