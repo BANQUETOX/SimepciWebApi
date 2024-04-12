@@ -54,6 +54,12 @@ namespace AppLogic
             return citasDisponibles;
         }
 
+        public List<Cita> CitasPaciente(int idPaciente)
+        {
+            List<Cita> citasPaciente = citaCrud.GetCitasPaciente(idPaciente);
+            return citasPaciente;
+        }
+
         public bool validarFechaCita(DateTime horaInicio, DateTime horaFinal)
         {
             if (horaInicio.Date != horaFinal.Date)

@@ -38,7 +38,7 @@ namespace DataAccess.Mapper
             return results;
         }
 
-        public SqlOperation Create(Cita cita)
+        public SqlOperation GetCreateStatement(Cita cita)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_INSERT_CITA";
@@ -51,7 +51,7 @@ namespace DataAccess.Mapper
 
         }
 
-        SqlOperation UpdateCita(Cita cita)
+        SqlOperation GetUpdateCitaStatement(Cita cita)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_UPDATE_CITA";
@@ -62,7 +62,7 @@ namespace DataAccess.Mapper
             operation.AddDatetimeParam("horaFinal", cita.horaFinal);
             return operation;
         }
-        public SqlOperation Delete(int id)
+        public SqlOperation GetDeleteStatement(int id)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_DELETE_CITA";
@@ -70,7 +70,7 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetCitasReservadas(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
+        public SqlOperation GetCitasReservadasStatement(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_GET_CITAS_FECHA";
             operation.AddDatetimeParam("fechaInicio", fechaInico);
@@ -80,6 +80,14 @@ namespace DataAccess.Mapper
             return operation;
 
         
+        }
+
+        public SqlOperation GetCitasPacienteStatement(int idPaciente)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITAS_PACIENTE";
+            operation.AddIntegerParam("idPaciente",idPaciente);
+            return operation;
         }
     }
 }

@@ -26,5 +26,21 @@ namespace SIMEPCI_API.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        public ExpedienteCompleto ExpedienteCompletoPaciente(int idPaciente)
+        {
+            ExpedienteCompleto expedietente = new ExpedienteCompleto();
+            try
+            {
+                expedietente = manager.GetExpedienteCompleto(idPaciente);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return expedietente;
+            }
+            return expedietente;
+        }
     }
 }

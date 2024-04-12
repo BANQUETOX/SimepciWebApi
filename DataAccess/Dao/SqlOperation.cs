@@ -37,5 +37,9 @@ namespace DataAccess.Dao
         {
             parameters.Add(new SqlParameter("@" + parameterName, parameterValue));
         }
+        public void AddFloatParam(string parameterName, float parameterValue)
+        {
+            parameters.Add(new SqlParameter("@" + parameterName, parameterValue));
+        }
     }
 }

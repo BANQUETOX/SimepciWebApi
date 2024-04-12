@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO.Citas;
+using DTO;
 
 namespace DataAccess.Crud
 {
@@ -22,17 +23,23 @@ namespace DataAccess.Crud
 
         public void Create(Cita cita)
         {
-            SqlOperation operation = citaMapper.Create(cita);
+            SqlOperation operation = citaMapper.GetCreateStatement(cita);
             sqlDao.ExecuteStoredProcedure(operation);
             
         }
 
         public List<Cita> GetCitasReservadas(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
-            List<Cita> citas = new List<Cita>();
-            SqlOperation operation = citaMapper.GetCitasReservadas(fechaInico,fechaFinal, idEspecialidad, idSede);
+            SqlOperation operation = citaMapper.GetCitasReservadasStatement(fechaInico,fechaFinal, idEspecialidad, idSede);
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
-            return citaMapper.BuildObjects(results); ;
+            return citaMapper.BuildObjects(results); 
 
+        }
+
+        public List<Cita> GetCitasPaciente(int idPaciente)
+        {
+            SqlOperation operation = citaMapper.GetCitasPacienteStatement(idPaciente);
+            var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return citaMapper.BuildObjects(results);
         }
     }
 }

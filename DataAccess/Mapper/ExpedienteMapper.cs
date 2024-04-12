@@ -48,5 +48,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetExpedienteByPacienteStatement(int idPaciente)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_EXPEDIENTE_PACIENTE";
+            operation.AddIntegerParam("idPaciente",idPaciente);
+            return operation;
+
+        }
+
     }
 }

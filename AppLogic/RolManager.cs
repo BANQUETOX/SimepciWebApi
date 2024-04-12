@@ -17,6 +17,7 @@ namespace AppLogic
         EnfermeroManager enfermeroManager = new EnfermeroManager();
         SecretarioManager secretarioManager = new SecretarioManager();
         PacienteManager pacienteManager = new PacienteManager();
+        UsuarioCrud usuarioCrud   = new UsuarioCrud();
 
 
        
@@ -105,8 +106,9 @@ namespace AppLogic
 
         public void AsignarRolDoctor(DoctorInsert doctorInsert)
         {
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(doctorInsert.correoUsuario);
             Doctor doctor = new Doctor();
-            doctor.idUsuario = doctorInsert.idUsuario;  
+            doctor.idUsuario = usuario.Id;  
             doctor.idEspecialidad = doctorInsert.idEspecialidad;
             doctor.horario = doctorInsert.horario;  
             doctor.idSede = doctorInsert.idSede;
