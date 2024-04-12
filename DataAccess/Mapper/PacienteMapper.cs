@@ -56,5 +56,12 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+
+        public SqlOperation GetByUsuarioIdStatement(int idUsuario) {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_PACIENTE_USUARIO_ID";
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            return operation;
+        }
     }
 }

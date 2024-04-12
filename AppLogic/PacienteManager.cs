@@ -1,4 +1,5 @@
-﻿using DataAccess.Crud;
+﻿using Azure.Core;
+using DataAccess.Crud;
 using DTO;
 using DTO.Usuarios;
 using System;
@@ -12,23 +13,28 @@ namespace AppLogic
 {
     public class PacienteManager
     {
-        PacienteCrud pacienteCrud = new PacienteCrud();
+        PacienteCrud crud = new PacienteCrud();
        
 
         public void CrearPaciente(int idUsuario)
         {
-            pacienteCrud.Create(idUsuario);
+            crud.Create(idUsuario);
         }
 
         public void EliminarPaciente (int idUsuario)
         {
-            pacienteCrud.Delete(idUsuario);
+            crud.Delete(idUsuario);
         }
 
         public List<Paciente> GetAllPacientes()
         {
-            List<Paciente> list = pacienteCrud.RetrieveAll<Paciente>();
+            List<Paciente> list = crud.RetrieveAll<Paciente>();
             return list;
+        }
+
+        public Paciente GetPacienteByUsuarioId(int idUsuario)
+        {
+            return crud.GetPacieteByUsuarioId(idUsuario);
         }
 
     }

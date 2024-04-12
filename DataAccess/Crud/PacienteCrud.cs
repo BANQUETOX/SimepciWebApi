@@ -1,8 +1,11 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
+using DTO;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,14 +13,10 @@ namespace DataAccess.Crud
 {
     public class PacienteCrud
     {
-        PacienteMapper mapper;
-        SqlDao sqlDao;
+        PacienteMapper mapper = new PacienteMapper();
+        SqlDao sqlDao = new SqlDao();
 
-        public PacienteCrud()
-        {
-            mapper = new PacienteMapper();
-            sqlDao = new SqlDao();
-        }
+      
 
         public void Create(int userId)
         {
@@ -49,6 +48,22 @@ namespace DataAccess.Crud
                 }
             }
             return resultList;
+        }
+
+        public Paciente GetPacieteByUsuarioId(int usuarioId)
+        {
+            Paciente paciente = new Paciente();
+            SqlOperation operation = mapper.GetByUsuarioIdStatement(usuarioId);
+            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (dataResults.Count > 0)
+            {
+                paciente = (Paciente)mapper.BuildObject(dataResults[0]);
+
+            }
+
+            return paciente;
+
+
         }
     }
 }

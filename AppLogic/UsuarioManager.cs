@@ -1,5 +1,7 @@
 ﻿using Azure.Core;
 using DataAccess.Crud;
+using DTO;
+using DTO.Expedientes;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace AppLogic
     {
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         RolManager rolManager = new RolManager();
+        ExpedienteManager expedienteManager = new ExpedienteManager();
+        PacienteManager pacienteManager = new PacienteManager();
 
 
         public string CreateUsuario(Usuario usuario) 
@@ -31,6 +35,13 @@ namespace AppLogic
 
             Usuario fullUsuario = usuarioCrud.GetUsuarioByEmail(usuario.correo);
             rolManager.AsignarRolUsuario(fullUsuario.correo,5);
+            Paciente paciente = pacienteManager.GetPacienteByUsuarioId(fullUsuario.Id);
+            ExpedienteInput expediente = new ExpedienteInput();
+            expediente.idPaciente = paciente.Id;
+            expediente.notasEnfermeria = " ";
+            expediente.notasMedicas = " ";  
+            expediente.historialMedico = " ";
+            expedienteManager.CreateExpediente(expediente);
             return "Usuario creado";
         }
 

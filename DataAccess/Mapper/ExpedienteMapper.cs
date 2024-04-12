@@ -40,11 +40,13 @@ namespace DataAccess.Mapper
         public SqlOperation GetCreateStatement(Expediente expediente)
         {
             SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_INSERT_EXPEDIENTE";
             operation.AddIntegerParam("idPaciente",expediente.idPaciente);
             operation.AddVarcharParam("notasEnfermeria",expediente.notasEnfermeria);
             operation.AddVarcharParam("notasMedicas", expediente.notasMedicas);
             operation.AddVarcharParam("historialMedico", expediente.historialMedico);
             return operation;
         }
+
     }
 }
