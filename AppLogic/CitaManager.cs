@@ -52,14 +52,13 @@ namespace AppLogic
         public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
         {
             DateTime fechaInicio = DateTime.Now;
-            DateTime fechaFinal = DateTime.Now;
-            fechaFinal.AddDays(10);
+            DateTime fechaFinal = fechaInicio.AddDays(10);
             List<Cupo> cuposDisponibles = new List<Cupo>();
             var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede,idEspecialidad);
             foreach (var doctor in doctores)
             {
                 var cupos = cuposDiponiblesDoctor(fechaInicio,fechaFinal,doctor.Id);
-                cuposDisponibles.Concat(cupos).ToList();
+                cuposDisponibles = cuposDisponibles.Concat(cupos).ToList();
             }
             return cuposDisponibles;
         }
@@ -99,6 +98,7 @@ namespace AppLogic
 
         public List<Cupo> cuposDiponiblesDoctor(DateTime fechaInicio,DateTime fechaFinal,int idDoctor)
         {
+
             DateTime inicio = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, fechaInicio.Hour, 0, 0);
             DateTime fin = new DateTime(fechaFinal.Year, fechaFinal.Month, fechaFinal.Day, fechaFinal.Hour, 0, 0);
             var cuposTotales = new List<Cupo>();
@@ -110,7 +110,7 @@ namespace AppLogic
                 while (inicio < fin)
                 {
                     DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && siguiente <= horaSalida)
+                    if (inicio >= horaEntrada && horaSalida <= siguiente)
                     {
                     Cupo cupo = new Cupo();
                     cupo.horaInicio = inicio;
@@ -128,7 +128,7 @@ namespace AppLogic
                 while (inicio < fin)
                 {
                     DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && siguiente <= horaSalida)
+                    if (inicio >= horaEntrada && horaSalida <= siguiente)
                     {
                         Cupo cupo = new Cupo();
                         cupo.horaInicio = inicio;
@@ -146,7 +146,7 @@ namespace AppLogic
                 while (inicio < fin)
                 {
                     DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && siguiente <= horaSalida)
+                    if (inicio >= horaEntrada && horaSalida <= siguiente)
                     {
                         Cupo cupo = new Cupo();
                         cupo.horaInicio = inicio;
@@ -168,7 +168,7 @@ namespace AppLogic
             }
 
             var cuposDisponibles = new List<Cupo>();
-            cuposDisponibles = cuposTotales.Except(cuposTotales).ToList();
+            cuposDisponibles = cuposTotales.Except(cuposOcupados).ToList();
             return cuposDisponibles;
         }
         public bool validarFechaCita(DateTime horaInicio, DateTime horaFinal)
