@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class DoctorMapper : IObjectMapper
+    public class DoctorMapper 
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public Doctor BuildObject(Dictionary<string, object> row)
         {
             Doctor doctor = new Doctor();
             doctor.Id = int.Parse(row["Id"].ToString());
@@ -22,9 +22,17 @@ namespace DataAccess.Mapper
             return doctor;
         }
 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
+        public List<Doctor> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            throw new NotImplementedException();
+            List<Doctor> results = new List<Doctor>();
+
+            foreach (var row in rowList)
+            {
+                var doctor = BuildObject(row);
+                results.Add(doctor);
+            }
+
+            return results;
         }
 
         public SqlOperation GetCreateStatement(Doctor doctor)
@@ -45,6 +53,23 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idUsuario", idUsuario);
             return operation;
 
+        }
+
+        public SqlOperation GetDoctorByIdStatement(int idDoctor)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_DOCTOR_ID";
+            operation.AddIntegerParam("idDoctor",idDoctor);
+            return operation;
+        }
+
+        public SqlOperation GetDoctorBySedeAndEspecialidadStatement(int idSede,int idEspecialidad)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_DOCTORES_SEDE_ESPECIALIDAD";
+            operation.AddIntegerParam("idSede",idSede);
+            operation.AddIntegerParam("idEspecialidad",idEspecialidad);
+            return operation;
         }
     }
 }

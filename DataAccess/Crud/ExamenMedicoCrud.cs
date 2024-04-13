@@ -11,8 +11,14 @@ namespace DataAccess.Crud
 {
     public class ExamenMedicoCrud
     {
-        ExamenMedicoMapper mapper = new ExamenMedicoMapper();
-        SqlDao dao = new SqlDao();
+        ExamenMedicoMapper mapper;
+        SqlDao dao;
+
+        public ExamenMedicoCrud()
+        { 
+            mapper = new ExamenMedicoMapper();
+            dao = SqlDao.GetInstance();
+        }
 
         public void Create(ExamenMedico examenMedico)
         {

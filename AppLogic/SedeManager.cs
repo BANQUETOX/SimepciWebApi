@@ -1,5 +1,6 @@
-﻿using DataAccess.Crud;
-using DTO;
+﻿using Azure.Core;
+using DataAccess.Crud;
+using DTO.Sedes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace AppLogic
             return list;
         }
 
-        public string CrearSede(Sede sede)
+        public string CrearSede(SedeInsert sedeInsert)
         {
             string result;
             try
             {
-                sedeCrud.Create(sede);
+
+                sedeCrud.Create(CastSedeInsert(sedeInsert));
                 result = "Sede creada";
             }
             catch (Exception ex)
@@ -33,6 +35,61 @@ namespace AppLogic
             }
             return result;
             
+        }
+
+        public Sede GetSedeById (int idsede)
+        {
+            Sede sede = new Sede();
+            try
+            {
+                sede = sedeCrud.RetrieveById(idsede);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return sede;
+        }
+
+        public string UpdateSede(Sede sedeUpdate)
+        {
+            string result;
+            try
+            {
+                sedeCrud.Update(sedeUpdate);
+                result = "Sede actualizada";
+            }
+            catch (Exception ex) { 
+                result = ex.Message;
+            }
+            return result;
+        }
+
+        public string DeleteSede (int idsede)
+        {
+            string result;
+            try
+            {
+                sedeCrud.Delete(idsede);
+                result = "Sede eliminada";
+            }
+            catch(Exception ex)
+            {
+                result = ex.Message;    
+            }
+            return result;
+        }
+
+
+        public Sede CastSedeInsert(SedeInsert sedeInsert)
+        {
+            Sede sede = new Sede();
+            sede.nombre = sedeInsert.nombre;
+            sede.descripcion = sedeInsert.descripcion;
+            sede.fechaCreacion = sedeInsert.fechaCreacion;
+            sede.ubicacion = sedeInsert.ubicacion;
+            sede.foto = sedeInsert.foto;
+            return sede;
         }
     }
 }

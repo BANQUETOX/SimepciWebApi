@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO
+namespace DTO.Recetas
 {
-    public class RecetaInput
+    public class Receta : BaseClass
     {
         public int idPaciente { get; set; }
         public string imagen { get; set; }

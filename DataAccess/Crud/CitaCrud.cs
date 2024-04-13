@@ -18,7 +18,7 @@ namespace DataAccess.Crud
         public CitaCrud()
         {
             citaMapper = new CitaMapper();
-            sqlDao = new SqlDao();
+            sqlDao =  SqlDao.GetInstance();
         }
 
         public void Create(Cita cita)
@@ -38,6 +38,12 @@ namespace DataAccess.Crud
         public List<Cita> GetCitasPaciente(int idPaciente)
         {
             SqlOperation operation = citaMapper.GetCitasPacienteStatement(idPaciente);
+            var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return citaMapper.BuildObjects(results);
+        }
+        public List<Cita> GetCitasDoctor(int idDoctor)
+        {
+            SqlOperation operation = citaMapper.GetCitasPacienteStatement(idDoctor);
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             return citaMapper.BuildObjects(results);
         }

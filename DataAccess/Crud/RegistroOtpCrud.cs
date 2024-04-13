@@ -11,8 +11,14 @@ namespace DataAccess.Crud
 {
     public class RegistroOtpCrud 
     {
-        RegistroOtpMapper mapper = new RegistroOtpMapper();
-        SqlDao sqlDao = SqlDao.GetInstance();
+        RegistroOtpMapper mapper;
+        SqlDao sqlDao;
+
+        public RegistroOtpCrud()
+        {
+            mapper = new RegistroOtpMapper();
+            sqlDao = SqlDao.GetInstance();
+        }
         public void Create(BaseClass dto)
         {
             SqlOperation operation = mapper.GetCreateStatement(dto);

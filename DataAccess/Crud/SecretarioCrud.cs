@@ -16,7 +16,7 @@ namespace DataAccess.Crud
         public SecretarioCrud()
         {
             mapper = new PacienteMapper();
-            sqlDao = new SqlDao();
+            sqlDao = SqlDao.GetInstance();
         }
 
         public void Create(int userId)

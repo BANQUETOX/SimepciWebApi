@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using DTO;
 using AppLogic;
+using Azure.Core;
+using DTO.Sedes;
 namespace SIMEPCI_API.Controllers
 {
     [EnableCors("Simepci-web-policy")]
@@ -29,8 +30,12 @@ namespace SIMEPCI_API.Controllers
             return sedes;
         }
 
+        [HttpGet] 
+        public Sede GetSedeById (int idSede) { 
+            return sedeManager.GetSedeById(idSede);
+        }
         [HttpPost]
-        public string CrearSede(Sede sede)
+        public string CrearSede(SedeInsert sede)
         {
             string result;
             try
@@ -44,6 +49,19 @@ namespace SIMEPCI_API.Controllers
             }
             return result;
         }
+
+        [HttpPatch]
+        public string ActualizarSede(Sede sede)
+        {
+            return sedeManager.UpdateSede(sede);
+        }
+
+        [HttpDelete]
+        public string EliminarSede(int idSede)
+        {
+            return sedeManager.DeleteSede(idSede);
+        }
+
 
     }
 }

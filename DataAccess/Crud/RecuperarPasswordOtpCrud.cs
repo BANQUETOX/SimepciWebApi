@@ -19,7 +19,7 @@ namespace DataAccess.Crud
         public RecuperarPasswordOtpCrud()
         {
             mapper =new RecuperarPasswordOtpMapper();
-            sqlDao = new SqlDao();
+            sqlDao = SqlDao.GetInstance();
         }
         public override void  Create(BaseClass dto)
         {

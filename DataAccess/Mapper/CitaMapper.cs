@@ -89,5 +89,12 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idPaciente",idPaciente);
             return operation;
         }
+        public SqlOperation GetCitasDoctorStatement(int idDoctor)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITAS_DOCTOR";
+            operation.AddIntegerParam("idDoctor", idDoctor);
+            return operation;
+        }
     }
 }

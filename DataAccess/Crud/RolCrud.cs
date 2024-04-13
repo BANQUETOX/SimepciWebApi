@@ -9,27 +9,19 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Crud
 {
-    public class RolCrud : CrudFactory
+    public class RolCrud 
     {
         RolMapper rolMapper;
-
-        public RolCrud() : base()
+        SqlDao dao;
+        public RolCrud() 
         {
             rolMapper = new RolMapper();
             dao = SqlDao.GetInstance();
         }
 
-        public override void Create(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
+     
 
-        public override void Delete(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<T> RetrieveAll<T>()
+        public  List<T> RetrieveAll<T>()
         {
             List<T> resultList = new List<T>();
             SqlOperation operation = rolMapper.GetRetrieveAllStatement();
@@ -47,15 +39,7 @@ namespace DataAccess.Crud
             return resultList;
         }
 
-        public override T RetrieveById<T>(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(BaseClass dto)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public string AsignarRolUsuario(int idUsuario, int idRol)
         {

@@ -1,8 +1,9 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper.Interfaces;
-using DTO;
+using DTO.Recetas;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,39 @@ namespace DataAccess.Mapper
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_GET_RECETA_PACIENTE_ID";
             operation.AddIntegerParam("idPaciente",idPaciente);
+            return operation;
+        }
+
+        public SqlOperation GetUpdateRecetaStatement(Receta receta)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_RECETA";
+            operation.AddIntegerParam("idReceta", receta.Id);
+            operation.AddIntegerParam("idPaciente", receta.idPaciente);
+            operation.AddVarcharParam("imagen", receta.imagen);
+            operation.AddDatetimeParam("fechaEmision", receta.fechaEmision);
+            operation.AddVarcharParam("medicamento", receta.medicamento);
+            operation.AddVarcharParam("dosis", receta.dosis);
+            operation.AddVarcharParam("diasDosis", receta.diasDosis);
+            operation.AddVarcharParam("recomendaciones", receta.recomendaciones);
+            return operation;
+        }
+
+
+        public SqlOperation GetDeleteStatement(int idReceta)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_DELETE_RECETA";
+            operation.AddIntegerParam("idReceta",idReceta);
+            return operation;
+        }
+
+
+        public SqlOperation GetRertieveByIdStatement(int idReceta)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_RECETA_ID";
+            operation.AddIntegerParam("idReceta", idReceta);
             return operation;
         }
     }

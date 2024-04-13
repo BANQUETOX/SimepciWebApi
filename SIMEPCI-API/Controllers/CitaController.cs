@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AppLogic;
 using DTO.Citas;
+using DTO;
 
 namespace SIMEPCI_API.Controllers
 {
@@ -41,6 +42,12 @@ namespace SIMEPCI_API.Controllers
             }
             return result;  
 
+        }
+
+        [HttpGet]
+        public List<Cupo> GetCuposDisponibles (DateTime fechaInicio, DateTime fechaFinal, int idSede, int idEspecialidad)
+        {
+            return citaManager.cuposDisponibles(fechaInicio,fechaFinal,idSede,idEspecialidad);
         }
     }
 }

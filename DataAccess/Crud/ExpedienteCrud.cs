@@ -12,8 +12,14 @@ namespace DataAccess.Crud
 {
     public class ExpedienteCrud
     {
-        ExpedienteMapper mapper = new ExpedienteMapper();
-        SqlDao dao = new SqlDao();
+        ExpedienteMapper mapper;
+        SqlDao dao;
+
+        public ExpedienteCrud()
+        {
+            mapper = new ExpedienteMapper();
+            dao = SqlDao.GetInstance();
+        }
 
         public void Create(Expediente expediente)
         {

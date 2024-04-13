@@ -84,6 +84,7 @@ namespace SIMEPCI_API.Controllers
         public string AsignarRolDoctor(DoctorInsert doctor)
         {
             string result;
+            
             try
             {
 

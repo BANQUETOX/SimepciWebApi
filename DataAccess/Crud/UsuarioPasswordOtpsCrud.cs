@@ -17,7 +17,7 @@ namespace DataAccess.Crud
         public UsuarioPasswordOtpsCrud()
         {
             mapper = new UsuarioPasswordsOtpsMapper();
-            sqlDao = new SqlDao();
+            sqlDao = SqlDao.GetInstance();
         }
 
         public override void Create(BaseClass dto)

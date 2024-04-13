@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class Cupo : BaseClass
+    public class Cupo 
     {
         public DateTime horaInicio {  get; set; }
         public DateTime horaFinal { get; set; }
-        public int idCita { get; set; }
-        public int idEspecialidadMedica { get; set; }
+   
 
     }
 }

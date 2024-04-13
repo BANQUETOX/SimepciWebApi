@@ -1,4 +1,5 @@
-﻿using DataAccess.Mapper;
+﻿using DataAccess.Dao;
+using DataAccess.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace DataAccess.Crud
 {
     public class TipoExamenCrud
     {
-        TipoExamenMapper mappper = new TipoExamenMapper();
+        TipoExamenMapper mapper;
+        SqlDao dao;
+        public TipoExamenCrud()
+        {
+            mapper = new TipoExamenMapper();
+            dao = SqlDao.GetInstance(); 
+        }
     }
 }

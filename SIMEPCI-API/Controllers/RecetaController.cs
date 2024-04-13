@@ -1,5 +1,5 @@
 ﻿using AppLogic;
-using DTO;
+using DTO.Recetas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +40,17 @@ namespace SIMEPCI_API.Controllers
                 result = new List<Receta>();
             }
             return result;
+        }
+
+        [HttpPatch]
+        public string UpdateReceta(Receta receta) { 
+            return manager.UpdateReceta(receta);    
+        }
+
+        [HttpDelete]
+        public string DeleteReceta(int idReceta)
+        {
+            return manager.DeleteReceta(idReceta);
         }
     }
 }

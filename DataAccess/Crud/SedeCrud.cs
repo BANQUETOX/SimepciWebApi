@@ -1,6 +1,6 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
-using DTO;
+using DTO.Sedes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +14,8 @@ namespace DataAccess.Crud
         SedeMapper sedeMapper;
         SqlDao sqlDao;
 
-        public SedeCrud() : base()
-        {
+        public SedeCrud() 
+        {   
             sedeMapper = new SedeMapper();
             sqlDao = SqlDao.GetInstance();
         }
@@ -26,9 +26,14 @@ namespace DataAccess.Crud
             sqlDao.ExecuteStoredProcedure(operation);
         }
 
-        public void Delete(BaseClass dto)
+        public void Update(Sede sede) { 
+            SqlOperation operation = sedeMapper.GetUpdateStatement(sede);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+        public void Delete(int idSede)
         {
-            throw new NotImplementedException();
+            SqlOperation operation = sedeMapper.GetDeleteStatement(idSede);
+            sqlDao.ExecuteStoredProcedure(operation);
         }
 
         public List<T> RetrieveAll<T>()
@@ -49,9 +54,16 @@ namespace DataAccess.Crud
             return resultList;
         }
 
-        public  T RetrieveById<T>(int id)
+        public  Sede RetrieveById(int idSede)
         {
-            throw new NotImplementedException();
+            Sede sede = new Sede();
+            SqlOperation operation = sedeMapper.GetRetrieveByIdStatement(idSede);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count > 0)
+            {
+                sede = sedeMapper.BuildObject(result[0]);
+            }
+            return sede;
         }
     }
 }

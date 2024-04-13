@@ -13,8 +13,14 @@ namespace DataAccess.Crud
 {
     public class PacienteCrud
     {
-        PacienteMapper mapper = new PacienteMapper();
-        SqlDao sqlDao = new SqlDao();
+        PacienteMapper mapper;
+        SqlDao sqlDao;
+
+        public PacienteCrud()
+        {
+            mapper = new PacienteMapper();
+            sqlDao = SqlDao.GetInstance();
+        }
 
       
 

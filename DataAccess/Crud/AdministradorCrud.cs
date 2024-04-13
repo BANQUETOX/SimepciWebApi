@@ -16,7 +16,7 @@ namespace DataAccess.Crud
         public AdministradorCrud()
         {
             mapper = new AdministradorMapper();
-            sqlDao = new SqlDao();
+            sqlDao = SqlDao.GetInstance();
         }
 
         public void Create(int userId)
