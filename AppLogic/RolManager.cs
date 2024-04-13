@@ -113,6 +113,7 @@ namespace AppLogic
             doctor.horario = doctorInsert.horario;  
             doctor.idSede = doctorInsert.idSede;
             doctorManager.CrearDoctor(doctor);
+            rolCrud.AsignarRolUsuario(usuario.Id, 2);
         }
         
     }

@@ -45,9 +45,26 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<Cupo> GetCuposDisponibles (DateTime fechaInicio, DateTime fechaFinal, int idSede, int idEspecialidad)
+        public List<Cupo> GetCuposDisponibles ( int idSede, int idEspecialidad)
         {
-            return citaManager.cuposDisponibles(fechaInicio,fechaFinal,idSede,idEspecialidad);
+            return citaManager.cuposDisponibles(idSede,idEspecialidad);
+        }
+
+        [HttpGet]
+        public List<Cita> GetCitasPaciente(int idPaciente)
+        {
+            return citaManager.CitasPaciente(idPaciente);
+        }
+        [HttpGet]
+        public List<Cita> GetCitasDoctor(int idDoctor)
+        {
+            return citaManager.CitasDoctor(idDoctor);
+        }
+
+        [HttpGet]
+        public List<Cupo> GetCuposDisponiblesDoctor(DateTime fechaInico, DateTime fechaFinal, int idDoctor)
+        {
+            return citaManager.cuposDiponiblesDoctor(fechaInico,fechaFinal,idDoctor);
         }
     }
 }

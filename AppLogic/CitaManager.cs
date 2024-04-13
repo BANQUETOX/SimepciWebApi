@@ -49,8 +49,11 @@ namespace AppLogic
             fechaFinal = fechaFinal.AddDays(10);
             return citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
         }
-        public List<Cupo> cuposDisponibles(DateTime fechaInicio, DateTime fechaFinal, int idSede, int idEspecialidad)
+        public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
         {
+            DateTime fechaInicio = DateTime.Now;
+            DateTime fechaFinal = DateTime.Now;
+            fechaFinal.AddDays(10);
             List<Cupo> cuposDisponibles = new List<Cupo>();
             var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede,idEspecialidad);
             foreach (var doctor in doctores)
