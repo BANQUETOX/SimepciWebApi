@@ -1,6 +1,7 @@
 ﻿using DataAccess.Crud;
 using DTO;
 using DTO.ExamenesMedicos;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,11 @@ namespace AppLogic
     {
         ExamenMedicoCrud crud = new ExamenMedicoCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
-
+        UsuarioCrud usuarioCrud = new UsuarioCrud();
         public string CrearExamenMedico(ExamenMedicoInsert examenMedicoInsert)
         {
-            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(examenMedicoInsert.idUsuario);
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(examenMedicoInsert.correoUsuario);
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
             ExamenMedico examenMedico = new ExamenMedico();
             examenMedico.idPaciente = paciente.Id;
             examenMedico.idTipoExamenMedico = examenMedicoInsert.idTipoExamenMedico;
