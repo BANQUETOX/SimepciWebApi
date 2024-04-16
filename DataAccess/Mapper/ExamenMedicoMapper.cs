@@ -54,7 +54,32 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+         
+        public SqlOperation GetUpdateStatement(ExamenMedico examenMedico)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_EXAMEN_MEDICO";
+            operation.AddIntegerParam("id", examenMedico.Id);
+            operation.AddVarcharParam("resultado", examenMedico.resultado);
+            return operation;
 
+        }
+
+        public SqlOperation GetRetrieveByIdStatement (int idExamenMedico)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_EXAMEN_MEDICO_ID";
+            operation.AddIntegerParam ("id", idExamenMedico);
+            return operation;
+        }
+
+        public SqlOperation GetDeleteStatement(int idExamenMedico)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName= "SP_DELETE_EXAMEN_MEDICO";
+            operation.AddIntegerParam("id", idExamenMedico);
+            return operation;
+        }
        
     }
 

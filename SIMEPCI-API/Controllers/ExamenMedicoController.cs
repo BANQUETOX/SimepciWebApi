@@ -32,5 +32,22 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.GetExamenMedicosPaciente(idUsuario);
         }
+
+        [HttpGet]
+        public ExamenMedico GetExamenMedicoById(int idExamenMedico) {
+            return manager.GetExamenMedicoById(idExamenMedico);
+        }
+
+        [HttpPatch]
+        public string SubirResultado(string resultado, int idExamenMedico)
+        {
+            return manager.UpdateExamenMedico(resultado, idExamenMedico);
+        }
+
+        [HttpDelete]
+        public string EliminarExamenMedico(int idExamenMedico)
+        {
+            return manager.DeleteExamenMedico(idExamenMedico);
+        }
     }
 }
