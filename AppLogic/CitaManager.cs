@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DTO.Citas;
 using DTO;
 using DTO.Usuarios;
+using DTO.EspecialidadesMedicas;
 
 namespace AppLogic
 {

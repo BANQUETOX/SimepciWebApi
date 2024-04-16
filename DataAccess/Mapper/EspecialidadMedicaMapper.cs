@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Dao;
+using DTO.EspecialidadesMedicas;
 
 namespace DataAccess.Mapper
 {
@@ -39,6 +40,14 @@ namespace DataAccess.Mapper
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_GET_ESPECIALIDAD_MEDICA_ID";
             operation.AddIntegerParam("idEspecialidad", idEspecialidad);
+            return operation;
+        }
+
+        public SqlOperation GetCreateStatement(EspecialidadMedica especialidadMedica) {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_INSERT_ESPECIALIDAD_MEDICA";
+            operation.AddFloatParam("costoCita",especialidadMedica.costoCita);
+            operation.AddVarcharParam("nombre", especialidadMedica.nombre);
             return operation;
         }
     }

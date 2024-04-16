@@ -1,6 +1,7 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
 using DTO;
+using DTO.EspecialidadesMedicas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,12 @@ namespace DataAccess.Crud
                 especialidad = mapper.BuildObject(result[0]);
             }
             return especialidad;
+        }
+
+        public void CreateEspecialidadMedica(EspecialidadMedica especialidadMedica)
+        {
+            SqlOperation operation = mapper.GetCreateStatement(especialidadMedica);
+            sqlDao.ExecuteStoredProcedure(operation);
         }
 
     }
