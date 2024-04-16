@@ -51,9 +51,9 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<Cita> GetCitasPaciente(int idPaciente)
+        public List<CitaOutput> GetCitasPaciente(int idUsuario)
         {
-            return citaManager.CitasPaciente(idPaciente);
+            return citaManager.CitasPaciente(idUsuario);
         }
         [HttpGet]
         public List<Cita> GetCitasDoctor(int idDoctor)

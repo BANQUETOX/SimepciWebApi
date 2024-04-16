@@ -8,6 +8,7 @@ namespace DTO.Usuarios
 {
     public class UsuarioGet
     {
+        public int Id { get; set; }
         public string nombre { get; set; }
         public string primerApellido { get; set; }
         public string segundoApellido { get; set; }

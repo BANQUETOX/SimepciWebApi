@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO
+namespace DTO.TiposExamenes
 {
     public class TipoExamen : BaseClass
     {
-        public string nombre {  get; set; }
+        public string nombre { get; set; }
     }
 }

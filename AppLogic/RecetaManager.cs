@@ -1,4 +1,5 @@
 ﻿using DataAccess.Crud;
+using DTO;
 using DTO.Recetas;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,15 @@ namespace AppLogic
     public class RecetaManager
     {
         RecetaCrud crud = new RecetaCrud();
+        PacienteCrud pacienteCrud = new PacienteCrud();
 
         public string CrearReceta(RecetaInput recetaInput)
         {
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(recetaInput.idUsuario); 
             Receta receta = new Receta();
-            receta.idPaciente = recetaInput.idPaciente;
+            receta.idPaciente = paciente.Id;
             receta.imagen = recetaInput.imagen;
-            receta.fechaEmision = recetaInput.fechaEmision;
+            receta.fechaEmision = DateTime.Now;
             receta.medicamento = recetaInput.medicamento;   
             receta.dosis = recetaInput.dosis;
             receta.diasDosis = recetaInput.diasDosis;
@@ -26,8 +29,8 @@ namespace AppLogic
             return "Receta Creada";
         }
 
-        public List<Receta> GetRecetasPaciente(int idPaciete) {
-            return crud.GetRecetasPaciente(idPaciete);
+        public List<Receta> GetRecetasPaciente(int idUsuario) {
+            return crud.GetRecetasPaciente(idUsuario);
         }
 
         public string UpdateReceta(Receta receta)

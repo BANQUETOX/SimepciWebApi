@@ -144,6 +144,7 @@ namespace AppLogic
 
         public UsuarioGet castUsuarioGet(Usuario usuarioBase) { 
             UsuarioGet usuario = new UsuarioGet();
+            usuario.Id = usuarioBase.Id;
             usuario.nombre = usuarioBase.nombre;
             usuario.primerApellido = usuarioBase.primerApellido;
             usuario.segundoApellido = usuarioBase.segundoApellido;

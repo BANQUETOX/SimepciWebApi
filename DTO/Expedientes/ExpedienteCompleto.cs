@@ -12,7 +12,7 @@ namespace DTO.Expedientes
     public class ExpedienteCompleto
     {
         public Expediente infoExpediente {  get; set; }
-        public List<Cita> citas { get; set; }
+        public List<CitaOutput> citas { get; set; }
         public List<ExamenMedico> examenesMedicos { get; set; }
         public List<Receta> recetas { get; set; }
         public List<Factura> facturas { get; set; }

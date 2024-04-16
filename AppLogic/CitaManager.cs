@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO.Citas;
 using DTO;
+using DTO.Usuarios;
 
 namespace AppLogic
 {
@@ -13,6 +14,9 @@ namespace AppLogic
     {
         CitaCrud citaCrud = new CitaCrud();
         DoctorCrud doctorCrud = new DoctorCrud();
+        UsuarioCrud usuarioCrud = new UsuarioCrud();
+        EspecialidadMedicaCrud especialidadMedicaCrud = new EspecialidadMedicaCrud();
+        PacienteCrud pacienteCrud = new PacienteCrud();
 
 
         public string CrearCita(CitaInsert citaInsert)
@@ -33,7 +37,7 @@ namespace AppLogic
 
         public Cita CastCitaInsert(CitaInsert citaInsert) {
             Cita cita = new Cita();
-            Doctor doctorAsignado = GetDoctorDisponible(citaInsert.horaInicio, citaInsert.horaFinal, citaInsert.idSede, citaInsert.idEspecialidad );
+            Doctor doctorAsignado = GetDoctorDisponible(citaInsert.horaInicio, citaInsert.horaFinal, citaInsert.idSede, citaInsert.idEspecialidad);
             cita.idDoctor = doctorAsignado.Id;
             cita.idPaciente = citaInsert.idPaciente;
             cita.idSede = citaInsert.idSede;
@@ -63,10 +67,26 @@ namespace AppLogic
             return cuposDisponibles;
         }
 
-        public List<Cita> CitasPaciente(int idPaciente)
+        public List<CitaOutput> CitasPaciente(int idUsuario)
         {
-            List<Cita> citasPaciente = citaCrud.GetCitasPaciente(idPaciente);
-            return citasPaciente;
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(idUsuario);
+            List<Cita> citasPaciente = citaCrud.GetCitasPaciente(paciente.Id);
+            List<CitaOutput> citasOutput = new List<CitaOutput>();
+            
+            foreach (var cita in citasPaciente)
+            {
+                Doctor doctor = doctorCrud.GetDoctorById(cita.idDoctor);
+                Usuario usuarioDoctor  = usuarioCrud.RetrieveByDoctorId(doctor.Id);
+                EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadById(doctor.Id);
+                CitaOutput citaOutput = new CitaOutput();
+                citaOutput.doctor = usuarioDoctor.nombre;
+                citaOutput.fecha = cita.horaInicio;
+                citaOutput.especialidad = especialidad.nombre;
+                citaOutput.precio = "nohayPrecio";
+                citasOutput.Add(citaOutput);
+            }
+
+            return citasOutput;
         }
 
         public List<Cita> CitasDoctor(int idDoctor)

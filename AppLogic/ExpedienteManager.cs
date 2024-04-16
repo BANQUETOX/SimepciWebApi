@@ -1,4 +1,5 @@
 ﻿using DataAccess.Crud;
+using DTO;
 using DTO.Expedientes;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace AppLogic
         CitaManager citaManager = new CitaManager();
         ExamenMedicoManager examenMedicoManager = new ExamenMedicoManager();
         RecetaManager recetaManager = new RecetaManager();
+        PacienteCrud pacienteCrud = new PacienteCrud();
 
         public string CreateExpediente(ExpedienteInput expedienteInput)
         {
@@ -31,13 +33,14 @@ namespace AppLogic
             return crud.GetExpedietePaciente(idPaciente);
         }
 
-        public ExpedienteCompleto GetExpedienteCompleto(int idPaciente)
+        public ExpedienteCompleto GetExpedienteCompleto(int idUsuario)
         {
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(idUsuario);
             ExpedienteCompleto expedienteCompleto = new ExpedienteCompleto();
-            expedienteCompleto.infoExpediente = GetExpedietePaciente(idPaciente);
-            expedienteCompleto.citas = citaManager.CitasPaciente(idPaciente);
-            expedienteCompleto.examenesMedicos = examenMedicoManager.GetExamenMedicosPaciente(idPaciente);
-            expedienteCompleto.recetas = recetaManager.GetRecetasPaciente(idPaciente);
+            expedienteCompleto.infoExpediente = GetExpedietePaciente(paciente.Id);
+            expedienteCompleto.citas = citaManager.CitasPaciente(paciente.Id);
+            expedienteCompleto.examenesMedicos = examenMedicoManager.GetExamenMedicosPaciente(paciente.Id);
+            expedienteCompleto.recetas = recetaManager.GetRecetasPaciente(paciente.Id);
             return expedienteCompleto;
         }
     }

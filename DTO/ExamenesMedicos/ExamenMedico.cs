@@ -12,5 +12,7 @@ namespace DTO.ExamenesMedicos
         public int idPaciente { get; set; }
         public string resultado { get; set; }
 
+        public string objetivo { get; set; }
+
     }
 }

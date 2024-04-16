@@ -19,6 +19,7 @@ namespace DataAccess.Mapper
             examenMedico.idPaciente = int.Parse(row["IdPaciente"].ToString());
             examenMedico.idTipoExamenMedico = int.Parse(row["IdTipoExamen"].ToString());
             examenMedico.resultado = row["Resultado"].ToString();
+            examenMedico.objetivo = row["Objetivo"].ToString();
             return examenMedico;
         }
 
@@ -46,12 +47,15 @@ namespace DataAccess.Mapper
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_INSERT_EXAMEN_MEDICO";
-            operation.AddIntegerParam("idPaciente",examenMedico.idPaciente);
+            operation.AddIntegerParam("idPaciente", examenMedico.idPaciente);
             operation.AddIntegerParam("idTipoExamen", examenMedico.idTipoExamenMedico);
             operation.AddVarcharParam("resultado", examenMedico.resultado);
+            operation.AddVarcharParam("objetivo", examenMedico.objetivo);
             return operation;
 
         }
+
+       
     }
 
 }

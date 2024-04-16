@@ -9,7 +9,8 @@ namespace DTO.ExamenesMedicos
     public class ExamenMedicoInsert
     {
         public int idTipoExamenMedico { get; set; }
-        public int idPaciente { get; set; }
+        public int idUsuario { get; set; }
         public string resultado { get; set; }
+        public string objetivo { get; set; }   
     }
 }

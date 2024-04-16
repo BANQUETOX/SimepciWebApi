@@ -28,9 +28,9 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<ExamenMedico> GetExamenMedicosPaciente(int idPaciente)
+        public List<ExamenMedico> GetExamenMedicosPaciente(int idUsuario)
         {
-            return manager.GetExamenMedicosPaciente(idPaciente);
+            return manager.GetExamenMedicosPaciente(idUsuario);
         }
     }
 }
