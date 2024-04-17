@@ -137,6 +137,12 @@ namespace SIMEPCI_API.Controllers
             return resultado;
         }
 
+        [HttpPatch]
+
+        public string UpdateUsuario(UsuarioUpdate usuario)
+        {
+            return usuarioManager.UpdateUsuario(usuario);
+        }
         
 
 

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DataAccess.Dao;
 using DataAccess.Mapper;
@@ -30,7 +31,7 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
 
         }
-        public void Update(Usuario usuario) { 
+        public void Update(UsuarioUpdate usuario) { 
             SqlOperation operation = usuarioMapper.GetUpdateStatement(usuario);
             dao.ExecuteStoredProcedure(operation);
         }
@@ -143,9 +144,13 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
         }
 
-       
 
-       
+
+        public bool verificarCorreo(string correo)
+        {
+            string patronCorreo = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            return Regex.IsMatch(correo, patronCorreo);
+        }
 
     }
 }

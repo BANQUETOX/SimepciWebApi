@@ -18,14 +18,14 @@ namespace AppLogic
         EmailClient emailClient;
         string sender = "DoNotReply@b1248de0-1af0-462b-8f90-5c62032638df.azurecomm.net";
         private const string caracteresPermitidosOtp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        UsuarioManager usuarioManager;
+        UsuarioCrud usuarioCrud;
         AdministradorCrud administradorCrud;
 
         public EmailManager()
         {
             connectionString = "endpoint=https://simepci-email-service.unitedstates.communication.azure.com/;accesskey=HsnnZIFJsRBmRc67ESCA8qjLmgnUiTSV6ugMk1RuV5EDudQt6ewcR5R5LfXJgAnXVn+FaN89IwQc1FaO/yrOZA==";
             emailClient = new EmailClient(connectionString);
-            usuarioManager = new UsuarioManager();
+            usuarioCrud = new UsuarioCrud();
             administradorCrud = new AdministradorCrud();
 
 
@@ -36,7 +36,7 @@ namespace AppLogic
         public async Task<string> SendOtp(string emailAddress) 
                                                                  
         {
-            if (usuarioManager.GetUsuarioByEmail(emailAddress) != null)
+            if (usuarioCrud.GetUsuarioByEmail(emailAddress) != null)
             {
                 return "El correo ya ha sido registrado";
             }
@@ -76,11 +76,11 @@ namespace AppLogic
 
             string codigoOtp = generarCodigoOTP();
             int idPassword = recuperarPasswordOtpManager.CrearPasswordOtp(codigoOtp);
-            if (!usuarioManager.verificarCorreo(emailAddress))
+            if (!usuarioCrud.verificarCorreo(emailAddress))
             {
                 return "Correo Invalido";
             }
-            Usuario usuario = usuarioManager.GetUsuarioByEmail(emailAddress);
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(emailAddress);
             if (usuario == null)
             {
                 return "Usuario no encontrado";
@@ -115,7 +115,7 @@ namespace AppLogic
 
             foreach (var administrador in administradoes)
             {
-                UsuarioGet usuarioAdmin = usuarioManager.GetUsuarioById(administrador.idUsuario);
+                Usuario usuarioAdmin = usuarioCrud.RetrieveById(administrador.idUsuario);
                 string emailAddress = usuarioAdmin.correo;
             List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
             EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);

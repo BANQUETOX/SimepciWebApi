@@ -126,7 +126,7 @@ namespace AppLogic
             return resultado;
         }
 
-        public string UpdateUsuario(Usuario usuario)
+        public string UpdateUsuario(UsuarioUpdate usuario)
         {
             string result;
             try
@@ -180,6 +180,24 @@ namespace AppLogic
             usuario.sexo = usuarioBase.sexo;
             usuario.roles = rolManager.GetRolesUsuario(usuarioBase.correo);
             return usuario;
+        }
+
+        public Usuario castUsuarioUpdate(UsuarioUpdate usuarioUpdate)
+        {
+            Usuario usuario = new Usuario();
+            usuario.nombre = usuarioUpdate.nombre;
+            usuario.primerApellido = usuarioUpdate.primerApellido;
+            usuario.segundoApellido = usuarioUpdate.segundoApellido;
+            usuario.cedula = usuarioUpdate.cedula;
+            usuario.fechaNacimiento = usuarioUpdate.fechaNacimiento;
+            usuario.telefono = usuarioUpdate.telefono;
+            usuario.correo = usuarioUpdate.correo;
+            usuario.direccion = usuarioUpdate.direccion;
+            usuario.fotoPerfil = usuarioUpdate.fotoPerfil;
+            usuario.sexo = usuarioUpdate.sexo;
+            usuario.password = usuarioUpdate.password;
+            return usuario;
+
         }
     }
 }
