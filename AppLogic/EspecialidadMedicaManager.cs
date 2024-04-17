@@ -13,6 +13,10 @@ namespace AppLogic
         EspecialidadMedicaCrud crud = new EspecialidadMedicaCrud();
 
 
+        public List<EspecialidadMedica> GetAllEspecialidadMedicas()
+        {
+           return crud.GetAllEspecialidadMedicas();
+        }
         public EspecialidadMedica GetEspecialidadById(int idEspecialidadMedica)
         {
             return crud.GetEspecialidadById(idEspecialidadMedica);

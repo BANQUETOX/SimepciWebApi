@@ -20,6 +20,12 @@ namespace SIMEPCI_API.Controllers
             return manager.GetEspecialidadById(idEspecialidadMedica);
         }
 
+        [HttpGet] 
+        public List<EspecialidadMedica> GetAllEspecialidadesMedicas()
+        {
+            return manager.GetAllEspecialidadMedicas();
+        }
+
         [HttpPost]
         public string CrearEspecialidadMedica(EspecialidadMedicaInsert especialidadMedicaInsert)
         {

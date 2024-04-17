@@ -19,12 +19,15 @@ namespace AppLogic
         string sender = "DoNotReply@b1248de0-1af0-462b-8f90-5c62032638df.azurecomm.net";
         private const string caracteresPermitidosOtp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         UsuarioManager usuarioManager;
+        AdministradorCrud administradorCrud;
 
         public EmailManager()
         {
             connectionString = "endpoint=https://simepci-email-service.unitedstates.communication.azure.com/;accesskey=HsnnZIFJsRBmRc67ESCA8qjLmgnUiTSV6ugMk1RuV5EDudQt6ewcR5R5LfXJgAnXVn+FaN89IwQc1FaO/yrOZA==";
             emailClient = new EmailClient(connectionString);
             usuarioManager = new UsuarioManager();
+            administradorCrud = new AdministradorCrud();
+
 
         }
 
@@ -98,6 +101,34 @@ namespace AppLogic
             Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
             return emailSendOperation.Value.Status.ToString();
+        }
+
+
+        public async Task<string> SendSolicitudFuncionario(string correoSolicitud)
+        {
+
+            List<Administrador> administradoes = administradorCrud.GetAllAdministrador();
+   
+
+            EmailContent emailContent = new EmailContent("Verificacion para creacion de su cuenta en SIMEPCI"); //Subject
+            emailContent.PlainText = $"Un usuario con correo {correoSolicitud} a solicitado unirse como funcionario de la clinica, revisa tus solicitudes para apovar o denegar el acceso";
+
+            foreach (var administrador in administradoes)
+            {
+                UsuarioGet usuarioAdmin = usuarioManager.GetUsuarioById(administrador.idUsuario);
+                string emailAddress = usuarioAdmin.correo;
+            List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                                                    WaitUntil.Completed,
+                                                                emailMessage, CancellationToken.None);
+            EmailSendResult statusMonitor = emailSendOperation.Value;
+
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            }
+
+            return "Correo enviado a los administadores";
         }
 
         internal static string generarCodigoOTP()

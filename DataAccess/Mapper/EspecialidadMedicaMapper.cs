@@ -20,9 +20,9 @@ namespace DataAccess.Mapper
             return especialidad;
         }
 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
+        public List<EspecialidadMedica> BuildObjects(List<Dictionary<string, object>> rowList)
         {
-            List<BaseClass> results = new List<BaseClass>();
+            List<EspecialidadMedica> results = new List<EspecialidadMedica>();
 
             foreach (var row in rowList)
             {
@@ -34,6 +34,12 @@ namespace DataAccess.Mapper
         }
 
 
+        public SqlOperation RetrieveAllStatement()
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_ESPECIALIDADES_MEDICAS";
+            return operation;
+        }
 
         public SqlOperation RetrieveByIdStatement(int idEspecialidad)
         {

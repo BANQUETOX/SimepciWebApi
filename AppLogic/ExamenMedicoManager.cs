@@ -100,5 +100,12 @@ namespace AppLogic
             output.objetivo = examenMedico.objetivo;
             return output;
         }
+
+        public Paciente GetPacienteByCorreo(string correo)
+        {
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
+            return paciente;
+        }
     }
 }

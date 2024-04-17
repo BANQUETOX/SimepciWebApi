@@ -1,5 +1,6 @@
 ﻿using DTO.Citas;
 using DTO.ExamenesMedicos;
+using DTO.Facturas;
 using DTO.Recetas;
 using System;
 using System.Collections.Generic;

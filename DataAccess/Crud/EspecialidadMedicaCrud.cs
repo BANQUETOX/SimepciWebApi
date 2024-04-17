@@ -20,7 +20,13 @@ namespace DataAccess.Crud
             sqlDao = SqlDao.GetInstance();
         }
 
-
+        public List<EspecialidadMedica> GetAllEspecialidadMedicas() { 
+            List<EspecialidadMedica> especialidades = new List<EspecialidadMedica>();
+            SqlOperation operation = mapper.RetrieveAllStatement();
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            especialidades = mapper.BuildObjects(result);
+            return especialidades;
+        }
 
         public EspecialidadMedica GetEspecialidadById(int idEspecialidad)
         {

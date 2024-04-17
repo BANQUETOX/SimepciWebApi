@@ -18,9 +18,10 @@ namespace AppLogic
         RolManager rolManager = new RolManager();
         ExpedienteManager expedienteManager = new ExpedienteManager();
         PacienteManager pacienteManager = new PacienteManager();
+        EmailManager emailManager = new EmailManager(); 
 
 
-        public string CreateUsuario(Usuario usuario) 
+        public string CreateUsuario(Usuario usuario,bool esFuncionario) 
         {
             string correo = usuario.correo;
             if (!verificarCorreo(correo))
@@ -42,6 +43,11 @@ namespace AppLogic
             expediente.notasMedicas = " ";  
             expediente.historialMedico = " ";
             expedienteManager.CreateExpediente(expediente);
+
+            if (esFuncionario)
+            {
+                _ = emailManager.SendSolicitudFuncionario(fullUsuario.correo);
+            }
             return "Usuario creado";
         }
 

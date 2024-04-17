@@ -1,6 +1,6 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper.Interfaces;
-using DTO;
+using DTO.Facturas;
 using System;
 using System.Collections.Generic;
 using System.Linq;

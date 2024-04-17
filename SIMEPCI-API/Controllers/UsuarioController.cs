@@ -66,14 +66,14 @@ namespace SIMEPCI_API.Controllers
 
         [HttpPost]
 
-        public string CreateUsuario(UsuarioInsert usuarioInsert)
+        public string CreateUsuario(UsuarioInsert usuarioInsert, bool esFuncionario)
         {
             Usuario usuario = usuarioManager.castUsuarioInsert(usuarioInsert);
 
             string result = "";
             try
             {
-                result = usuarioManager.CreateUsuario(usuario);
+                result = usuarioManager.CreateUsuario(usuario, esFuncionario);
             }
             catch (Exception e) {
                 Console.WriteLine(e.ToString());
