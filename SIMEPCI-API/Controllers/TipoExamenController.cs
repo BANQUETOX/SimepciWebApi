@@ -1,12 +1,14 @@
 ﻿using AppLogic;
 using Azure.Core;
 using DTO.TiposExamenes;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 
 namespace SIMEPCI_API.Controllers
 {
+    [EnableCors("Simepci-web-policy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class TipoExamenController : ControllerBase

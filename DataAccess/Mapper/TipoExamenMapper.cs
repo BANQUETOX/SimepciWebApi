@@ -39,6 +39,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetRetrieveByIdStatement(int id)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_TIPO_EXAMEN_ID";
+            operation.AddIntegerParam("id", id);
+            return operation;
+        }
+
         public SqlOperation GetCreateStatement(TipoExamen tipoExamen)
         {
             SqlOperation operation = new SqlOperation();

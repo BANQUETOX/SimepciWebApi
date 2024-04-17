@@ -1,6 +1,7 @@
 ﻿using DataAccess.Crud;
 using DTO;
 using DTO.ExamenesMedicos;
+using DTO.TiposExamenes;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace AppLogic
         ExamenMedicoCrud crud = new ExamenMedicoCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
         UsuarioCrud usuarioCrud = new UsuarioCrud();
+        TipoExamenCrud tipoExamenCrud = new TipoExamenCrud();
         public string CrearExamenMedico(ExamenMedicoInsert examenMedicoInsert)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(examenMedicoInsert.correoUsuario);
@@ -28,16 +30,24 @@ namespace AppLogic
             return "Examen Medico creado";
         }
 
-        public List<ExamenMedico> GetExamenMedicosPaciente(int idPaciente)
+        public List<ExamenMedicoOutput> GetExamenMedicosPaciente(int idPaciente)
         {
+            List<ExamenMedicoOutput> listaOutputs = new List<ExamenMedicoOutput>();
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(idPaciente);
-            return crud.GetExamenesPaciente(paciente.Id);
+            List<ExamenMedico> examenesMedicos =  crud.GetExamenesPaciente(paciente.Id);
+            foreach (var examen in examenesMedicos){
+                var output = castExamenMedicoOutput(examen);
+                listaOutputs.Add(output);
+            }
+            return listaOutputs;
+
         }
 
-        public ExamenMedico GetExamenMedicoById(int idExamenMedico)
+        public ExamenMedicoOutput GetExamenMedicoById(int idExamenMedico)
         {
             ExamenMedico examenMedico = crud.GetExamenMedicoById(idExamenMedico);
-            return examenMedico;
+            ExamenMedicoOutput output = castExamenMedicoOutput(examenMedico);
+            return output;
         }
 
         public string UpdateExamenMedico(string resultado, int idExamenMedico)
@@ -78,6 +88,17 @@ namespace AppLogic
                 result = ex.Message;
             }
             return result;
+        }
+
+        public ExamenMedicoOutput castExamenMedicoOutput(ExamenMedico examenMedico) {
+            TipoExamen tipoExamenMedico = tipoExamenCrud.GetTipoExamenById(examenMedico.idTipoExamenMedico);
+            ExamenMedicoOutput output = new ExamenMedicoOutput();
+            output.Id = examenMedico.Id;
+            output.nombreTipoExamenMedico = tipoExamenMedico.nombre;
+            output.idPaciente = examenMedico.idPaciente;
+            output.resultado = examenMedico.resultado;
+            output.objetivo = examenMedico.objetivo;
+            return output;
         }
     }
 }

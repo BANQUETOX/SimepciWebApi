@@ -1,10 +1,12 @@
 ﻿using AppLogic;
 using DTO.Expedientes;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SIMEPCI_API.Controllers
 {
+    [EnableCors("Simepci-web-policy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ExpedienteController : ControllerBase

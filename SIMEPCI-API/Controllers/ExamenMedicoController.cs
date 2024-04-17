@@ -1,10 +1,12 @@
 ﻿using AppLogic;
 using DTO.ExamenesMedicos;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SIMEPCI_API.Controllers
 {
+    [EnableCors("Simepci-web-policy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ExamenMedicoController : ControllerBase
@@ -28,13 +30,13 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<ExamenMedico> GetExamenMedicosPaciente(int idUsuario)
+        public List<ExamenMedicoOutput> GetExamenMedicosPaciente(int idUsuario)
         {
             return manager.GetExamenMedicosPaciente(idUsuario);
         }
 
         [HttpGet]
-        public ExamenMedico GetExamenMedicoById(int idExamenMedico) {
+        public ExamenMedicoOutput GetExamenMedicoById(int idExamenMedico) {
             return manager.GetExamenMedicoById(idExamenMedico);
         }
 
