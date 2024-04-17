@@ -8,7 +8,7 @@ namespace DTO.Citas
 {
     public class CitaInsert
     {
-        public int idPaciente { get; set; }
+        public int idUsuarioPaciente { get; set; }
         public DateTime horaInicio { get; set; }
         public DateTime horaFinal { get; set; }
         public int idSede { get; set; }

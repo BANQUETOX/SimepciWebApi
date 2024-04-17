@@ -37,10 +37,11 @@ namespace AppLogic
         }
 
         public Cita CastCitaInsert(CitaInsert citaInsert) {
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(citaInsert.idUsuarioPaciente);
             Cita cita = new Cita();
             Doctor doctorAsignado = GetDoctorDisponible(citaInsert.horaInicio, citaInsert.horaFinal, citaInsert.idSede, citaInsert.idEspecialidad);
             cita.idDoctor = doctorAsignado.Id;
-            cita.idPaciente = citaInsert.idPaciente;
+            cita.idPaciente = paciente.Id;
             cita.idSede = citaInsert.idSede;
             cita.horaInicio = citaInsert.horaInicio;
             cita.horaFinal = citaInsert.horaFinal;
