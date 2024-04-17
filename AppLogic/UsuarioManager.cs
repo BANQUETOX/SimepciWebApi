@@ -18,29 +18,29 @@ namespace AppLogic
         RolManager rolManager = new RolManager();
         ExpedienteManager expedienteManager = new ExpedienteManager();
         PacienteManager pacienteManager = new PacienteManager();
-        EmailManager emailManager = new EmailManager(); 
+        EmailManager emailManager = new EmailManager();
 
 
-        public string CreateUsuario(Usuario usuario,bool esFuncionario) 
+        public string CreateUsuario(Usuario usuario, bool esFuncionario)
         {
             string correo = usuario.correo;
             if (!verificarCorreo(correo))
             {
                 return "Formato de correo invalido";
             }
-            else if (GetUsuarioByEmail(correo) != null ) {
+            else if (GetUsuarioByEmail(correo) != null) {
                 return "El correo ya ha sido registrado";
             }
-           
+
             usuarioCrud.Create(usuario);
 
             Usuario fullUsuario = usuarioCrud.GetUsuarioByEmail(usuario.correo);
-            rolManager.AsignarRolUsuario(fullUsuario.correo,5);
+            rolManager.AsignarRolUsuario(fullUsuario.correo, 5);
             Paciente paciente = pacienteManager.GetPacienteByUsuarioId(fullUsuario.Id);
             ExpedienteInput expediente = new ExpedienteInput();
             expediente.idPaciente = paciente.Id;
             expediente.notasEnfermeria = " ";
-            expediente.notasMedicas = " ";  
+            expediente.notasMedicas = " ";
             expediente.historialMedico = " ";
             expedienteManager.CreateExpediente(expediente);
 
@@ -59,29 +59,29 @@ namespace AppLogic
             {
                 UsuarioGet usuarioGet = castUsuarioGet(usuario);
                 listResult.Add(usuarioGet);
-                
+
             }
             return listResult;
         }
 
         public Usuario GetUsuarioByEmail(string correo)
         {
-            
+
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
-            return  usuario;
+            return usuario;
         }
 
-        public UsuarioGet GetUsuarioById(int id) { 
+        public UsuarioGet GetUsuarioById(int id) {
             Usuario usuario = usuarioCrud.RetrieveById(id);
             UsuarioGet usuarioGet = castUsuarioGet(usuario);
             return usuarioGet;
         }
 
-        
+
         public UsuarioGet Login(string correo, string password)
         {
             UsuarioGet result;
-           
+
             try
             {
                 Usuario usuario = usuarioCrud.Login(correo, password);
@@ -91,9 +91,9 @@ namespace AppLogic
             {
                 result = new UsuarioGet();
             }
-            
-            return result ; 
-            
+
+            return result;
+
 
         }
 
@@ -103,7 +103,7 @@ namespace AppLogic
             {
                 return "Usuario inexistente";
             }
-            usuarioCrud.UpdatePassword(correoUsuario,newPassword);
+            usuarioCrud.UpdatePassword(correoUsuario, newPassword);
             return "Dato actualizado exitosamente";
         }
 
@@ -126,7 +126,22 @@ namespace AppLogic
             return resultado;
         }
 
-       
+        public string UpdateUsuario(Usuario usuario)
+        {
+            string result;
+            try
+            {
+                usuarioCrud.Update(usuario);
+                result = "Usuario Actualizado";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+
+            return result;
+
+        }
 
        
         public Usuario castUsuarioInsert(UsuarioInsert usuarioInsert)

@@ -30,6 +30,10 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
 
         }
+        public void Update(Usuario usuario) { 
+            SqlOperation operation = usuarioMapper.GetUpdateStatement(usuario);
+            dao.ExecuteStoredProcedure(operation);
+        }
 
         public  void Delete(BaseClass dto)
         {

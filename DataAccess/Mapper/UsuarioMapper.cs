@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class UsuarioMapper: IObjectMapper, ICrudStatements
+    public class UsuarioMapper: IObjectMapper
     {
         public BaseClass BuildObject(Dictionary<string, object> row)
         {
@@ -117,9 +117,26 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-        public SqlOperation GetUpdateStatement(BaseClass dto)
+        public SqlOperation GetUpdateStatement(Usuario usuario)
         {
-            throw new NotImplementedException();
+
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_USUARIO";
+            operation.AddIntegerParam("id",usuario.Id);
+            operation.AddVarcharParam("nombre", usuario.nombre);
+            operation.AddVarcharParam("primerApellido", usuario.primerApellido);
+            operation.AddVarcharParam("segundoApellido", usuario.segundoApellido);
+            operation.AddVarcharParam("cedula", usuario.cedula);
+            operation.AddDatetimeParam("fechaNacimiento", usuario.fechaNacimiento);
+            operation.AddVarcharParam("telefono", usuario.telefono);
+            operation.AddVarcharParam("correo", usuario.correo);
+            operation.AddVarcharParam("direccion", usuario.direccion);
+            operation.AddVarcharParam("fotoPerfil", usuario.fotoPerfil);
+            operation.AddBooleanParam("activo", usuario.activo);
+            operation.AddVarcharParam("password", usuario.password);
+            operation.AddVarcharParam("sexo", usuario.sexo);
+            return operation;
+
         }
 
         public SqlOperation Login(string correo, string password)
