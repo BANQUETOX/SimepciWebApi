@@ -1,4 +1,5 @@
 ﻿using AppLogic;
+using DTO;
 using DTO.ExamenesMedicos;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -36,10 +37,11 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<ExamenMedicoOutput> GetExamenesMedicosByCorreoPaciente(string correo)
+        public List<ExamenMedicoOutput> GetExamenesMedicosByCorreoPaciente(string correoPaciente)
         {
-            
-            return manager.GetExamenMedicosPaciente(manager.GetPacienteByCorreo(correo).Id);
+            Paciente paciente = manager.GetPacienteByCorreo(correoPaciente);
+            Console.WriteLine(paciente.Id);
+            return manager.GetExamenMedicosPaciente(paciente.IdUsuario);
         }
 
         [HttpGet]

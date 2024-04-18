@@ -1,6 +1,7 @@
 ﻿using DataAccess.Crud;
 using DTO;
 using DTO.Recetas;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace AppLogic
     {
         RecetaCrud crud = new RecetaCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
+        UsuarioCrud usuarioCrud = new UsuarioCrud();
 
         public string CrearReceta(RecetaInput recetaInput)
         {
-            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(recetaInput.idUsuario); 
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(recetaInput.correoPaciente);
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id); 
             Receta receta = new Receta();
             receta.idPaciente = paciente.Id;
             receta.imagen = recetaInput.imagen;
