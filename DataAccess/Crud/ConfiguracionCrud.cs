@@ -20,7 +20,7 @@ namespace DataAccess.Crud
             sqlDao = SqlDao.GetInstance();
         }
 
-        public List<Configuracion> GetConfuguraciones()
+        public List<Configuracion> GetConfiguraciones()
         {
             List<Configuracion> configuraciones = new List<Configuracion>();
             SqlOperation operation = mapper.GetConfiguraciones();

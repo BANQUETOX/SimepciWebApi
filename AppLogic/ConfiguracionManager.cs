@@ -15,7 +15,7 @@ namespace AppLogic
 
         public List<Configuracion> GetConfiguraciones()
         {
-            return configuracionCrud.GetConfuguraciones();
+            return configuracionCrud.GetConfiguraciones();
         }
 
         public string UpdateImpuesto(string nuevoValor)

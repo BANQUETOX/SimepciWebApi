@@ -19,6 +19,8 @@ namespace AppLogic
         CostoAdicionalCrud costoAdicionalCrud = new CostoAdicionalCrud();
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
+        ConfiguracionCrud configuracionCrud = new ConfiguracionCrud();
+        CitaCrud citaCrud = new CitaCrud();
 
 
 
@@ -28,6 +30,7 @@ namespace AppLogic
             string result;
             try
             {
+               
                 
                 float monto = 0;
 
@@ -43,9 +46,22 @@ namespace AppLogic
                         monto += costoAdicional.precio;
                     }
                 }
+                if(monto > 0)
+                {
+                    Configuracion impuesto = configuracionCrud.GetConfiguraciones()[0];
+                    float valorImpuesto = float.Parse(impuesto.valor);
+
+                    if (impuesto != null && valorImpuesto > 0) {
+                        float impuestoDecimal = valorImpuesto / 100;
+                        Console.WriteLine(impuestoDecimal);
+                        monto += (monto / impuestoDecimal);
+                       
+                    }
+                }
+                Console.WriteLine(monto);
                 Factura factura = castFacturaInput(facturaInput, monto);
                 Factura facturaCreada  = facturaCrud.Create(factura);
-                Console.WriteLine(facturaCreada.monto);
+              
                 if (facturaInput.costosAdicionales.Count != 0)
                 {
 
