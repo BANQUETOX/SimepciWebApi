@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO
+namespace DTO.CostosAdicionales
 {
-    public class CostoAdicional : BaseClass
+    public class CostoAdicionalInsert
     {
         public string nombre { get; set; }
-        public float precio { get; set; }   
+        public float precio { get; set; }
     }
 }
+ 

@@ -29,13 +29,13 @@ namespace SIMEPCI_API.Controllers
             return result;
         }
         [HttpGet]
-        public List<Receta> GetRecetasPaciente(int idPaciente)
+        public List<Receta> GetRecetasPaciente(string correoPaciente)
         {
             List<Receta> result;
             try
             {
 
-             result = manager.GetRecetasPaciente(idPaciente);
+             result = manager.GetRecetasPaciente(correoPaciente);
             }
             catch (Exception ex)
             {

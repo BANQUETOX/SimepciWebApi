@@ -15,7 +15,6 @@ namespace DataAccess.Mapper
         public Expediente BuildObject(Dictionary<string, object> row)
         {
             Expediente expediente = new Expediente();
-            expediente.Id = int.Parse(row["Id"].ToString());
             expediente.idPaciente = int.Parse(row["IdPaciente"].ToString());
             expediente.notasEnfermeria = row["NotasEnfermeria"].ToString();
             expediente.notasMedicas = row["NotasMedicas"].ToString();
@@ -43,6 +42,17 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "SP_INSERT_EXPEDIENTE";
             operation.AddIntegerParam("idPaciente",expediente.idPaciente);
             operation.AddVarcharParam("notasEnfermeria",expediente.notasEnfermeria);
+            operation.AddVarcharParam("notasMedicas", expediente.notasMedicas);
+            operation.AddVarcharParam("historialMedico", expediente.historialMedico);
+            return operation;
+        }
+
+        public SqlOperation GetInitialUpdateStatement(Expediente expediente)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_EXPEDIENTE";
+            operation.AddIntegerParam("idPaciente", expediente.idPaciente);
+            operation.AddVarcharParam("notasEnfermeria", expediente.notasEnfermeria);
             operation.AddVarcharParam("notasMedicas", expediente.notasMedicas);
             operation.AddVarcharParam("historialMedico", expediente.historialMedico);
             return operation;

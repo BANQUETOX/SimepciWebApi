@@ -38,7 +38,7 @@ namespace AppLogic
             rolManager.AsignarRolUsuario(fullUsuario.correo, 5);
             Paciente paciente = pacienteManager.GetPacienteByUsuarioId(fullUsuario.Id);
             ExpedienteInput expediente = new ExpedienteInput();
-            expediente.idPaciente = paciente.Id;
+            expediente.correoPaciente = fullUsuario.correo;
             expediente.notasEnfermeria = " ";
             expediente.notasMedicas = " ";
             expediente.historialMedico = " ";
@@ -195,7 +195,6 @@ namespace AppLogic
             usuario.direccion = usuarioUpdate.direccion;
             usuario.fotoPerfil = usuarioUpdate.fotoPerfil;
             usuario.sexo = usuarioUpdate.sexo;
-            usuario.password = usuarioUpdate.password;
             return usuario;
 
         }

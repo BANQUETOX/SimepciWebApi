@@ -13,5 +13,8 @@ namespace DTO.Sedes
         public DateTime fechaCreacion { get; set; }
         public string ubicacion { get; set; }
         public string foto { get; set; }
+        public string provincia { get; set; }
+        public string canton { get; set; }
+        public string distrito { get; set; }
     }
 }

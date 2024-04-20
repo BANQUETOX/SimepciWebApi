@@ -19,6 +19,5 @@ namespace DTO.Usuarios
         public string direccion { get; set; }
         public string fotoPerfil { get; set; }
         public string sexo { get; set; }
-        public string password { get; set; }
     }
 }

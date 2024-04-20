@@ -17,6 +17,7 @@ namespace DataAccess.Mapper
             EspecialidadMedica especialidad = new EspecialidadMedica();
             especialidad.Id = int.Parse(row["Id"].ToString());
             especialidad.nombre = row["Nombre"].ToString();
+            especialidad.costoCita = float.Parse(row["CostoCita"].ToString());
             return especialidad;
         }
 
@@ -54,6 +55,14 @@ namespace DataAccess.Mapper
             operation.ProcedureName = "SP_INSERT_ESPECIALIDAD_MEDICA";
             operation.AddFloatParam("costoCita",especialidadMedica.costoCita);
             operation.AddVarcharParam("nombre", especialidadMedica.nombre);
+            return operation;
+        }
+
+        public SqlOperation GetEspecialidadByCitaIdStatement(int idCita)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_ESPECIALIDAD_CITA_ID";
+            operation.AddIntegerParam("idCita", idCita);
             return operation;
         }
     }

@@ -47,5 +47,6 @@ namespace DataAccess.Crud
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             return citaMapper.BuildObjects(results);
         }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO.Expedientes
 {
-    public class Expediente : BaseClass
+    public class Expediente
     {
         public int idPaciente { get; set; }
         public string notasEnfermeria { get; set; }

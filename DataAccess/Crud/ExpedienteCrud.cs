@@ -27,6 +27,12 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
         }
 
+        public void InitialUpdate (Expediente expediente)
+        {
+            SqlOperation operation = mapper.GetInitialUpdateStatement(expediente);
+            dao.ExecuteStoredProcedure(operation);
+        }
+
         public Expediente GetExpedietePaciente(int idPaciente) {
             Expediente expediente = new Expediente();
             SqlOperation operation = mapper.GetExpedienteByPacienteStatement(idPaciente);

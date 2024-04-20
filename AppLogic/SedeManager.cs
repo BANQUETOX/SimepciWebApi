@@ -89,6 +89,9 @@ namespace AppLogic
             sede.fechaCreacion = sedeInsert.fechaCreacion;
             sede.ubicacion = sedeInsert.ubicacion;
             sede.foto = sedeInsert.foto;
+            sede.provincia = sedeInsert.provincia;
+            sede.canton = sedeInsert.canton;
+            sede.distrito = sedeInsert.distrito;    
             return sede;
         }
     }

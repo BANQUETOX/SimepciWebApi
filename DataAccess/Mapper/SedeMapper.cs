@@ -20,6 +20,9 @@ namespace DataAccess.Mapper
             sede.fechaCreacion = DateTime.Parse(row["FechaCreacion"].ToString());
             sede.ubicacion = row["Ubicacion"].ToString();
             sede.foto = row["Foto"].ToString();
+            sede.provincia = row["Provincia"].ToString();
+            sede.canton = row["Canton"].ToString();
+            sede.distrito = row["Distrito"].ToString();
             return sede;
         }
 
@@ -49,6 +52,10 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("ubicacion",sede.ubicacion);
             operation.AddVarcharParam("foto", sede.foto);
             operation.AddDatetimeParam("fechaCreacion", sede.fechaCreacion);
+            operation.AddVarcharParam("provincia", sede.provincia);
+            operation.AddVarcharParam("canton", sede.canton);
+            operation.AddVarcharParam("distrito", sede.distrito);
+
             return operation;
         }
 
@@ -70,6 +77,9 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("ubicacion", sede.ubicacion);
             operation.AddVarcharParam("foto", sede.foto);
             operation.AddDatetimeParam("fechaCreacion", sede.fechaCreacion);
+            operation.AddVarcharParam("provincia", sede.provincia);
+            operation.AddVarcharParam("canton", sede.canton);
+            operation.AddVarcharParam("distrito", sede.distrito);
             return operation;
         }
 

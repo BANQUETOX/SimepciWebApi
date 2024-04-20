@@ -13,14 +13,14 @@ namespace SIMEPCI_API.Controllers
     {
         ExpedienteManager manager = new ExpedienteManager();
 
-        [HttpPost]
+        [HttpPatch]
         public string CrearExpediente(ExpedienteInput expediente)
         {
             string result;
             try
             {
 
-               result = manager.CreateExpediente(expediente);
+                result = manager.InicializarExpediente(expediente);
             }
             catch (Exception ex)
             {
@@ -30,12 +30,12 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public ExpedienteCompleto ExpedienteCompletoPaciente(int idPaciente)
+        public ExpedienteCompleto ExpedienteCompletoPaciente(string correoPaciente)
         {
             ExpedienteCompleto expedietente = new ExpedienteCompleto();
             try
             {
-                expedietente = manager.GetExpedienteCompleto(idPaciente);
+                expedietente = manager.GetExpedienteCompleto(correoPaciente);
             }
             catch (Exception ex)
             {

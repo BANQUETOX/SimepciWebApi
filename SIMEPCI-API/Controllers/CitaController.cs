@@ -44,16 +44,16 @@ namespace SIMEPCI_API.Controllers
 
         }
 
-        [HttpGet]
+       /* [HttpGet]
         public List<Cupo> GetCuposDisponibles ( int idSede, int idEspecialidad)
         {
             return citaManager.cuposDisponibles(idSede,idEspecialidad);
-        }
+        }*/
 
         [HttpGet]
-        public List<CitaOutput> GetCitasPaciente(int idUsuario)
+        public List<CitaOutput> GetCitasPaciente(string correoPaciente)
         {
-            return citaManager.CitasPaciente(idUsuario);
+            return citaManager.CitasPaciente(correoPaciente);
         }
         [HttpGet]
         public List<Cita> GetCitasDoctor(int idDoctor)

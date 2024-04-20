@@ -8,6 +8,7 @@ using DTO.Citas;
 using DTO;
 using DTO.Usuarios;
 using DTO.EspecialidadesMedicas;
+using System.Runtime.InteropServices;
 
 namespace AppLogic
 {
@@ -23,16 +24,25 @@ namespace AppLogic
         public string CrearCita(CitaInsert citaInsert)
         {
             string result;
-            if (validarFechaCita(citaInsert.horaInicio, citaInsert.horaFinal))
+            try
             {
-            Cita cita = CastCitaInsert(citaInsert);
-            citaCrud.Create(cita);
-                result = "Cita Creada";
+                if (validarFechaCita(citaInsert.horaInicio, citaInsert.horaFinal))
+                {
+                    Cita cita = CastCitaInsert(citaInsert);
+                    citaCrud.Create(cita);
+                    result = "Cita Creada";
+                }
+                else
+                {
+                    result = "Fecha invalida";
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                result = "Fecha invalida";
+                result = ex.Message;
             }
+         
             return result; ;
         }
 
@@ -52,13 +62,13 @@ namespace AppLogic
         public List<Cita> CitasReservadas(int idEspecialidad, int idSede) {
             DateTime fechaInicio = DateTime.Now;
             DateTime fechaFinal = DateTime.Now;
-            fechaFinal = fechaFinal.AddDays(10);
+            fechaFinal = fechaFinal.AddDays(1);
             return citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
         }
-        public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
+       /* public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
         {
             DateTime fechaInicio = DateTime.Now;
-            DateTime fechaFinal = fechaInicio.AddDays(10);
+            DateTime fechaFinal = fechaInicio.AddDays(1);
             List<Cupo> cuposDisponibles = new List<Cupo>();
             var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede,idEspecialidad);
             foreach (var doctor in doctores)
@@ -67,24 +77,26 @@ namespace AppLogic
                 cuposDisponibles = cuposDisponibles.Concat(cupos).ToList();
             }
             return cuposDisponibles;
-        }
+        }*/
 
-        public List<CitaOutput> CitasPaciente(int idUsuario)
+        public List<CitaOutput> CitasPaciente(string correoPaciente)
         {
-            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(idUsuario);
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoPaciente);
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
             List<Cita> citasPaciente = citaCrud.GetCitasPaciente(paciente.Id);
             List<CitaOutput> citasOutput = new List<CitaOutput>();
-            
+
             foreach (var cita in citasPaciente)
             {
                 Doctor doctor = doctorCrud.GetDoctorById(cita.idDoctor);
-                Usuario usuarioDoctor  = usuarioCrud.RetrieveByDoctorId(doctor.Id);
+                Usuario usuarioDoctor = usuarioCrud.RetrieveByDoctorId(doctor.Id);
                 EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadById(doctor.Id);
                 CitaOutput citaOutput = new CitaOutput();
+                citaOutput.id = cita.Id;
                 citaOutput.doctor = usuarioDoctor.nombre;
                 citaOutput.fecha = cita.horaInicio;
                 citaOutput.especialidad = especialidad.nombre;
-                citaOutput.precio = "nohayPrecio";
+                citaOutput.precio = especialidad.costoCita;
                 citasOutput.Add(citaOutput);
             }
 

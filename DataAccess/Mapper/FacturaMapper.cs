@@ -14,6 +14,7 @@ namespace DataAccess.Mapper
         public Factura BuildObject(Dictionary<string, object> row)
         {
             Factura factura = new Factura();
+            factura.Id = int.Parse(row["Id"].ToString());
             factura.monto = float.Parse(row["Monto"].ToString());
             factura.fechaEmision = DateTime.Parse(row["FechaEmision"].ToString());
             factura.idCita = int.Parse(row["IdCita"].ToString());
@@ -45,10 +46,19 @@ namespace DataAccess.Mapper
             operation.AddBooleanParam("pagada", factura.pagada);
             return operation;
         }
+
+        public SqlOperation GetFacturaByIdPStatement(int idFactura)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_FACTURA_ID";
+            operation.AddIntegerParam("id", idFactura);
+            return operation;
+
+        }
         public SqlOperation GetFacturasPacienteStatement(int idPaciente)
         {
             SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "SP_GET_FACTURAS_PACIENTE";
+            operation.ProcedureName = "SP_GET_FACTURAS_PACIENTE_ID";
             operation.AddIntegerParam("idPaciente", idPaciente);
             return operation;
 

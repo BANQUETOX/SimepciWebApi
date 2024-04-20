@@ -2,6 +2,7 @@
 using DataAccess.Mapper;
 using DTO;
 using DTO.Recetas;
+using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,18 @@ namespace DataAccess.Crud
         public RecetaCrud() { 
             mapper = new RecetaMapper();
             sqlDao = SqlDao.GetInstance();
-            pacienteCrud = new PacienteCrud();  
+            pacienteCrud = new PacienteCrud(); 
         }
         public void Create(Receta receta)
         {
            SqlOperation operation = mapper.Create(receta);
             sqlDao.ExecuteStoredProcedure(operation);
         }
-        public List<Receta> GetRecetasPaciente(int idUsuario) 
+        public List<Receta> GetRecetasPaciente(int usuarioId) 
         {
+
             List<Receta> recetas = new List<Receta>();
-            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(idUsuario);
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuarioId);
             SqlOperation operation = mapper.GetRecetasByPaciente(paciente.Id);
             var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             recetas = mapper.BuildObjects(result);

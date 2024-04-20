@@ -8,9 +8,10 @@ namespace DTO.Citas
 {
     public class CitaOutput
     {
+        public int id {  get; set; }
         public DateTime fecha { get; set; }
         public string especialidad { get; set; }
         public string doctor { get; set; }
-        public string precio { get; set; }
+        public float precio { get; set; }
     }
 }

@@ -84,10 +84,7 @@ namespace SIMEPCI_API.Controllers
 
       
 
-        
-
-
-
+       
 
         [HttpPatch]
         public string ActualizarPassword(string correoUsuario, string newpassword)
@@ -137,8 +134,8 @@ namespace SIMEPCI_API.Controllers
             return resultado;
         }
 
-        [HttpPatch]
 
+        [HttpPatch]
         public string UpdateUsuario(UsuarioUpdate usuario)
         {
             return usuarioManager.UpdateUsuario(usuario);

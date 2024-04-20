@@ -96,5 +96,8 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idDoctor", idDoctor);
             return operation;
         }
+
+
+      
     }
 }

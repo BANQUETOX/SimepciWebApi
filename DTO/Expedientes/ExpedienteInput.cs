@@ -8,7 +8,7 @@ namespace DTO.Expedientes
 {
     public class ExpedienteInput
     {
-        public int idPaciente { get; set; }
+        public string correoPaciente { get; set; }
         public string notasEnfermeria { get; set; }
         public string notasMedicas { get; set; }
         public string historialMedico { get; set; }

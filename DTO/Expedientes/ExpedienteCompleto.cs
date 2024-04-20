@@ -16,6 +16,6 @@ namespace DTO.Expedientes
         public List<CitaOutput> citas { get; set; }
         public List<ExamenMedicoOutput> examenesMedicos { get; set; }
         public List<Receta> recetas { get; set; }
-        public List<Factura> facturas { get; set; }
+        public List<FacturaCompleta> facturas { get; set; }
     }
 }

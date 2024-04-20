@@ -32,8 +32,9 @@ namespace AppLogic
             return "Receta Creada";
         }
 
-        public List<Receta> GetRecetasPaciente(int idUsuario) {
-            return crud.GetRecetasPaciente(idUsuario);
+        public List<Receta> GetRecetasPaciente(string correoPaciente) {
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoPaciente);
+            return crud.GetRecetasPaciente(usuario.Id);
         }
 
         public string UpdateReceta(Receta receta)

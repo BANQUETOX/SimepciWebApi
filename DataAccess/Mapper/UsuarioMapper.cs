@@ -132,7 +132,6 @@ namespace DataAccess.Mapper
             operation.AddVarcharParam("correo", usuario.correo);
             operation.AddVarcharParam("direccion", usuario.direccion);
             operation.AddVarcharParam("fotoPerfil", usuario.fotoPerfil);
-            operation.AddVarcharParam("password", usuario.password);
             operation.AddVarcharParam("sexo", usuario.sexo);
             return operation;
 

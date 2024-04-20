@@ -45,5 +45,17 @@ namespace DataAccess.Crud
             sqlDao.ExecuteStoredProcedure(operation);
         }
 
+        public EspecialidadMedica GetEspecialidadByCitaId(int idCita)
+        {
+            EspecialidadMedica especialidad = new EspecialidadMedica();
+            SqlOperation operation = mapper.GetEspecialidadByCitaIdStatement(idCita);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count > 0)
+            {
+                especialidad = mapper.BuildObject(result[0]);
+            }
+            return especialidad;
+        }
+
     }
 }
