@@ -95,6 +95,38 @@ namespace AppLogic
         }
 
 
+        public string UpdateFacturaPagada(int idFactura)
+        {
+            string result;
+            try
+            {
+
+                facturaCrud.UpdateFacturaPagada(idFactura);
+                result = "Factura Pagada";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+           return result;
+        }
+
+        public string UpdateFacturaSinPagar(int idFactura)
+        {
+            string result;
+            try
+            {
+
+                facturaCrud.UpdateFacturaSinPagar(idFactura);
+                result = "Ahora la factura esta pendiente de pago";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
+        }
+
         public Factura castFacturaInput(FacturaInput facturaInput, float monto)
         {
             Factura factura = new Factura();

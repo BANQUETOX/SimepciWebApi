@@ -22,5 +22,17 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.GetFacturasPaciente(correoPaciente);
         }
+
+        [HttpPatch]
+        public string PagarFactura(int idFactura)
+        {
+            return manager.UpdateFacturaPagada(idFactura);
+        }
+
+        [HttpPatch]
+        public string SetFacturaSinPagar(int idFactura)
+        {
+            return manager.UpdateFacturaSinPagar(idFactura);
+        }
     }
 }

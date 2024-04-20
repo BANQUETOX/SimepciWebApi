@@ -16,6 +16,7 @@ namespace DataAccess.Mapper
         public Comentario BuildObject(Dictionary<string, object> row)
         {
             Comentario comentario = new Comentario();
+            comentario.Id = int.Parse(row["Id"].ToString());
             comentario.satisfaccion = int.Parse(row["Satisfaccion"].ToString());
             comentario.profecionalismo = int.Parse(row["Profecionalismo"].ToString());
             comentario.instalaciones = int.Parse(row["Instalaciones"].ToString());
@@ -45,6 +46,7 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("satisfaccion",comentario.satisfaccion);
             operation.AddIntegerParam("profecionalismo", comentario.profecionalismo);
             operation.AddIntegerParam("instalaciones",comentario.instalaciones);
+            operation.AddBooleanParam("recomendaciones", comentario.recomendaria);
             operation.AddVarcharParam("comentarios", comentario.comentarios);
             return operation;
 

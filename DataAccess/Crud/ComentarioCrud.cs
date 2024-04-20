@@ -18,7 +18,7 @@ namespace DataAccess.Crud
         public ComentarioCrud()
         {
             mapper = new ComentarioMapper();
-            dao = new SqlDao();
+            dao = SqlDao.GetInstance();
         }
 
         public void Create(Comentario comentario)
@@ -27,11 +27,13 @@ namespace DataAccess.Crud
             dao.ExecuteStoredProcedure(operation);
         }
 
-       /* public List<Comentario> GetAll()
+        public List<Comentario> GetAll()
         {
+            List<Comentario> comentarios = new List<Comentario>();
             SqlOperation operation = mapper.GetRetrieveAllStatement();
-        }*/
-
-
+            var result = dao.ExecuteStoredProcedureWithQuery(operation);
+            comentarios = mapper.BuildObjects(result);
+            return comentarios;
+        }
     }
 }

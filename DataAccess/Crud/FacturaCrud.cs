@@ -52,7 +52,17 @@ namespace DataAccess.Crud
             return facturas;
         }
 
-      
+        public void UpdateFacturaPagada(int idFactura)
+        {
+            SqlOperation operation = mapper.GetUpdateSetPagadaStatement(idFactura);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+        public void UpdateFacturaSinPagar(int idFactura)
+        {
+            SqlOperation operation = mapper.GetUpdateSetSinPagarStatement(idFactura);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+
 
 
     }

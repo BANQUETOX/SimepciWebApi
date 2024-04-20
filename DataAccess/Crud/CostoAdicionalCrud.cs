@@ -17,7 +17,7 @@ namespace DataAccess.Crud
         public CostoAdicionalCrud()
         {
             mapper = new CostoAdicionalMapper();
-            sqlDao = new SqlDao();
+            sqlDao = SqlDao.GetInstance();
         }
 
         public void Create(CostoAdicional costoAdicional)

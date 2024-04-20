@@ -63,5 +63,23 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+
+        public SqlOperation GetUpdateSetPagadaStatement(int idFactura)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_FACTURA_PAGADA";
+            operation.AddIntegerParam("id",idFactura);
+            return operation;
+
+        }
+
+        public SqlOperation GetUpdateSetSinPagarStatement(int idFactura)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_FACTURA_SIN_PAGAR";
+            operation.AddIntegerParam("id", idFactura);
+            return operation;
+
+        }
     }
 }
