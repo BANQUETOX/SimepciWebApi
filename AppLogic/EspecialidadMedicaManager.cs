@@ -12,6 +12,20 @@ namespace AppLogic
     {
         EspecialidadMedicaCrud crud = new EspecialidadMedicaCrud();
 
+        public string UpdatePrecioEspecialidad(int idEspecialidad, float nuevoPrecio)
+        {
+            string result;
+            try
+            {
+                crud.UpdateCostoCitaEspecialidad(idEspecialidad, nuevoPrecio);
+                result = "Precio actualizado";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
+        }
 
         public List<EspecialidadMedica> GetAllEspecialidadMedicas()
         {

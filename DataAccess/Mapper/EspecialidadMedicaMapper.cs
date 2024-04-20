@@ -65,5 +65,14 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idCita", idCita);
             return operation;
         }
+
+        public SqlOperation UpdatePrecioEspecialidadStatement(int idEspecialidad, float nuevoPrecio)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_ESPECIALIDAD_PRECIO";
+            operation.AddIntegerParam("id", idEspecialidad);
+            operation.AddFloatParam("nuevoPrecio",nuevoPrecio);
+            return operation;
+        }
     }
 }

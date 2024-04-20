@@ -31,5 +31,11 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.CreateEspecialidad(especialidadMedicaInsert);
         }
+
+        [HttpPatch]
+        public string ActualizarPrecioEspecialidad(int idEspecialidad, float nuevoPrecio)
+        {
+            return manager.UpdatePrecioEspecialidad(idEspecialidad, nuevoPrecio);
+        }
     }
 }

@@ -20,6 +20,13 @@ namespace DataAccess.Crud
             sqlDao = SqlDao.GetInstance();
         }
 
+
+
+        public void UpdateCostoCitaEspecialidad(int idEspecialidad, float nuevoPrecio)
+        {
+            SqlOperation operation = mapper.UpdatePrecioEspecialidadStatement(idEspecialidad,nuevoPrecio);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
         public List<EspecialidadMedica> GetAllEspecialidadMedicas() { 
             List<EspecialidadMedica> especialidades = new List<EspecialidadMedica>();
             SqlOperation operation = mapper.RetrieveAllStatement();
@@ -56,6 +63,8 @@ namespace DataAccess.Crud
             }
             return especialidad;
         }
+
+
 
     }
 }
