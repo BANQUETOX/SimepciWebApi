@@ -17,7 +17,7 @@ namespace DataAccess.Crud
         public DoctorCrud()
         {
             mapper = new DoctorMapper();
-            sqlDao =  SqlDao.GetInstance();
+            sqlDao = SqlDao.GetInstance();
         }
 
         public void Create(Doctor doctor)
@@ -32,9 +32,9 @@ namespace DataAccess.Crud
             SqlOperation operation = mapper.GetDoctorByIdStatement(idDoctor);
             var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             Doctor doctor = new Doctor();
-            if(result.Count > 0)
+            if (result.Count > 0)
             {
-             doctor = mapper.BuildObject(result[0]);
+                doctor = mapper.BuildObject(result[0]);
             }
             return doctor;
         }
@@ -46,9 +46,22 @@ namespace DataAccess.Crud
         }
 
         public List<Doctor> DoctoresBySedeAndEspecialidad(int idSede, int idEspecialidad) {
-            SqlOperation operation = mapper.GetDoctorBySedeAndEspecialidadStatement(idSede,idEspecialidad);
+            SqlOperation operation = mapper.GetDoctorBySedeAndEspecialidadStatement(idSede, idEspecialidad);
             var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             return mapper.BuildObjects(result);
+        }
+
+        public Doctor GetDoctorByUsuarioId(int idUsuario)
+        {
+            SqlOperation operation = mapper.GetDoctorByUsuarioIdStatement(idUsuario);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            Doctor doctor = new Doctor();
+            if (result.Count > 0)
+            {
+                doctor = mapper.BuildObject(result[0]);
+            }
+            return doctor;
+
         }
     }
 }

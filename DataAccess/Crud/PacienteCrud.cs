@@ -71,5 +71,21 @@ namespace DataAccess.Crud
 
 
         }
+
+
+        public Paciente GetPacienteById(int id)
+        {
+            Paciente paciente = new Paciente();
+            SqlOperation operation = mapper.GetRetrieveByIdStatement(id);
+            List<Dictionary<string, object>> dataResults = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (dataResults.Count > 0)
+            {
+                paciente = (Paciente)mapper.BuildObject(dataResults[0]);
+
+            }
+
+            return paciente;
+
+        }
     }
 }

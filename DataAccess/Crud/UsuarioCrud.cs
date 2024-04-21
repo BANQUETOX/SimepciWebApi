@@ -79,6 +79,18 @@ namespace DataAccess.Crud
             return usuario;
 
         }
+        public Usuario RetrieveByPacienteId(int idPaciente)
+        {
+
+            SqlOperation operation = usuarioMapper.GetUsuarioByPacienteId(idPaciente);
+            var result = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = new Usuario();
+            if (result.Count> 0) { 
+                usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            }
+            return usuario;
+
+        }
 
         public  void Update(BaseClass dto)
         {

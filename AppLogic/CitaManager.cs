@@ -83,8 +83,7 @@ namespace AppLogic
         public List<CitaOutputReservada> CitasReservadas(int idEspecialidad, int idSede) {
             List<CitaOutputReservada> citasOutput = new List<CitaOutputReservada>();
             DateTime fechaInicio = DateTime.Now;
-            DateTime fechaFinal = DateTime.Now;
-            fechaFinal = fechaFinal.AddDays(14);
+            DateTime fechaFinal = fechaInicio.AddDays(14);
             List<Cita> citas =  citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
             foreach (Cita cita in citas)
             {
@@ -131,10 +130,21 @@ namespace AppLogic
             return citasOutput;
         }
 
-        public List<Cita> CitasDoctor(int idDoctor)
+        public List<CitaOutputDoctor> CitasDoctor(string correoDoctor)
         {
-            List<Cita> citasDoctor = citaCrud.GetCitasDoctor(idDoctor);
-            return citasDoctor;
+            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoDoctor);
+            Doctor doctor = doctorCrud.GetDoctorByUsuarioId(usuario.Id);
+            List<Cita> citasDoctor = citaCrud.GetCitasDoctor(doctor.Id);
+            List<CitaOutputDoctor> citasOutput = new List<CitaOutputDoctor>();
+            if (citasDoctor.Count() > 0)
+            {
+                foreach (var cita in citasDoctor)
+                {
+                    CitaOutputDoctor output = castCitaOutputDoctor(cita);
+                    citasOutput.Add(output);
+                }
+            }
+            return citasOutput;
         }
 
         public Doctor GetDoctorDisponible(DateTime horaInicio, DateTime horaFinal, int idSede,int idEspecialidad)
@@ -265,6 +275,20 @@ namespace AppLogic
             citaOutputReservada.especialidad = especialidad.nombre;
             return citaOutputReservada;
 
+        }
+        public CitaOutputDoctor castCitaOutputDoctor(Cita citaBase)
+        {
+            Usuario usuarioPaciente = usuarioCrud.RetrieveByPacienteId(citaBase.idPaciente);
+            string nombreCompletoPaciente = $"{usuarioPaciente.nombre} - {usuarioPaciente.primerApellido} - {usuarioPaciente.segundoApellido}";
+            CitaOutputDoctor citaOutputDoctor = new CitaOutputDoctor();
+            citaOutputDoctor.Id = citaBase.Id;
+            citaOutputDoctor.idPaciente = citaBase.idPaciente ;
+            citaOutputDoctor.nombrePaciente = nombreCompletoPaciente;
+            citaOutputDoctor.idDoctor = citaBase .idDoctor;
+            citaOutputDoctor.horaInicio = citaBase.horaInicio;
+            citaOutputDoctor.horaFinal= citaBase.horaFinal;
+            citaOutputDoctor.idSede= citaBase.idSede;
+            return citaOutputDoctor;
         }
     }
 }

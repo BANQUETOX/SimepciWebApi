@@ -71,5 +71,13 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idEspecialidad",idEspecialidad);
             return operation;
         }
+
+        public SqlOperation GetDoctorByUsuarioIdStatement(int idUsuario)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_DOCTOR_USUARIO_ID";
+            operation.AddIntegerParam("idUsuario",idUsuario);
+            return operation;
+        }
     }
 }

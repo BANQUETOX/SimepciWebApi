@@ -180,6 +180,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUsuarioByPacienteId(int idPaciente)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_ID_Paciente";
+            operation.AddIntegerParam("idPaciente", idPaciente);
+            return operation;
+        }
+
         internal int CalcularEdad(DateTime fechaNacimiento)
         {
             DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Today);
