@@ -9,6 +9,7 @@ using DTO;
 using DTO.Usuarios;
 using DTO.EspecialidadesMedicas;
 using System.Runtime.InteropServices;
+using Azure.Core;
 
 namespace AppLogic
 {
@@ -21,6 +22,20 @@ namespace AppLogic
         PacienteCrud pacienteCrud = new PacienteCrud();
 
 
+        public List<Cita> GetAllCitas()
+        {
+            List<Cita> citas = new List<Cita>();
+            try
+            {
+                citas = citaCrud.GetAllCitas();  
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return citas;
+        }
+
         public string CrearCita(CitaInsert citaInsert)
         {
             string result;
@@ -29,6 +44,11 @@ namespace AppLogic
                 if (validarFechaCita(citaInsert.horaInicio, citaInsert.horaFinal))
                 {
                     Cita cita = CastCitaInsert(citaInsert);
+                    if (cita.idDoctor == 0)
+                    {
+                        result = "No hay doctor disponible en la sede y especialidad solicitadas";
+                        return result;  
+                    }
                     citaCrud.Create(cita);
                     result = "Cita Creada";
                 }
@@ -60,11 +80,18 @@ namespace AppLogic
         }
 
 
-        public List<Cita> CitasReservadas(int idEspecialidad, int idSede) {
+        public List<CitaOutputReservada> CitasReservadas(int idEspecialidad, int idSede) {
+            List<CitaOutputReservada> citasOutput = new List<CitaOutputReservada>();
             DateTime fechaInicio = DateTime.Now;
             DateTime fechaFinal = DateTime.Now;
-            fechaFinal = fechaFinal.AddDays(1);
-            return citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
+            fechaFinal = fechaFinal.AddDays(14);
+            List<Cita> citas =  citaCrud.GetCitasReservadas(fechaInicio, fechaFinal, idEspecialidad, idSede);
+            foreach (Cita cita in citas)
+            {
+                citasOutput.Add(castCitaReservadaOutput(cita));
+            }
+            return citasOutput;
+            
         }
        /* public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
         {
@@ -223,6 +250,21 @@ namespace AppLogic
             }
 
             return true;
+        }
+
+        public CitaOutputReservada castCitaReservadaOutput(Cita citaBase)
+        {
+            EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadByCitaId(citaBase.Id);
+            CitaOutputReservada citaOutputReservada = new CitaOutputReservada();
+            citaOutputReservada.Id = citaBase.Id;   
+            citaOutputReservada.idPaciente = citaBase.idPaciente;
+            citaOutputReservada.idDoctor = citaBase.idDoctor;   
+            citaOutputReservada.horaInicio = citaBase.horaInicio;
+            citaOutputReservada.horaFinal = citaBase.horaFinal;
+            citaOutputReservada.idSede = citaBase.idSede;
+            citaOutputReservada.especialidad = especialidad.nombre;
+            return citaOutputReservada;
+
         }
     }
 }

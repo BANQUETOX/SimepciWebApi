@@ -1,4 +1,5 @@
 ﻿using AppLogic;
+using DTO;
 using DTO.Facturas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,12 @@ namespace SIMEPCI_API.Controllers
         public List<FacturaCompleta> GetFacturasPaciente(string correoPaciente)
         {
             return manager.GetFacturasPaciente(correoPaciente);
+        }
+
+        [HttpGet]
+        public List<ReporteMensual> GetReportesFinancieros()
+        {
+            return manager.reporteGanancias();
         }
 
         [HttpPatch]

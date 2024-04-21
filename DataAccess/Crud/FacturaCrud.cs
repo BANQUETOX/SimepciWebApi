@@ -3,6 +3,7 @@ using DataAccess.Mapper;
 using DTO.Facturas;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -61,6 +62,13 @@ namespace DataAccess.Crud
         {
             SqlOperation operation = mapper.GetUpdateSetSinPagarStatement(idFactura);
             sqlDao.ExecuteStoredProcedure(operation);
+        }
+
+        public List<Factura> GetFacturasPagadas()
+        {
+            SqlOperation operation = mapper.GetRetrieveFacturasPagadas();
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return mapper.BuildObjects(result);
         }
 
 

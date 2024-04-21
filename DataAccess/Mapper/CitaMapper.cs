@@ -38,6 +38,13 @@ namespace DataAccess.Mapper
             return results;
         }
 
+        public SqlOperation GetRetrieveAllStatement()
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITAS";
+            return operation;
+        }
+
         public SqlOperation GetCreateStatement(Cita cita)
         {
             SqlOperation operation = new SqlOperation();
@@ -51,7 +58,7 @@ namespace DataAccess.Mapper
 
         }
 
-        SqlOperation GetUpdateCitaStatement(Cita cita)
+        public SqlOperation GetUpdateCitaStatement(Cita cita)
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_UPDATE_CITA";

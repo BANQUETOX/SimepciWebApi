@@ -28,6 +28,14 @@ namespace DataAccess.Crud
             
         }
 
+        public List<Cita> GetAllCitas() {
+            SqlOperation operation = citaMapper.GetRetrieveAllStatement();
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return citaMapper.BuildObjects(result);
+
+
+        }
+
         public List<Cita> GetCitasReservadas(DateTime fechaInico, DateTime fechaFinal,int idEspecialidad, int idSede) {
             SqlOperation operation = citaMapper.GetCitasReservadasStatement(fechaInico,fechaFinal, idEspecialidad, idSede);
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
@@ -43,7 +51,7 @@ namespace DataAccess.Crud
         }
         public List<Cita> GetCitasDoctor(int idDoctor)
         {
-            SqlOperation operation = citaMapper.GetCitasPacienteStatement(idDoctor);
+            SqlOperation operation = citaMapper.GetCitasDoctorStatement(idDoctor);
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             return citaMapper.BuildObjects(results);
         }

@@ -6,6 +6,7 @@ using DTO.Facturas;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace AppLogic
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
         ConfiguracionCrud configuracionCrud = new ConfiguracionCrud();
-        CitaCrud citaCrud = new CitaCrud();
+        
 
 
 
@@ -153,7 +154,58 @@ namespace AppLogic
             return factura;
         }
 
-       
+
+        public List<ReporteMensual> reporteGanancias()
+        {
+            List<ReporteMensual> reporteCompleto = new List<ReporteMensual>();
+            try {
+                List<Factura> facturasPagadas = facturaCrud.GetFacturasPagadas();
+                var facturasAgrupadasPorMesAnio = facturasPagadas.GroupBy(factura => new { Mes = factura.fechaEmision.Month, Anio = factura.fechaEmision.Year });
+                foreach (var grupo in facturasAgrupadasPorMesAnio)
+                {
+                    int mes = grupo.Key.Mes; // Mes del grupo
+                    int anio = grupo.Key.Anio; // Año del grupo
+                    ReporteMensual reporteMensual = new ReporteMensual();
+                    reporteMensual.mes = $"{mes}/{anio}";
+                    reporteMensual.gananciaCitas = 0;
+                    reporteMensual.gananciaServicios = 0;
+                    reporteMensual.gananciasTotales = 0;
+                    foreach (var factura in grupo)
+                    {
+                        List<CostoAdicional> cotosAdicionales = costoAdicionalCrud.GetCostosByFacutaId(factura.Id);
+                        float montoCostosAdicionales = 0;
+                        if (cotosAdicionales.Count > 0)
+                        {
+                            foreach (var costoAdicional in cotosAdicionales)
+                            {
+                                montoCostosAdicionales += costoAdicional.precio;
+                            }
+                        }
+                        float costoCita = 0;
+                        if (factura.idCita != null || factura.idCita != 0)
+                        {
+                            float montoCita = especialidadMedicaCrud.GetEspecialidadByCitaId(factura.idCita).costoCita;
+                            costoCita += montoCita;
+                        }
+
+                        reporteMensual.gananciaServicios += montoCostosAdicionales;
+                        reporteMensual.gananciaCitas += costoCita;
+                        reporteMensual.gananciasTotales += factura.monto;
+
+                    }
+
+                    reporteCompleto.Add(reporteMensual);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            return reporteCompleto;
+        }
+
+
 
     }
 }

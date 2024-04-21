@@ -81,5 +81,12 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+
+        public SqlOperation GetRetrieveFacturasPagadas()
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_FACTURAS_PAGADAS";
+            return operation;
+        }
     }
 }

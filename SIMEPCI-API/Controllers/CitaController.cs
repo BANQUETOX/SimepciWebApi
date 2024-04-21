@@ -29,16 +29,21 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public List<Cita> GetCitasReservadas(int idEspecialidad, int idSede)
+        public List<Cita> GetAllCitas() { 
+            return citaManager.GetAllCitas();
+        }
+
+        [HttpGet]
+        public List<CitaOutputReservada> GetCitasReservadas(int idEspecialidad, int idSede)
         {
-            List<Cita> result;
+            List<CitaOutputReservada> result;
             try
             {
                 result = citaManager.CitasReservadas(idEspecialidad,idSede);
             }
             catch (Exception ex)
             {
-                result = new List<Cita>();
+                result = new List<CitaOutputReservada>();
             }
             return result;  
 
