@@ -1,5 +1,6 @@
 ﻿using DataAccess.Crud;
 using DTO;
+using DTO.Citas;
 using DTO.CostosAdicionales;
 using DTO.EspecialidadesMedicas;
 using DTO.Facturas;
@@ -21,6 +22,7 @@ namespace AppLogic
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
         ConfiguracionCrud configuracionCrud = new ConfiguracionCrud();
+        CitaCrud citaCrud = new CitaCrud();
         
 
 
@@ -37,8 +39,20 @@ namespace AppLogic
 
                 if (facturaInput.idCita != null || facturaInput.idCita != 0)
                 {
-                    EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadByCitaId(facturaInput.idCita);
-                    monto += especialidad.costoCita;
+                    
+                    Factura facturaExistente = facturaCrud.GetFacturaByCitaId(facturaInput.idCita);
+                    if (facturaExistente.idCita != facturaInput.idCita)
+                    {
+                        EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadByCitaId(facturaInput.idCita);
+                        monto += especialidad.costoCita;
+
+                    }
+                    else {
+                        return "La cita ya tiene una factura asignada";
+                    }
+
+                    
+                    
                 }
                 if (facturaInput.costosAdicionales.Count != 0) {
 

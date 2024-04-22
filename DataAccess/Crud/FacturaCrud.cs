@@ -72,6 +72,17 @@ namespace DataAccess.Crud
         }
 
 
+        public Factura GetFacturaByCitaId(int idCita)
+        {
+            Factura factura = new Factura();
+            SqlOperation operation = mapper.GetFacturaByCitaIdStatement(idCita);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count() > 0) { 
+                factura = mapper.BuildObject(result[0]);
+            }
+            return factura;
+        }
+
 
     }
 }

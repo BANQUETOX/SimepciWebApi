@@ -38,6 +38,14 @@ namespace DataAccess.Mapper
             return results;
         }
 
+
+        public SqlOperation RetrieveByIdStatement(int id)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITA_ID";
+            operation.AddIntegerParam("id", id);
+            return operation;
+        }
         public SqlOperation GetRetrieveAllStatement()
         {
             SqlOperation operation = new SqlOperation();

@@ -56,5 +56,17 @@ namespace DataAccess.Crud
             return citaMapper.BuildObjects(results);
         }
 
+        public Cita GetCitaById(int id)
+        {
+            Cita cita = null;
+            SqlOperation operation = citaMapper.GetCitasDoctorStatement(id);
+            var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if(results.Count() > 0)
+            {
+                cita = citaMapper.BuildObject(results[0]);
+            }
+            return cita;
+        }
+
     }
 }

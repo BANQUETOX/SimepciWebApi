@@ -64,6 +64,15 @@ namespace DataAccess.Mapper
 
         }
 
+        public SqlOperation GetFacturaByCitaIdStatement(int idCita)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_FACTURA_CITA_ID";
+            operation.AddIntegerParam("idCita", idCita);
+            return operation;
+
+        }
+
         public SqlOperation GetUpdateSetPagadaStatement(int idFactura)
         {
             SqlOperation operation = new SqlOperation();
