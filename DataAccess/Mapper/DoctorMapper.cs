@@ -79,5 +79,14 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idUsuario",idUsuario);
             return operation;
         }
+
+        public SqlOperation GetUpdateHorarioDoctor(int idDoctor, int horarioNuevo)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_DOCTOR_HORARIO";
+            operation.AddIntegerParam("idDoctor", idDoctor);
+            operation.AddIntegerParam("horario",horarioNuevo);
+            return operation;
+        }
     }
 }

@@ -163,7 +163,7 @@ namespace AppLogic
             usuario.correo = usuarioInsert.correo;
             usuario.direccion = usuarioInsert.direccion;
             usuario.fotoPerfil = usuarioInsert.fotoPerfil;
-            usuario.activo = true;
+            usuario.activo = false;
             usuario.sexo = usuarioInsert.sexo;
             usuario.password = usuarioInsert.password;
             return usuario;

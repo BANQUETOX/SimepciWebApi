@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using AppLogic;
 using DTO.Citas;
 using DTO;
+using Microsoft.AspNetCore.Cors;
 
 namespace SIMEPCI_API.Controllers
 {
+    [EnableCors("Simepci-web-policy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CitaController : ControllerBase
