@@ -41,6 +41,8 @@ namespace AppLogic
             string result;
             try
             {
+                
+
                 if (validarFechaCita(citaInsert.horaInicio, citaInsert.horaFinal))
                 {
                     Cita cita = CastCitaInsert(citaInsert);
@@ -49,6 +51,15 @@ namespace AppLogic
                         result = "No hay doctor disponible en la sede y especialidad solicitadas";
                         return result;  
                     }
+
+
+                    Cita citaExistente = new Cita();
+                    citaExistente = citaCrud.GetCitaByDoctorFecha(cita.idDoctor,cita.horaInicio,cita.horaFinal);
+                    if(citaExistente.Id != 0)
+                    {
+                        return "La cita ya ha sido agendada";
+                    }
+
                     citaCrud.Create(cita);
                     result = "Cita Creada";
                 }

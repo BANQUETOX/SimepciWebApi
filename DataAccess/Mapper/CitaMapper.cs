@@ -112,7 +112,15 @@ namespace DataAccess.Mapper
             return operation;
         }
 
-
+        public SqlOperation GetCitaDoctroHoraStatement(int idDoctor, DateTime horaInico, DateTime horaFinal)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_CITA_DOCTOR_FECHA";
+            operation.AddIntegerParam("idDoctor", idDoctor);
+            operation.AddDatetimeParam("horaInicio",horaInico);
+            operation.AddDatetimeParam("horaFinal",horaFinal);
+            return operation;
+        }
       
     }
 }

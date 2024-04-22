@@ -74,5 +74,17 @@ namespace DataAccess.Crud
             sqlDao.ExecuteStoredProcedure(operation);
         }
 
+        public Cita GetCitaByDoctorFecha(int idDoctor, DateTime horaInico, DateTime horaFinal)
+        {   
+            Cita cita = new Cita();
+            SqlOperation operation = citaMapper.GetCitaDoctroHoraStatement(idDoctor,horaInico,horaFinal);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count() > 0) {
+                cita = citaMapper.BuildObject(result[0]);
+            }
+            return cita;
+          
+        }
+
     }
 }
