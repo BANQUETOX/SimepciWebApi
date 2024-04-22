@@ -92,6 +92,16 @@ namespace DataAccess.Crud
 
         }
 
+        public Usuario RetrieveByCedula(string cedula)
+        {
+
+            SqlOperation operation = usuarioMapper.GetUsuarioByCedula(cedula);
+            var result = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            return usuario;
+
+        }
+
 
         public Usuario RetrieveByFacturaId(int idFactura)
         {

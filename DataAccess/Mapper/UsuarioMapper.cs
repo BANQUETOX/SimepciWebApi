@@ -196,6 +196,14 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUsuarioByCedula(string cedula)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_CEDULA";
+            operation.AddVarcharParam("cedula", cedula);
+            return operation;
+        }
+
         internal int CalcularEdad(DateTime fechaNacimiento)
         {
             DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Today);

@@ -10,15 +10,15 @@ namespace DataAccess.Mapper
 {
     public class SecretarioMapper
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public Secretario BuildObject(Dictionary<string, object> row)
         {
-            Paciente paciente = new Paciente();
-            paciente.Id = int.Parse(row["Id"].ToString());
-            paciente.IdUsuario = int.Parse(row["IdUsuario"].ToString());
-            return paciente;
+            Secretario secretario = new Secretario();
+            secretario.Id = int.Parse(row["Id"].ToString());
+            secretario.idUsuario = int.Parse(row["IdUsuario"].ToString());
+            return secretario;
         }
 
-        public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
+        public List<Secretario> BuildObjects(List<Dictionary<string, object>> rowList)
         {
             throw new NotImplementedException();
         }
@@ -38,6 +38,14 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("idUsuario", idUsuario);
             return operation;
 
+        }
+
+        public SqlOperation GetRetrieveByUsuarioIdStatement(int idUsuario)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_SECRETARIO_USUARIO_ID";
+            operation.AddIntegerParam("idUsuario",idUsuario);
+            return operation;
         }
     }
 }

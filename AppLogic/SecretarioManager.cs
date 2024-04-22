@@ -1,4 +1,5 @@
 ﻿using DataAccess.Crud;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace AppLogic
         public void EliminarSecretario(int idUsuario)
         {
             secretarioCrud.Delete(idUsuario);
+        }
+
+        public Secretario GetSecretarioByUsuarioId(int idUsuario)
+        {
+            return secretarioCrud.GetSecretarioByUsuarioId(idUsuario);
         }
     }
 }

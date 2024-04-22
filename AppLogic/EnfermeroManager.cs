@@ -1,4 +1,6 @@
-﻿using DataAccess.Crud;
+﻿using Azure.Core;
+using DataAccess.Crud;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,11 @@ namespace AppLogic
         public void EliminarEnfermero(int idUsuario)
         {
             enfermeroCrud.Delete(idUsuario);
+        }
+
+        public Enfermero GetEnfermeroByUsuarioId(int idUsuario)
+        {
+            return enfermeroCrud.GetEnfermeroByUsuarioId(idUsuario);
         }
     }
 }

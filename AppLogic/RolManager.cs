@@ -49,6 +49,11 @@ namespace AppLogic
             }
             if (idRol == 1)
             {
+                Administrador administradorExistente = administradorManager.GetAdministradorByUsusarioId(idUsuario);
+                if (administradorExistente.Id != 0)
+                {
+                    return "El usuario ya tiene el rol administrador asignado";
+                }
                 administradorManager.CrearAdministrador(idUsuario);
             }
             else if (idRol == 2)
@@ -57,14 +62,29 @@ namespace AppLogic
             }
             else if (idRol == 3)
             {
+                Secretario secretarioExistente = secretarioManager.GetSecretarioByUsuarioId(idUsuario);
+                if (secretarioExistente.Id != 0)
+                {
+                    return "El usuario ya tiene el rol secretario asignado";
+                }
                 secretarioManager.CrearSecretario(idUsuario);
             }
             else if (idRol == 4)
             {
+                Enfermero enfermeroExistente = enfermeroManager.GetEnfermeroByUsuarioId(idUsuario);
+                if (enfermeroExistente.Id != 0)
+                {
+                    return "El usuario ya tiene el rol enfermero asignado";
+                }
                 enfermeroManager.CrearEnfermero(idUsuario);
             }
             else if (idRol == 5) 
             {
+                Paciente pacienteExistente = pacienteManager.GetPacienteByUsuarioId(idUsuario);
+                if (pacienteExistente.Id != 0)
+                {
+                    return "El usuario ya tiene el rol paciente asignado";
+                }
                 pacienteManager.CrearPaciente(idUsuario);
             }
             return rolCrud.AsignarRolUsuario(idUsuario, idRol);
@@ -72,31 +92,43 @@ namespace AppLogic
 
         public string RemoverRolUsuario(int idUsuario, int idRol)
         {
-            if (idRol > 5)
+            string result;
+            try
             {
-                return "idRol Invalido";
+                if (idRol > 5)
+                {
+                    return "idRol Invalido";
+                }
+                if (idRol == 1)
+                {
+                    administradorManager.EliminarAdministrador(idUsuario);
+                }
+                else if (idRol == 2)
+                {
+                    doctorManager.EliminarDoctor(idUsuario);
+                }
+                else if (idRol == 3)
+                {
+                    secretarioManager.EliminarSecretario(idUsuario);
+                }
+                else if (idRol == 4)
+                {
+                    enfermeroManager.EliminarEnfermero(idUsuario);
+                }
+                else if (idRol == 5)
+                {
+                    pacienteManager.EliminarPaciente(idUsuario);
+                }
+                rolCrud.RemoverRolUsuario(idUsuario, idRol);
+                 result = "El rol a sido removido";
+
             }
-            if (idRol == 1)
+            catch (Exception e)
             {
-                administradorManager.EliminarAdministrador(idUsuario);
+               result = e.Message;
             }
-            else if (idRol == 2)
-            {
-                doctorManager.EliminarDoctor(idUsuario);
-            }
-            else if (idRol == 3)
-            {
-                secretarioManager.EliminarSecretario(idUsuario);
-            }
-            else if (idRol == 4)
-            {
-                enfermeroManager.EliminarEnfermero(idUsuario);
-            }
-            else if (idRol == 5) 
-            {
-                pacienteManager.EliminarPaciente(idUsuario);
-            }
-            return rolCrud.RemoverRolUsuario(idUsuario, idRol);
+            return result;
+            
         }
 
         public List<string> GetRolesUsuario(string correo)

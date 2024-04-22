@@ -23,6 +23,12 @@ namespace AppLogic
 
         public string CreateUsuario(Usuario usuario, bool esFuncionario)
         {
+
+            Usuario usuarioExistente = usuarioCrud.RetrieveByCedula(usuario.cedula);
+            if (usuarioExistente != null || usuarioExistente.Id != 0) {
+                return "La cedula ya ha sido registrada";
+            }
+            
             string correo = usuario.correo;
             if (!verificarCorreo(correo))
             {

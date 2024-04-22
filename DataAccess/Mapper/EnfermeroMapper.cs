@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class EnfermeroMapper : IObjectMapper
+    public class EnfermeroMapper
     {
-        public BaseClass BuildObject(Dictionary<string, object> row)
+        public Enfermero BuildObject(Dictionary<string, object> row)
         {
-            Paciente paciente = new Paciente();
-            paciente.Id = int.Parse(row["Id"].ToString());
-            paciente.IdUsuario = int.Parse(row["IdUsuario"].ToString());
-            return paciente;
+            Enfermero enfermero = new Enfermero();
+            enfermero.Id = int.Parse(row["Id"].ToString());
+            enfermero.IdUsuario = int.Parse(row["IdUsuario"].ToString());
+            return enfermero;
         }
 
         public List<BaseClass> BuildObjects(List<Dictionary<string, object>> rowList)
@@ -36,6 +36,15 @@ namespace DataAccess.Mapper
         {
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_DELETE_ENFERMERO";
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            return operation;
+
+        }
+
+        public SqlOperation GetRetrieveByUsuarioId(int idUsuario)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_ENFERMERO_USUARIO_ID";
             operation.AddIntegerParam("idUsuario", idUsuario);
             return operation;
 

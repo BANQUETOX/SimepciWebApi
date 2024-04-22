@@ -57,5 +57,13 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+
+        public SqlOperation GetRetrieveByUsuarioId(int idUsuario)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_ADMINISTRADOR_USUARIO_ID";
+            operation.AddIntegerParam("idUsuario", idUsuario);
+            return operation;
+        }
     }
 }

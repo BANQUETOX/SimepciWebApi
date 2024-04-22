@@ -8,6 +8,7 @@ namespace DTO
 {
     public class Enfermero : BaseClass
     {
-        public int idUsuario {  get; set; }
+       
+        public int IdUsuario {  get; set; }
     }
 }

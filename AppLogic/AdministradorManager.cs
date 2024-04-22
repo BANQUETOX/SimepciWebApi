@@ -1,4 +1,5 @@
 ﻿using DataAccess.Crud;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace AppLogic
         public void EliminarAdministrador(int idUsuario)
         {
             administradorCrud.Delete(idUsuario);
+        }
+        public Administrador GetAdministradorByUsusarioId(int idUsuario)
+        {
+            return administradorCrud.GetAdministradorByUsuarioId(idUsuario);
         }
     }
 }

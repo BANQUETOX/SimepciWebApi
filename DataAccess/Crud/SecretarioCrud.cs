@@ -1,5 +1,6 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace DataAccess.Crud
 {
     public class SecretarioCrud
     {
-        PacienteMapper mapper;
+        SecretarioMapper mapper;
         SqlDao sqlDao;
 
         public SecretarioCrud()
         {
-            mapper = new PacienteMapper();
+            mapper = new SecretarioMapper();
             sqlDao = SqlDao.GetInstance();
         }
 
@@ -31,6 +32,19 @@ namespace DataAccess.Crud
             SqlOperation operation = mapper.GetDeleteStatement(userId);
             sqlDao.ExecuteStoredProcedure(operation);
         }
+
+        public Secretario GetSecretarioByUsuarioId(int idUsuario)
+        {
+            Secretario secretario = new Secretario();
+            SqlOperation operation = mapper.GetRetrieveByUsuarioIdStatement(idUsuario);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count > 0)
+            {
+                secretario = mapper.BuildObject(result[0]);
+            }
+            return secretario;
+        }
+
     }
 }
 

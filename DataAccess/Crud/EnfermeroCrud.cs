@@ -1,5 +1,6 @@
 ﻿using DataAccess.Dao;
 using DataAccess.Mapper;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,18 @@ namespace DataAccess.Crud
         {
             SqlOperation operation = mapper.GetDeleteStatement(userId);
             sqlDao.ExecuteStoredProcedure(operation);
+        }
+
+        public Enfermero GetEnfermeroByUsuarioId(int idUsuario)
+        {
+            Enfermero enfermero = new Enfermero();
+            SqlOperation operation = mapper.GetRetrieveByUsuarioId(idUsuario);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count() > 0)
+            {
+                enfermero = mapper.BuildObject(result[0]);
+            }
+            return enfermero;
         }
     }
 }

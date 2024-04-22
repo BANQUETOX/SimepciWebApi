@@ -40,6 +40,18 @@ namespace DataAccess.Crud
             var administradores = mapper.BuildObjects(result);
             return administradores;
         }
+
+        public Administrador GetAdministradorByUsuarioId(int idUsuario)
+        {
+            Administrador administrador = new Administrador();
+            SqlOperation operation = mapper.GetRetrieveByUsuarioId(idUsuario);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count > 0)
+            {
+                administrador = mapper.BuildObject(result[0]);
+            }
+            return administrador;
+        }
     }
 }
 
