@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Azure;
@@ -9,6 +10,7 @@ using Azure.Communication.Email;
 using DataAccess.Crud;
 using DTO;
 using DTO.Citas;
+using DTO.Facturas;
 using DTO.Usuarios;
 
 namespace AppLogic
@@ -185,6 +187,34 @@ namespace AppLogic
             }
             return result;
             
+        }
+
+        public async Task<string> SendConfirmacionPago(Usuario usuarioPaciente, Factura factura)
+        {
+            string result;
+            try
+            {
+                string emailAddress = usuarioPaciente.correo;
+                EmailContent emailContent = new EmailContent("Confirmacion de pago"); //Subject
+                emailContent.PlainText = $"Gracias por confiar en nuestros servicios, se ha confirmado el pago realizado por el monto de ₡{factura.monto}"; //Contenido del correo
+                
+                List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+                EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+                EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                                                        WaitUntil.Completed,
+                                                                    emailMessage, CancellationToken.None);
+                EmailSendResult statusMonitor = emailSendOperation.Value;
+
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+                result = "Confirmacion de pago enviada";
+            }
+            catch (Exception e)
+            {
+                result=e.Message;   
+            }
+            return result;
+
         }
         internal static string generarCodigoOTP()
         {

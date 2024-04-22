@@ -92,6 +92,22 @@ namespace DataAccess.Crud
 
         }
 
+
+        public Usuario RetrieveByFacturaId(int idFactura)
+        {
+
+            SqlOperation operation = usuarioMapper.GetUsuarioByFacturaId(idFactura);
+            var result = dao.ExecuteStoredProcedureWithQuery(operation);
+            Usuario usuario = new Usuario();
+            if (result.Count > 0)
+            {
+                usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            }
+            return usuario;
+
+        }
+
+
         public  void Update(BaseClass dto)
         {
             throw new NotImplementedException();

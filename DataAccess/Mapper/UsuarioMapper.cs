@@ -183,8 +183,16 @@ namespace DataAccess.Mapper
         public SqlOperation GetUsuarioByPacienteId(int idPaciente)
         {
             SqlOperation operation = new SqlOperation();
-            operation.ProcedureName = "SP_GET_USUARIO_ID_Paciente";
+            operation.ProcedureName = "SP_GET_USUARIO_ID_PACIENTE";
             operation.AddIntegerParam("idPaciente", idPaciente);
+            return operation;
+        }
+
+        public SqlOperation GetUsuarioByFacturaId(int idFactura)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_USUARIO_ID_FACTURA";
+            operation.AddIntegerParam("idFactura", idFactura);
             return operation;
         }
 

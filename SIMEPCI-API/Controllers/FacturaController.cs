@@ -31,7 +31,7 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpPatch]
-        public string PagarFactura(int idFactura)
+        public Task<string> PagarFactura(int idFactura)
         {
             return manager.UpdateFacturaPagada(idFactura);
         }

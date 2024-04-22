@@ -22,7 +22,7 @@ namespace AppLogic
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
         ConfiguracionCrud configuracionCrud = new ConfiguracionCrud();
-        CitaCrud citaCrud = new CitaCrud();
+        EmailManager emailManager = new EmailManager();
         
 
 
@@ -129,13 +129,16 @@ namespace AppLogic
         }
 
 
-        public string UpdateFacturaPagada(int idFactura)
+        public async Task<string> UpdateFacturaPagada(int idFactura)
         {
             string result;
             try
             {
 
                 facturaCrud.UpdateFacturaPagada(idFactura);
+                Factura factura = facturaCrud.GetFacturaById(idFactura);
+                Usuario usuarioPaciente = usuarioCrud.RetrieveByFacturaId(idFactura);
+                Console.WriteLine(await emailManager.SendConfirmacionPago(usuarioPaciente, factura));
                 result = "Factura Pagada";
             }
             catch (Exception ex)
