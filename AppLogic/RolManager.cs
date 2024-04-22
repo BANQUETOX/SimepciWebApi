@@ -14,6 +14,7 @@ namespace AppLogic
         RolCrud rolCrud = new RolCrud();
         AdministradorManager administradorManager = new AdministradorManager();
         DoctorManager doctorManager = new DoctorManager();
+        DoctorCrud doctorCrud = new DoctorCrud();
         EnfermeroManager enfermeroManager = new EnfermeroManager();
         SecretarioManager secretarioManager = new SecretarioManager();
         PacienteManager pacienteManager = new PacienteManager();
@@ -104,16 +105,33 @@ namespace AppLogic
             return roles;
         }
 
-        public void AsignarRolDoctor(DoctorInsert doctorInsert)
+        public string AsignarRolDoctor(DoctorInsert doctorInsert)
         {
-            Usuario usuario = usuarioCrud.GetUsuarioByEmail(doctorInsert.correoUsuario);
-            Doctor doctor = new Doctor();
-            doctor.idUsuario = usuario.Id;  
-            doctor.idEspecialidad = doctorInsert.idEspecialidad;
-            doctor.horario = doctorInsert.horario;  
-            doctor.idSede = doctorInsert.idSede;
-            doctorManager.CrearDoctor(doctor);
-            rolCrud.AsignarRolUsuario(usuario.Id, 2);
+            string result;
+            try {
+
+
+                Usuario usuario = usuarioCrud.GetUsuarioByEmail(doctorInsert.correoUsuario);
+                Doctor doctorExistente = doctorCrud.GetDoctorByUsuarioId(usuario.Id);
+                if (doctorExistente != null || doctorExistente.Id == 0) {
+                    return "El usuario ya es doctor";
+                }
+
+                Doctor doctor = new Doctor();
+                doctor.idUsuario = usuario.Id;
+                doctor.idEspecialidad = doctorInsert.idEspecialidad;
+                doctor.horario = doctorInsert.horario;
+                doctor.idSede = doctorInsert.idSede;
+                doctorManager.CrearDoctor(doctor);
+                rolCrud.AsignarRolUsuario(usuario.Id, 2);
+                result = "Rol doctor asignado";
+            }
+            catch (Exception e)
+            {
+                result = e.Message; 
+            }
+            return result;
+           
         }
         
     }

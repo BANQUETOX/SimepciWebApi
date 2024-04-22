@@ -83,19 +83,7 @@ namespace SIMEPCI_API.Controllers
         [HttpPost]
         public string AsignarRolDoctor(DoctorInsert doctor)
         {
-            string result;
-            
-            try
-            {
-
-             rolManager.AsignarRolDoctor(doctor);
-                result = "Doctor creado";
-            }
-            catch (Exception ex)
-            {
-                result = ex.ToString();
-            }
-            return result;
+            return rolManager.AsignarRolDoctor(doctor);
 
         }
 
