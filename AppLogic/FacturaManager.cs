@@ -50,12 +50,15 @@ namespace AppLogic
                 if(monto > 0)
                 {
                     Configuracion impuesto = configuracionCrud.GetConfiguraciones()[0];
+                    Configuracion iva = configuracionCrud.GetConfiguraciones()[2];
                     float valorImpuesto = float.Parse(impuesto.valor);
+                    float valorIva = float.Parse(iva.valor);
+                    
 
                     if (impuesto != null && valorImpuesto > 0) {
                         float impuestoDecimal = valorImpuesto / 100;
-                        Console.WriteLine(impuestoDecimal);
-                        monto += (monto / impuestoDecimal);
+                        float valorIvaDecimal = valorIva / 100;
+                        monto += (monto * impuestoDecimal) + (monto * valorIvaDecimal );
                        
                     }
                 }

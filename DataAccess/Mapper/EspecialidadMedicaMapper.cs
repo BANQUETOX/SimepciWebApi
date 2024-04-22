@@ -74,5 +74,13 @@ namespace DataAccess.Mapper
             operation.AddFloatParam("nuevoPrecio",nuevoPrecio);
             return operation;
         }
+
+        public SqlOperation GetRetrieveEspecialidadesBySedeId(int idSede)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_ESPECIALIDADES_SEDE_ID";
+            operation.AddIntegerParam("idSede", idSede);
+            return operation;
+        }
     }
 }

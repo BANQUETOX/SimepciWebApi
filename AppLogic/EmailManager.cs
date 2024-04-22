@@ -8,6 +8,7 @@ using Azure;
 using Azure.Communication.Email;
 using DataAccess.Crud;
 using DTO;
+using DTO.Citas;
 using DTO.Usuarios;
 
 namespace AppLogic
@@ -20,6 +21,9 @@ namespace AppLogic
         private const string caracteresPermitidosOtp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         UsuarioCrud usuarioCrud;
         AdministradorCrud administradorCrud;
+        CitaCrud citaCrud = new CitaCrud();
+        PacienteCrud pacieteCrud = new PacienteCrud();
+        ConfiguracionCrud configuracionCrud = new ConfiguracionCrud();
 
         public EmailManager()
         {
@@ -131,6 +135,57 @@ namespace AppLogic
             return "Correo enviado a los administadores";
         }
 
+
+        public async Task<string> SendRecordatorio(Usuario usuario)
+        {
+            string result = "";
+            try
+            {
+                string emailAddress = usuario.correo;
+                Paciente paciente = pacieteCrud.GetPacieteByUsuarioId(usuario.Id);
+                Configuracion configuracion = configuracionCrud.GetConfiguraciones()[1];
+                int diasNotificacion = int.Parse(configuracion.valor.ToString());
+                TimeSpan diasFecha = TimeSpan.FromDays(diasNotificacion);
+                List<Cita> citasPaciente = citaCrud.GetCitasPaciente(paciente.Id);
+                DateTime hoy = DateTime.Now;
+                foreach (var cita in citasPaciente)
+                {
+                    if (cita.horaInicio >= hoy)
+                    {
+                        TimeSpan diferencia = cita.horaInicio  - hoy.Date ;
+                        if (diferencia <= diasFecha)
+                        {
+                            EmailContent emailContent = new EmailContent("Recordatorio de su cita programada"); //Subject
+                            emailContent.PlainText = $"Recordar que tiene una cita el dia {cita.horaInicio.Date}"; //Contenido del correo
+                            List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+                            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+                            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
+                            EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                                                                    WaitUntil.Completed,
+                                                                                emailMessage, CancellationToken.None);
+                            EmailSendResult statusMonitor = emailSendOperation.Value;
+
+                            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+                            result = "Recordatorios enviados";
+
+                        }
+                    }
+                    else
+                    {
+                        result = "No hay recordatorios por enviar";
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
+            
+        }
         internal static string generarCodigoOTP()
         {
             int longitud = 8;

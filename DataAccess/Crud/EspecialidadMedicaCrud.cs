@@ -64,6 +64,15 @@ namespace DataAccess.Crud
             return especialidad;
         }
 
+        public List<EspecialidadMedica> GetEspecialidadesMedicasSede(int idSede)
+        {
+            List<EspecialidadMedica> especialidades = new List<EspecialidadMedica>();
+            SqlOperation operation = mapper.GetRetrieveEspecialidadesBySedeId(idSede);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            especialidades = mapper.BuildObjects(result);
+            return especialidades;
+        }
+
 
 
     }

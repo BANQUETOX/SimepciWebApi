@@ -78,7 +78,7 @@ namespace AppLogic
         }
 
 
-        public UsuarioGet Login(string correo, string password)
+        public async Task<UsuarioGet> Login(string correo, string password)
         {
             UsuarioGet result;
 
@@ -86,6 +86,7 @@ namespace AppLogic
             {
                 Usuario usuario = usuarioCrud.Login(correo, password);
                 result = castUsuarioGet(usuario);
+                Console.WriteLine(await emailManager.SendRecordatorio(usuario));
             }
             catch (Exception ex)
             {

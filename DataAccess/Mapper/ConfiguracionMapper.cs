@@ -49,6 +49,15 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUpdateIvaStatement(string nuevoValor)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_IVA";
+            operation.AddVarcharParam("nuevoValor", nuevoValor);
+            return operation;
+        }
+
+
         public SqlOperation GetUpdateRecordatorioStatement(string nuevoValor)
         {
             SqlOperation operation = new SqlOperation();

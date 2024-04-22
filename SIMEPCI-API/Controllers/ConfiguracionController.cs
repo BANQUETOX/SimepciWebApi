@@ -29,5 +29,11 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.UpdateRecordatorio(valorRecordatorio);
         }
+
+        [HttpPost]
+        public string ActualizarIVA(string valorRecordatorio)
+        {
+            return manager.UpdateIva(valorRecordatorio);
+        }
     }
 }

@@ -33,6 +33,21 @@ namespace AppLogic
             return result;
         }
 
+        public string UpdateIva(string nuevoValor)
+        {
+            string result;
+            try
+            {
+                configuracionCrud.UpdateIva(nuevoValor);
+                result = "Impuesto actualizado";
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            return result;
+        }
+
         public string UpdateRecordatorio(string nuevoValor)
         {
             string result;

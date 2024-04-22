@@ -36,6 +36,12 @@ namespace DataAccess.Crud
             sqlDao.ExecuteStoredProcedure(operation);
         }
 
+        public void UpdateIva(string nuevoValor)
+        {
+            SqlOperation operation = mapper.GetUpdateIvaStatement(nuevoValor);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+
         public void UpdateRecordatorio(string nuevoValor)
         {
             SqlOperation operation = mapper.GetUpdateRecordatorioStatement(nuevoValor);

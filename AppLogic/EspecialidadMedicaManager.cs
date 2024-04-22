@@ -57,5 +57,10 @@ namespace AppLogic
             especialidad.nombre = insert.nombre;
             return especialidad;
         }
+
+        public List<EspecialidadMedica> GetEspecialidadesMedicasSede(int idSede)
+        {
+            return crud.GetEspecialidadesMedicasSede(idSede);
+        }
     }
 }
