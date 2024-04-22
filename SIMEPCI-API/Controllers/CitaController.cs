@@ -71,5 +71,11 @@ namespace SIMEPCI_API.Controllers
         {
             return citaManager.cuposDiponiblesDoctor(fechaInico,fechaFinal,idDoctor);
         }
+
+        [HttpDelete]
+        public string CancelarCita(int idCita)
+        {
+            return citaManager.DeleteCita(idCita);
+        }
     }
 }

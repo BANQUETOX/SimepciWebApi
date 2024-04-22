@@ -68,5 +68,11 @@ namespace DataAccess.Crud
             return cita;
         }
 
+        public void DeleteCita(int id)
+        {
+            SqlOperation operation = citaMapper.GetDeleteStatement(id);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
+
     }
 }

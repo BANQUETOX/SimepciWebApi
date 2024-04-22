@@ -243,6 +243,23 @@ namespace AppLogic
             cuposDisponibles = cuposTotales.Except(cuposOcupados).ToList();
             return cuposDisponibles;
         }
+
+        public string DeleteCita(int idCita)
+        {
+            string result;
+            try
+            {
+                citaCrud.DeleteCita(idCita);
+                result = "Cita eliminada";
+            }
+            catch (Exception ex) {
+                result = "No se puede eliminar la cita, debido a que tiene una factura asociada";
+                Console.WriteLine(ex);    
+            }
+            return result;
+        }
+
+
         public bool validarFechaCita(DateTime horaInicio, DateTime horaFinal)
         {
             if (horaInicio.Date != horaFinal.Date)
@@ -290,5 +307,7 @@ namespace AppLogic
             citaOutputDoctor.idSede= citaBase.idSede;
             return citaOutputDoctor;
         }
+
+
     }
 }
