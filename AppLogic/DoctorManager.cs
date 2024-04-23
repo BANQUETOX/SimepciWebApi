@@ -39,5 +39,19 @@ namespace AppLogic
                 return ex.Message;
             }
         }
+
+        public List<Doctor> GetAllDoctors()
+        {
+            List<Doctor> doctores = new List<Doctor>();
+            try
+            {
+                doctores = doctorCrud.GetAllDoctores();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);  
+            }
+            return doctores;
+        }
     }
 }

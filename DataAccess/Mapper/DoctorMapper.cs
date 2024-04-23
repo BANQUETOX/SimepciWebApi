@@ -88,5 +88,13 @@ namespace DataAccess.Mapper
             operation.AddIntegerParam("horario",horarioNuevo);
             return operation;
         }
+
+
+        public SqlOperation GetRetrieveAllStatement()
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_GET_DOCTORES";
+            return operation;
+        }
     }
 }

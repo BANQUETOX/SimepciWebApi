@@ -64,6 +64,13 @@ namespace DataAccess.Crud
 
         }
 
+        public List<Doctor> GetAllDoctores()
+        {
+            SqlOperation operation = mapper.GetRetrieveAllStatement();
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            return mapper.BuildObjects(result);
+        }
+
         public void UpdateHorarioDoctor(int idDoctor, int horarioNuevo)
         {
             SqlOperation operation = mapper.GetUpdateHorarioDoctor(idDoctor,horarioNuevo);
