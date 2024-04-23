@@ -103,19 +103,19 @@ namespace AppLogic
             return citasOutput;
             
         }
-       /* public List<Cupo> cuposDisponibles( int idSede, int idEspecialidad)
+        public List<Cupo> cuposDisponibles(int idSede, int idEspecialidad)
         {
             DateTime fechaInicio = DateTime.Now;
             DateTime fechaFinal = fechaInicio.AddDays(1);
             List<Cupo> cuposDisponibles = new List<Cupo>();
-            var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede,idEspecialidad);
+            var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede, idEspecialidad);
             foreach (var doctor in doctores)
             {
-                var cupos = cuposDiponiblesDoctor(fechaInicio,fechaFinal,doctor.Id);
+                var cupos = cuposDiponiblesDoctor(fechaInicio, fechaFinal, doctor.Id);
                 cuposDisponibles = cuposDisponibles.Concat(cupos).ToList();
             }
             return cuposDisponibles;
-        }*/
+        }
 
         public List<CitaOutput> CitasPaciente(string correoPaciente)
         {
@@ -168,7 +168,7 @@ namespace AppLogic
             List<Doctor> doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede, idEspecialidad);
             foreach (Doctor doctor in doctores)
             {
-                if(cuposDiponiblesDoctor(horaInicio, horaFinal, doctor.Id) != null)
+                if(cuposDiponiblesDoctor(horaInicio, horaFinal, doctor.Id).Count > 0) 
                 {
                     doctorDisponible = doctor;
                 }
@@ -200,6 +200,10 @@ namespace AppLogic
                     cupo.horaFinal = siguiente;
                     cuposTotales.Add(cupo);
                     inicio = siguiente;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
 
@@ -292,9 +296,12 @@ namespace AppLogic
 
         public CitaOutputReservada castCitaReservadaOutput(Cita citaBase)
         {
+            Usuario usuarioPaciente = usuarioCrud.RetrieveByPacienteId(citaBase.idPaciente);
+            string nombrePaciente = $"{usuarioPaciente.nombre} - {usuarioPaciente.primerApellido} - {usuarioPaciente.segundoApellido}";
             EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadByCitaId(citaBase.Id);
             CitaOutputReservada citaOutputReservada = new CitaOutputReservada();
-            citaOutputReservada.Id = citaBase.Id;   
+            citaOutputReservada.Id = citaBase.Id; 
+            citaOutputReservada.nombrePaciente = nombrePaciente;
             citaOutputReservada.idPaciente = citaBase.idPaciente;
             citaOutputReservada.idDoctor = citaBase.idDoctor;   
             citaOutputReservada.horaInicio = citaBase.horaInicio;

@@ -51,10 +51,10 @@ namespace SIMEPCI_API.Controllers
 
         }
 
-       /* [HttpGet]
-        public List<Cupo> GetCuposDisponibles ( int idSede, int idEspecialidad)
+        /*[HttpGet]
+        public List<Cupo> GetCuposDisponibles(int idSede, int idEspecialidad)
         {
-            return citaManager.cuposDisponibles(idSede,idEspecialidad);
+            return citaManager.cuposDisponibles(idSede, idEspecialidad);
         }*/
 
         [HttpGet]
@@ -68,11 +68,11 @@ namespace SIMEPCI_API.Controllers
             return citaManager.CitasDoctor(correoDoctor);
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public List<Cupo> GetCuposDisponiblesDoctor(DateTime fechaInico, DateTime fechaFinal, int idDoctor)
         {
             return citaManager.cuposDiponiblesDoctor(fechaInico,fechaFinal,idDoctor);
-        }
+        }*/
 
         [HttpDelete]
         public string CancelarCita(int idCita)

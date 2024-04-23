@@ -8,7 +8,9 @@ namespace DTO.Citas
 {
     public class CitaOutputReservada : BaseClass
     {
+
         public int idPaciente { get; set; }
+        public string nombrePaciente { get; set; }
         public int idDoctor { get; set; }
         public string especialidad { get; set; }
         public DateTime horaInicio { get; set; }
