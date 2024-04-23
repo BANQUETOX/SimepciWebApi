@@ -116,7 +116,7 @@ namespace AppLogic
             List<Administrador> administradoes = administradorCrud.GetAllAdministrador();
    
 
-            EmailContent emailContent = new EmailContent("Verificacion para creacion de su cuenta en SIMEPCI"); //Subject
+            EmailContent emailContent = new EmailContent("Solicitud para ser funcionario"); //Subject
             emailContent.PlainText = $"Un usuario con correo {correoSolicitud} a solicitado unirse como funcionario de la clinica, revisa tus solicitudes para apovar o denegar el acceso";
 
             foreach (var administrador in administradoes)
@@ -158,7 +158,7 @@ namespace AppLogic
                         if (diferencia <= diasFecha)
                         {
                             EmailContent emailContent = new EmailContent("Recordatorio de su cita programada"); //Subject
-                            emailContent.PlainText = $"Recordar que tiene una cita el dia {cita.horaInicio.Date}"; //Contenido del correo
+                            emailContent.PlainText = $"Recordar que tiene una cita el dia {cita.horaInicio}"; //Contenido del correo
                             List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
                             EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
                             EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
@@ -214,6 +214,29 @@ namespace AppLogic
                 result=e.Message;   
             }
             return result;
+
+        }
+
+        public async void SendConfirmacionCita(Cita cita)
+        {
+
+            Usuario usuarioPaciente = usuarioCrud.RetrieveByPacienteId(cita.idPaciente);
+            string emailAddress = usuarioPaciente.correo;
+            DateTime horaInicioCr = cita.horaInicio.AddHours(-6);
+            EmailContent emailContent = new EmailContent("Confirmacion de Cita"); //Subject
+            emailContent.PlainText = $"Su cita para la fecha {horaInicioCr} se ha confirmado"; //Contenido del correo
+
+            List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                                                    WaitUntil.Completed,
+                                                                emailMessage, CancellationToken.None);
+            EmailSendResult statusMonitor = emailSendOperation.Value;
+
+            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+            
+            
 
         }
         internal static string generarCodigoOTP()

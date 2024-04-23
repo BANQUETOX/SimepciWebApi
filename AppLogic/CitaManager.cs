@@ -20,6 +20,7 @@ namespace AppLogic
         UsuarioCrud usuarioCrud = new UsuarioCrud();
         EspecialidadMedicaCrud especialidadMedicaCrud = new EspecialidadMedicaCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
+        EmailManager emailManager = new EmailManager();
 
 
         public List<Cita> GetAllCitas()
@@ -61,6 +62,7 @@ namespace AppLogic
                     }
 
                     citaCrud.Create(cita);
+                    emailManager.SendConfirmacionCita(cita);
                     result = "Cita Creada";
                 }
                 else
@@ -81,6 +83,8 @@ namespace AppLogic
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(citaInsert.correoPaciente);
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
             Cita cita = new Cita();
+          /*  DateTime horaInicioCr = citaInsert.horaInicio.AddHours(-6);
+            DateTime horaFinalCr = citaInsert.horaFinal.AddHours(-6);*/
             Doctor doctorAsignado = GetDoctorDisponible(citaInsert.horaInicio, citaInsert.horaFinal, citaInsert.idSede, citaInsert.idEspecialidad);
             cita.idDoctor = doctorAsignado.Id;
             cita.idPaciente = paciente.Id;
@@ -106,7 +110,7 @@ namespace AppLogic
         public List<Cupo> cuposDisponibles(int idSede, int idEspecialidad)
         {
             DateTime fechaInicio = DateTime.Now;
-            DateTime fechaFinal = fechaInicio.AddDays(1);
+            DateTime fechaFinal = fechaInicio.AddDays(2);
             List<Cupo> cuposDisponibles = new List<Cupo>();
             var doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede, idEspecialidad);
             foreach (var doctor in doctores)
@@ -168,7 +172,8 @@ namespace AppLogic
             List<Doctor> doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede, idEspecialidad);
             foreach (Doctor doctor in doctores)
             {
-                if(cuposDiponiblesDoctor(horaInicio, horaFinal, doctor.Id).Count > 0) 
+                List<Cupo> cuposDoctor = cuposDiponiblesDoctor(horaInicio, horaFinal, doctor.Id);
+                if(cuposDoctor.Count() > 0) 
                 {
                     doctorDisponible = doctor;
                 }
@@ -182,80 +187,77 @@ namespace AppLogic
         public List<Cupo> cuposDiponiblesDoctor(DateTime fechaInicio,DateTime fechaFinal,int idDoctor)
         {
 
-            DateTime inicio = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, fechaInicio.Hour, 0, 0);
-            DateTime fin = new DateTime(fechaFinal.Year, fechaFinal.Month, fechaFinal.Day, fechaFinal.Hour, 0, 0);
-            var cuposTotales = new List<Cupo>();
-            Doctor doctor = doctorCrud.GetDoctorById(idDoctor);
-            if(doctor.horario == 1)
-            {
-                DateTime horaEntrada = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, 6, 0, 0);
-                DateTime horaSalida = new DateTime(fechaFinal.Year, fechaInicio.Month, fechaInicio.Day, 14, 0, 0);
-                while (inicio < fin)
-                {
-                    DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && horaSalida <= siguiente)
-                    {
-                    Cupo cupo = new Cupo();
-                    cupo.horaInicio = inicio;
-                    cupo.horaFinal = siguiente;
-                    cuposTotales.Add(cupo);
-                    inicio = siguiente;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-            }
-            else if (doctor.horario == 2)
-            {
-                DateTime horaEntrada = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, 14, 0, 0);
-                DateTime horaSalida = new DateTime(fechaFinal.Year, fechaInicio.Month, fechaInicio.Day, 22, 0, 0);
-                while (inicio < fin)
-                {
-                    DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && horaSalida <= siguiente)
-                    {
-                        Cupo cupo = new Cupo();
-                        cupo.horaInicio = inicio;
-                        cupo.horaFinal = siguiente;
-                        cuposTotales.Add(cupo);
-                        inicio = siguiente;
-                    }
-                }
-
-            }
-            else if (doctor.horario == 3)
-            {
-                DateTime horaEntrada = new DateTime(fechaInicio.Year, fechaInicio.Month, fechaInicio.Day, 22, 0, 0);
-                DateTime horaSalida = new DateTime(fechaFinal.Year, fechaInicio.Month, fechaInicio.Day, 6, 0, 0);
-                while (inicio < fin)
-                {
-                    DateTime siguiente = inicio.AddMinutes(30);
-                    if (inicio >= horaEntrada && horaSalida <= siguiente)
-                    {
-                        Cupo cupo = new Cupo();
-                        cupo.horaInicio = inicio;
-                        cupo.horaFinal = siguiente;
-                        cuposTotales.Add(cupo);
-                        inicio = siguiente;
-                    }
-                }
-            }
-
-            var cuposOcupados = new List<Cupo>();
-            var citasAgendadas = citaCrud.GetCitasDoctor(idDoctor);
-            foreach (var cita in citasAgendadas)
-            {
-                Cupo cupoCita = new Cupo();
-                cupoCita.horaInicio = cita.horaInicio;
-                cupoCita.horaFinal = cita.horaFinal;
-                cuposOcupados.Add(cupoCita); 
-            }
-
             var cuposDisponibles = new List<Cupo>();
-            cuposDisponibles = cuposTotales.Except(cuposOcupados).ToList();
+            Doctor doctor = doctorCrud.GetDoctorById(idDoctor);
+
+            if (doctor != null)
+            {
+                DateTime fechaActual = fechaInicio;
+
+                while (fechaActual <= fechaFinal)
+                {
+                    DateTime horaInicio;
+                    DateTime horaFin;
+
+                    // Determinar el horario del doctor para la fecha actual
+                    switch (doctor.horario)
+                    {
+                        case 1:
+                            horaInicio = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 6, 0, 0);
+                            horaFin = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 14, 0, 0);
+                            break;
+                        case 2:
+                            horaInicio = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 14, 0, 0);
+                            horaFin = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 22, 0, 0);
+                            break;
+                        case 3:
+                            horaInicio = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 22, 0, 0);
+                            // Para el horario nocturno (case 3), horaFin será hasta medianoche (23:59:59)
+                            horaFin = new DateTime(fechaActual.Year, fechaActual.Month, fechaActual.Day, 23, 59, 59);
+                            break;
+                        default:
+                            // Horario no válido
+                            return new List<Cupo>();
+                    }
+
+                    // Generar cupos cada 30 minutos dentro del horario del doctor y para la fecha actual
+                    DateTime inicio = horaInicio;
+                    while (inicio < horaFin && inicio < fechaFinal)
+                    {
+                        DateTime siguiente = inicio.AddMinutes(30);
+
+                        // Verificar si el siguiente cupo se encuentra dentro del rango [inicio, horaFin)
+                        if (siguiente <= horaFin)
+                        {
+                            Cupo cupo = new Cupo
+                            {
+                                horaInicio = inicio,
+                                horaFinal = siguiente
+                            };
+
+                            cuposDisponibles.Add(cupo);
+                        }
+
+                        inicio = siguiente;
+                    }
+
+                    // Avanzar a la siguiente fecha
+                    fechaActual = fechaActual.AddDays(1);
+                }
+
+                // Obtener cupos ocupados a partir de citas agendadas
+                var cuposOcupados = citaCrud.GetCitasDoctor(idDoctor)
+                                             .Select(cita => new Cupo
+                                             {
+                                                 horaInicio = cita.horaInicio,
+                                                 horaFinal = cita.horaFinal
+                                             })
+                                             .ToList();
+
+                // Filtrar cupos disponibles para eliminar los cupos ocupados
+                cuposDisponibles = cuposDisponibles.Where(c => !cuposOcupados.Any(co => co.horaInicio <= c.horaInicio && co.horaFinal > c.horaInicio)).ToList();
+            }
+
             return cuposDisponibles;
         }
 
@@ -264,6 +266,13 @@ namespace AppLogic
             string result;
             try
             {
+                /*Cita cita = citaCrud.GetCitaById(idCita);
+                TimeSpan diferencia = cita.horaInicio - horaCancelacion;
+                double horasRestantes = diferencia.TotalHours;
+                if (horasRestantes < 24 )
+                {
+                    return "Quedan menos de 24 horas para la cita, no se puede cancelar";
+                }*/
                 citaCrud.DeleteCita(idCita);
                 result = "Cita eliminada";
             }
@@ -274,6 +283,29 @@ namespace AppLogic
             return result;
         }
 
+        public async Task<string> EnviarRecordatoriosCitas()
+        {
+            string result;
+            try
+            {
+                List<Usuario> usuarios = usuarioCrud.RetrieveAll();
+                foreach (var usuario in usuarios)
+                {
+                    try
+                    {
+                      result = await emailManager.SendRecordatorio(usuario);
+                      Console.WriteLine($"{result}");
+                    }
+                    catch (Exception e ) { 
+                        Console.WriteLine(e.Message);
+                    }
+                }
+                return "Recordatorios enviados";
+            }
+            catch(Exception e)
+            {
+                return e.Message;            }
+        }
 
         public bool validarFechaCita(DateTime horaInicio, DateTime horaFinal)
         {

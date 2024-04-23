@@ -1,9 +1,11 @@
 ﻿using DataAccess.Crud;
 using DTO;
 using DTO.Recetas;
+using DTO.Sedes;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +17,17 @@ namespace AppLogic
         RecetaCrud crud = new RecetaCrud();
         PacienteCrud pacienteCrud = new PacienteCrud();
         UsuarioCrud usuarioCrud = new UsuarioCrud();
+        SedeCrud sedeCrud = new SedeCrud();
+        DoctorCrud doctorCrud = new DoctorCrud();   
 
         public string CrearReceta(RecetaInput recetaInput)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(recetaInput.correoPaciente);
-            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id); 
+            Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
+            /*Usuario usuarioDoctor = usuarioCrud.GetUsuarioByEmail(recetaInput.correoDoctor);
+            Doctor doctor = doctorCrud.GetDoctorByUsuarioId(usuarioDoctor.Id);*/
             Receta receta = new Receta();
+            receta.nombreDoctor = recetaInput.nombreDoctor;
             receta.idPaciente = paciente.Id;
             receta.imagen = recetaInput.imagen;
             receta.fechaEmision = DateTime.Now;
@@ -32,9 +39,17 @@ namespace AppLogic
             return "Receta Creada";
         }
 
-        public List<Receta> GetRecetasPaciente(string correoPaciente) {
-            Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoPaciente);
-            return crud.GetRecetasPaciente(usuario.Id);
+        public List<RecetaOutput> GetRecetasPaciente(string correoPaciente) {
+            List<RecetaOutput> recetas = new List<RecetaOutput>();
+            Usuario usuarioPaciente = usuarioCrud.GetUsuarioByEmail(correoPaciente);
+            
+            List<Receta> recetasBase = crud.GetRecetasPaciente(usuarioPaciente.Id);
+            foreach (var receta in recetasBase)
+            {
+                RecetaOutput output = castRecetaOutput(receta);
+                recetas.Add(output);
+            }
+            return recetas;
         }
 
         public string UpdateReceta(Receta receta)
@@ -80,6 +95,30 @@ namespace AppLogic
                 Console.WriteLine(ex.Message);
             }
             return receta;
+
+        }
+
+
+        public RecetaOutput castRecetaOutput(Receta recetaBase)
+        {
+            Usuario usuarioPaciente = usuarioCrud.RetrieveByPacienteId(recetaBase.idPaciente);
+            /*Usuario usuarioDoctor = usuarioCrud.RetrieveByDoctorId(recetaBase.idDoctor);
+            Doctor doctor = doctorCrud.GetDoctorById(recetaBase.idDoctor);*/
+            /*Sede sedeDoctor = sedeCrud.RetrieveById(doctor.idSede);*/
+            RecetaOutput recetaOutput = new RecetaOutput();
+            recetaOutput.idPaciente = recetaBase.idPaciente;
+            /*recetaOutput.idDoctor = recetaBase.idDoctor;*/
+            recetaOutput.imagen = recetaBase.imagen;    
+            recetaOutput.fechaEmision = recetaBase.fechaEmision;
+            recetaOutput.medicamento = recetaBase.medicamento;  
+            recetaOutput.dosis = recetaBase.dosis;
+            recetaOutput.diasDosis = recetaBase.diasDosis;
+            recetaOutput.recomendaciones = recetaBase.recomendaciones;
+            recetaOutput.nombrePaciente = $"{usuarioPaciente.nombre} - {usuarioPaciente.primerApellido} - {usuarioPaciente.segundoApellido}";
+            recetaOutput.nombreMedico = recetaBase.nombreDoctor;
+            recetaOutput.clinica = $"Centro medico Su salud Primero";
+            return recetaOutput;
+            
 
         }
     }

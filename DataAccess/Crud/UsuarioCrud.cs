@@ -41,10 +41,10 @@ namespace DataAccess.Crud
             throw new NotImplementedException();
         }
 
-        public  List<T> RetrieveAll<T>()
+        public  List<Usuario> RetrieveAll()
         {
 
-            List<T> resultList = new List<T>();
+            List<Usuario> resultList = new List<Usuario>();
             SqlOperation operation = usuarioMapper.GetRetrieveAllStatement();
 
             List<Dictionary<string, object>> dataResults = dao.ExecuteStoredProcedureWithQuery(operation);
@@ -54,7 +54,7 @@ namespace DataAccess.Crud
                 var dtoList = usuarioMapper.BuildObjects(dataResults);
                 foreach (var dto in dtoList)
                 {
-                    resultList.Add((T)Convert.ChangeType(dto, typeof(T)));
+                    resultList.Add((Usuario)Convert.ChangeType(dto, typeof(Usuario)));
                 }
             }
             return resultList;
@@ -94,10 +94,13 @@ namespace DataAccess.Crud
 
         public Usuario RetrieveByCedula(string cedula)
         {
-
+            Usuario usuario = new Usuario();
             SqlOperation operation = usuarioMapper.GetUsuarioByCedula(cedula);
             var result = dao.ExecuteStoredProcedureWithQuery(operation);
-            Usuario usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            if (result.Count> 0)
+            {
+                 usuario = (Usuario)usuarioMapper.BuildObject(result[0]);
+            }
             return usuario;
 
         }

@@ -23,6 +23,8 @@ namespace DataAccess.Mapper
             receta.dosis = row["Dosis"].ToString();
             receta.diasDosis = row["DiasDosis"].ToString();
             receta.recomendaciones = row["Recomendaciones"].ToString();
+            receta.nombreDoctor = row["NombreDoctor"].ToString()
+            /*receta.idDoctor = int.Parse(row["IdDoctor"].ToString())*/;
             return receta;
         }
 
@@ -44,6 +46,7 @@ namespace DataAccess.Mapper
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_INSERT_RECETA";
             operation.AddIntegerParam("idPaciente",receta.idPaciente);
+            operation.AddVarcharParam("nombreDoctor", receta.nombreDoctor);
             operation.AddVarcharParam("imagen", receta.imagen);
             operation.AddDatetimeParam("fechaEmision",receta.fechaEmision);
             operation.AddVarcharParam("medicamento",receta.medicamento);
@@ -66,6 +69,8 @@ namespace DataAccess.Mapper
             SqlOperation operation = new SqlOperation();
             operation.ProcedureName = "SP_UPDATE_RECETA";
             operation.AddIntegerParam("idReceta", receta.Id);
+            operation.AddVarcharParam("nombreDoctor",receta.nombreDoctor);
+            /*operation.AddIntegerParam("idDoctor",receta.idDoctor);*/
             operation.AddIntegerParam("idPaciente", receta.idPaciente);
             operation.AddVarcharParam("imagen", receta.imagen);
             operation.AddDatetimeParam("fechaEmision", receta.fechaEmision);

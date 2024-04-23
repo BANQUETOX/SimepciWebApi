@@ -31,12 +31,12 @@ namespace SIMEPCI_API.Controllers
         }
 
         [HttpGet]
-        public async Task<UsuarioGet> Login(string correo, string password)
+        public  UsuarioGet Login(string correo, string password)
         {
             UsuarioGet usuario = new UsuarioGet();
             try
             {
-                usuario = await usuarioManager.Login(correo, password);
+                usuario =  usuarioManager.Login(correo, password);
             }
             catch (Exception ex)
             {

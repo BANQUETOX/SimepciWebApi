@@ -58,8 +58,8 @@ namespace DataAccess.Crud
 
         public Cita GetCitaById(int id)
         {
-            Cita cita = null;
-            SqlOperation operation = citaMapper.GetCitasDoctorStatement(id);
+            Cita cita = new Cita();
+            SqlOperation operation = citaMapper.RetrieveByIdStatement(id);
             var results = sqlDao.ExecuteStoredProcedureWithQuery(operation);
             if(results.Count() > 0)
             {

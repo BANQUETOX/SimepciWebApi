@@ -29,9 +29,9 @@ namespace SIMEPCI_API.Controllers
             return result;
         }
         [HttpGet]
-        public List<Receta> GetRecetasPaciente(string correoPaciente)
+        public List<RecetaOutput> GetRecetasPaciente(string correoPaciente)
         {
-            List<Receta> result;
+            List<RecetaOutput> result;
             try
             {
 
@@ -39,7 +39,7 @@ namespace SIMEPCI_API.Controllers
             }
             catch (Exception ex)
             {
-                result = new List<Receta>();
+                result = new List<RecetaOutput>();
             }
             return result;
         }

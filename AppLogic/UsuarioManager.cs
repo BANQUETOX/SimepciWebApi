@@ -25,7 +25,7 @@ namespace AppLogic
         {
 
             Usuario usuarioExistente = usuarioCrud.RetrieveByCedula(usuario.cedula);
-            if (usuarioExistente != null || usuarioExistente.Id != 0) {
+            if (usuarioExistente.Id != 0) {
                 return "La cedula ya ha sido registrada";
             }
             
@@ -59,7 +59,7 @@ namespace AppLogic
 
         public List<UsuarioGet> GetAllUsuarios()
         {
-            List<Usuario> list = usuarioCrud.RetrieveAll<Usuario>();
+            List<Usuario> list = usuarioCrud.RetrieveAll();
             List<UsuarioGet> listResult = new List<UsuarioGet>();
             foreach (Usuario usuario in list)
             {
@@ -84,7 +84,7 @@ namespace AppLogic
         }
 
 
-        public async Task<UsuarioGet> Login(string correo, string password)
+        public UsuarioGet Login(string correo, string password)
         {
             UsuarioGet result;
 
@@ -92,7 +92,6 @@ namespace AppLogic
             {
                 Usuario usuario = usuarioCrud.Login(correo, password);
                 result = castUsuarioGet(usuario);
-                Console.WriteLine(await emailManager.SendRecordatorio(usuario));
             }
             catch (Exception ex)
             {
