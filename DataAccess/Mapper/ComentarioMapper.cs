@@ -21,6 +21,7 @@ namespace DataAccess.Mapper
             comentario.profecionalismo = int.Parse(row["Profecionalismo"].ToString());
             comentario.instalaciones = int.Parse(row["Instalaciones"].ToString());
             comentario.comentarios = row["Comentarios"].ToString();
+            comentario.recomendaria = bool.Parse(row["Recomendacion"].ToString());
             return comentario;
 
         }
