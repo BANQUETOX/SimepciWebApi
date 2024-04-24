@@ -123,15 +123,15 @@ namespace AppLogic
             {
                 Usuario usuarioAdmin = usuarioCrud.RetrieveById(administrador.idUsuario);
                 string emailAddress = usuarioAdmin.correo;
-            List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
-            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
-            EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
-            EmailSendOperation emailSendOperation = await emailClient.SendAsync(
+                List<EmailAddress> emailAddresses = new List<EmailAddress> { new EmailAddress(emailAddress, "Suscriptor de SIMEPCI") };
+                EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+                EmailMessage emailMessage = new EmailMessage(sender, emailRecipients, emailContent);
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                                                     WaitUntil.Completed,
                                                                 emailMessage, CancellationToken.None);
-            EmailSendResult statusMonitor = emailSendOperation.Value;
+                EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+                Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
             }
 
             return "Correo enviado a los administadores";

@@ -138,7 +138,12 @@ namespace AppLogic
                 facturaCrud.UpdateFacturaPagada(idFactura);
                 Factura factura = facturaCrud.GetFacturaById(idFactura);
                 Usuario usuarioPaciente = usuarioCrud.RetrieveByFacturaId(idFactura);
-                usuarioCrud.ActivarUsuario(usuarioPaciente.correo);
+                Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuarioPaciente.Id);
+                List<Factura> facturasPaciente = facturaCrud.GetFacturasPaciente(paciente.Id);
+                if (facturasPaciente.Count() == 0)
+                {
+                    usuarioCrud.ActivarUsuario(usuarioPaciente.correo);
+                }
                 Console.WriteLine(await emailManager.SendConfirmacionPago(usuarioPaciente, factura));
                 result = "Factura Pagada";
             }
