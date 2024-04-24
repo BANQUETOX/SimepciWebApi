@@ -1,5 +1,6 @@
 ﻿using AppLogic;
 using DTO.Expedientes;
+using DTO.InfosExpediente;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,21 +13,23 @@ namespace SIMEPCI_API.Controllers
     public class ExpedienteController : ControllerBase
     {
         ExpedienteManager manager = new ExpedienteManager();
+        InfoExpedienteManager infoManager = new InfoExpedienteManager();   
 
-        [HttpPatch]
-        public string CrearExpediente(ExpedienteInput expediente)
+        [HttpPost]
+        public string adjuntarNotaMedica(InfoExpedienteInput infoExpediente)
         {
-            string result;
-            try
-            {
+            return infoManager.CreateNotaMedica(infoExpediente);
+        }
 
-                result = manager.InicializarExpediente(expediente);
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
-            }
-            return result;
+        [HttpPost]
+        public string adjuntarNotaEnfermeria(InfoExpedienteInput infoExpediente)
+        {
+            return infoManager.CreateNotaEnfermeria(infoExpediente);
+        }
+        [HttpPost]
+        public string adjuntarHistorialMedico(InfoExpedienteInput infoExpediente)
+        {
+            return infoManager.CreateHistorialMedico(infoExpediente);
         }
 
         [HttpGet]

@@ -12,7 +12,7 @@ namespace AppLogic
 {
     public class ExpedienteManager
     {
-        ExpedienteCrud crud = new ExpedienteCrud();
+        InfoExpedienteCrud infoExpedienteCrud = new InfoExpedienteCrud();
         CitaManager citaManager = new CitaManager();
         ExamenMedicoManager examenMedicoManager = new ExamenMedicoManager();
         RecetaManager recetaManager = new RecetaManager();
@@ -21,7 +21,7 @@ namespace AppLogic
         UsuarioCrud usuarioCrud = new UsuarioCrud();    
         DiagnosticoCrud diagnosticoCrud = new DiagnosticoCrud();
 
-        public string CreateExpediente(ExpedienteInput expedienteInput)
+        /*public string CreateExpediente(ExpedienteInput expedienteInput)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(expedienteInput.correoPaciente);
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
@@ -32,9 +32,9 @@ namespace AppLogic
             expediente.historialMedico = expedienteInput.historialMedico;
             crud.Create(expediente);
             return "Expediente Creado";
-        }
+        }*/
 
-        public string InicializarExpediente(ExpedienteInput expedienteInput)
+       /* public string InicializarExpediente(ExpedienteInput expedienteInput)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(expedienteInput.correoPaciente);
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
@@ -45,21 +45,24 @@ namespace AppLogic
             expediente.historialMedico = expedienteInput.historialMedico;
             crud.InitialUpdate(expediente);
             return "Expediente Actualizado";
-        }
+        }*/
 
-        public Expediente GetExpedietePaciente(string correoPaciente)
+       /* public Expediente GetExpedietePaciente(string correoPaciente)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoPaciente);
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
             return crud.GetExpedietePaciente(paciente.Id);
-        }
+        }*/
 
         public ExpedienteCompleto GetExpedienteCompleto(string correoPaciente)
         {
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(correoPaciente);
             Paciente paciente = pacienteCrud.GetPacieteByUsuarioId(usuario.Id);
             ExpedienteCompleto expedienteCompleto = new ExpedienteCompleto();
-            expedienteCompleto.infoExpediente = GetExpedietePaciente(correoPaciente);
+            /*expedienteCompleto.infoExpediente = GetExpedietePaciente(correoPaciente);*/
+            expedienteCompleto.notasMedicas = infoExpedienteCrud.GetNotasMedicas(paciente.Id);
+            expedienteCompleto.notasEnfermeria = infoExpedienteCrud.GetNotasEnfermeria(paciente.Id);
+            expedienteCompleto.historialMedico = infoExpedienteCrud.GetHistorialMedico(paciente.Id);
             expedienteCompleto.citas = citaManager.CitasPaciente(correoPaciente);
             expedienteCompleto.examenesMedicos = examenMedicoManager.GetExamenMedicosPaciente(paciente.Id);
             expedienteCompleto.recetas = recetaManager.GetRecetasPaciente(correoPaciente);

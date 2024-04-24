@@ -43,12 +43,6 @@ namespace AppLogic
             Usuario fullUsuario = usuarioCrud.GetUsuarioByEmail(usuario.correo);
             rolManager.AsignarRolUsuario(fullUsuario.correo, 5);
             Paciente paciente = pacienteManager.GetPacienteByUsuarioId(fullUsuario.Id);
-            ExpedienteInput expediente = new ExpedienteInput();
-            expediente.correoPaciente = fullUsuario.correo;
-            expediente.notasEnfermeria = " ";
-            expediente.notasMedicas = " ";
-            expediente.historialMedico = " ";
-            expedienteManager.CreateExpediente(expediente);
 
             if (esFuncionario)
             {

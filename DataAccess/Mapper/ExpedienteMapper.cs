@@ -66,6 +66,22 @@ namespace DataAccess.Mapper
             return operation;
 
         }
+        public SqlOperation GetUpdateNotasMedicas(int idExpediente, string nuevaNotaMedica)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_EXPEDIENTE_NOTAS_MEDICAS";
+            operation.AddIntegerParam("idExpediente",idExpediente);
+            operation.AddVarcharParam("notasMedicas", nuevaNotaMedica);
+            return operation;
+        }
 
+        public SqlOperation GetUpdateNotasEnfermeria(int idExpediente, string nuevaNotaMedica)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_EXPEDIENTE_NOTAS_ENFERMERIA";
+            operation.AddIntegerParam("idExpediente", idExpediente);
+            operation.AddVarcharParam("notasEnfermeria", nuevaNotaMedica);
+            return operation;
+        }
     }
 }
