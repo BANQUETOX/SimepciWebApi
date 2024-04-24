@@ -10,6 +10,7 @@ using DTO.Usuarios;
 using DTO.EspecialidadesMedicas;
 using System.Runtime.InteropServices;
 using Azure.Core;
+using DTO.Doctores;
 
 namespace AppLogic
 {

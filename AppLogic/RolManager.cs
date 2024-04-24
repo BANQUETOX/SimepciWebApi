@@ -1,5 +1,6 @@
 ﻿using DataAccess.Crud;
 using DTO;
+using DTO.Doctores;
 using DTO.Usuarios;
 using System;
 using System.Collections.Generic;

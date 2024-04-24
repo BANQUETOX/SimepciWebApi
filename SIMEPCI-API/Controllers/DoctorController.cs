@@ -1,5 +1,6 @@
 ﻿using AppLogic;
 using DTO;
+using DTO.Doctores;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace SIMEPCI_API.Controllers
 
         [HttpGet]
 
-        public List<Doctor> GetAllDoctores()
+        public List<DoctorOutput> GetAllDoctores()
         {
             return manager.GetAllDoctors();
         }

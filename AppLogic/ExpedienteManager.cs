@@ -19,6 +19,7 @@ namespace AppLogic
         PacienteCrud pacienteCrud = new PacienteCrud();
         FacturaManager facturaManager= new FacturaManager();
         UsuarioCrud usuarioCrud = new UsuarioCrud();    
+        DiagnosticoCrud diagnosticoCrud = new DiagnosticoCrud();
 
         public string CreateExpediente(ExpedienteInput expedienteInput)
         {
@@ -63,6 +64,7 @@ namespace AppLogic
             expedienteCompleto.examenesMedicos = examenMedicoManager.GetExamenMedicosPaciente(paciente.Id);
             expedienteCompleto.recetas = recetaManager.GetRecetasPaciente(correoPaciente);
             expedienteCompleto.facturas = facturaManager.GetFacturasPaciente(correoPaciente);
+            expedienteCompleto.diagnosticos = diagnosticoCrud.GetDiagnosticosPaciente(paciente.Id);
             return expedienteCompleto;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using DTO.Citas;
+using DTO.Diagnosticos;
 using DTO.ExamenesMedicos;
 using DTO.Facturas;
 using DTO.Recetas;
@@ -17,5 +18,6 @@ namespace DTO.Expedientes
         public List<ExamenMedicoOutput> examenesMedicos { get; set; }
         public List<RecetaOutput> recetas { get; set; }
         public List<FacturaCompleta> facturas { get; set; }
+        public List<Diagnostico> diagnosticos { get; set; }
     }
 }
