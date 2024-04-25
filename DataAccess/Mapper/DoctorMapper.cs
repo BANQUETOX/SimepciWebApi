@@ -89,6 +89,15 @@ namespace DataAccess.Mapper
             return operation;
         }
 
+        public SqlOperation GetUpdateSedeDoctor(int idDoctor, int nuevaSede)
+        {
+            SqlOperation operation = new SqlOperation();
+            operation.ProcedureName = "SP_UPDATE_DOCTOR_SEDE";
+            operation.AddIntegerParam("idDoctor", idDoctor);
+            operation.AddIntegerParam("idSede", nuevaSede);
+            return operation;
+        }
+
 
         public SqlOperation GetRetrieveAllStatement()
         {

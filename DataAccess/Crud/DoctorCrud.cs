@@ -76,6 +76,12 @@ namespace DataAccess.Crud
             SqlOperation operation = mapper.GetUpdateHorarioDoctor(idDoctor,horarioNuevo);
             sqlDao.ExecuteStoredProcedure(operation);
         }
+
+        public void UpdateSedeDoctor(int idDoctor, int sedeNueva)
+        {
+            SqlOperation operation = mapper.GetUpdateSedeDoctor(idDoctor, sedeNueva);
+            sqlDao.ExecuteStoredProcedure(operation);
+        }
     }
 }
 

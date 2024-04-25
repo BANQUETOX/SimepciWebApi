@@ -25,5 +25,11 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.UpdateHorarioDoctor(idDoctor, horario);
         }
+
+        [HttpPatch]
+        public string CambiarSedeDoctror(int idDoctor, int idSede)
+        {
+            return manager.UpdateSedeDoctor(idDoctor, idSede);
+        }
     }
 }

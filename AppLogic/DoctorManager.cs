@@ -46,6 +46,28 @@ namespace AppLogic
             }
         }
 
+        public string UpdateSedeDoctor(int idDoctor, int idSede)
+        {
+            List<Sede> sedes = sedeCrud.RetrieveAll<Sede>();
+            List<int> idsSedes = new List<int>();
+            foreach (Sede sede in sedes) { 
+                idsSedes.Add(sede.Id);
+            }
+             if (!idsSedes.Contains(idSede))
+            {
+                return "Numero id de sede invalido";
+            }
+            try
+            {
+                doctorCrud.UpdateSedeDoctor(idDoctor, idSede);
+                return "Sede actualizada";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         public List<DoctorOutput> GetAllDoctors()
         {
             List<Doctor> doctores = new List<Doctor>();

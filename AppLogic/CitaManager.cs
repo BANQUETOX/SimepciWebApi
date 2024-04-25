@@ -133,7 +133,7 @@ namespace AppLogic
             {
                 Doctor doctor = doctorCrud.GetDoctorById(cita.idDoctor);
                 Usuario usuarioDoctor = usuarioCrud.RetrieveByDoctorId(doctor.Id);
-                EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadById(doctor.Id);
+                EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadById(doctor.idEspecialidad);
                 CitaOutput citaOutput = new CitaOutput();
                 citaOutput.id = cita.Id;
                 citaOutput.doctor = usuarioDoctor.nombre;

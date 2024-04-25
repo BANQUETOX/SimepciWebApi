@@ -146,7 +146,7 @@ namespace AppLogic
 
                 Usuario usuario = usuarioCrud.GetUsuarioByEmail(doctorInsert.correoUsuario);
                 Doctor doctorExistente = doctorCrud.GetDoctorByUsuarioId(usuario.Id);
-                if (doctorExistente != null || doctorExistente.Id == 0) {
+                if (doctorExistente.Id != 0) {
                     return "El usuario ya es doctor";
                 }
 
