@@ -1,9 +1,11 @@
 ﻿using AppLogic;
+using DataAccess.Crud;
 using DTO;
 using DTO.Doctores;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 
 namespace SIMEPCI_API.Controllers
 {
@@ -31,5 +33,11 @@ namespace SIMEPCI_API.Controllers
         {
             return manager.UpdateSedeDoctor(idDoctor, idSede);
         }
+        [HttpGet]
+        public List<DoctorOutput> getDoctoresBySedeAndEspecialidad(int idSede, int idEspecialidad)
+        {
+            return manager.GetDoctoresByEspecialidadAndSede(idSede, idEspecialidad);
+        }
+
     }
 }

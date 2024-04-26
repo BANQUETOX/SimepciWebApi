@@ -330,6 +330,7 @@ namespace AppLogic
         public CitaOutputReservada castCitaReservadaOutput(Cita citaBase)
         {
             Usuario usuarioPaciente = usuarioCrud.RetrieveByPacienteId(citaBase.idPaciente);
+            Doctor doctor = doctorCrud.GetDoctorById(citaBase.idDoctor);
             string nombrePaciente = $"{usuarioPaciente.nombre} - {usuarioPaciente.primerApellido} - {usuarioPaciente.segundoApellido}";
             EspecialidadMedica especialidad = especialidadMedicaCrud.GetEspecialidadByCitaId(citaBase.Id);
             CitaOutputReservada citaOutputReservada = new CitaOutputReservada();
@@ -341,6 +342,7 @@ namespace AppLogic
             citaOutputReservada.horaFinal = citaBase.horaFinal;
             citaOutputReservada.idSede = citaBase.idSede;
             citaOutputReservada.especialidad = especialidad.nombre;
+            citaOutputReservada.horarioDoctor = doctor.horario;
             return citaOutputReservada;
 
         }

@@ -12,6 +12,7 @@ namespace DTO.Citas
         public int idPaciente { get; set; }
         public string nombrePaciente { get; set; }
         public int idDoctor { get; set; }
+        public int horarioDoctor { get; set; }
         public string especialidad { get; set; }
         public DateTime horaInicio { get; set; }
         public DateTime horaFinal { get; set; }

@@ -88,6 +88,26 @@ namespace AppLogic
             return doctoresOutput;
         }
 
+        public List<DoctorOutput> GetDoctoresByEspecialidadAndSede(int idSede, int idEspecialidad)
+        {
+            List<Doctor> doctores = new List<Doctor>();
+            List<DoctorOutput> doctoresOutput = new List<DoctorOutput>();
+            try
+            {
+                doctores = doctorCrud.DoctoresBySedeAndEspecialidad(idSede, idEspecialidad);
+                foreach (var doctor in doctores)
+                {
+                    DoctorOutput output = castDoctorOuput(doctor);
+                    doctoresOutput.Add(output);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return doctoresOutput;
+        }
+
         public DoctorOutput castDoctorOuput(Doctor doctorBase)
         {
             Usuario usuario = usuarioCrud.RetrieveByDoctorId(doctorBase.Id);
