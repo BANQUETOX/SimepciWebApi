@@ -10,5 +10,6 @@ namespace DTO
     {
         public string correoUsuario {  get; set; }
         public string codigoOtp { get; set; }
+        public DateTime fechaCreacion { get; set; }
     }
 }

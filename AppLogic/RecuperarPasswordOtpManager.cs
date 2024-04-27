@@ -27,12 +27,22 @@ namespace AppLogic
 
         public bool ValidarPasswordOtp(string correo, string otpInput)
         {
-            string otp = GetLastPasswordOtpByEmail(correo);
-            return otp.Equals(otpInput);
+            RecuperarPasswordOtp otp = GetLastPasswordOtpByEmail(correo);
+            DateTime horaActual = DateTime.Now;
+
+            TimeSpan diferencia = horaActual - otp.fechaCreacion.AddHours(-6);
+            Console.WriteLine(diferencia);
+            Console.WriteLine(diferencia.Minutes);
+            if (diferencia.Minutes > 1)
+            {
+                return false;
+            }
+           
+            return otp.codigo.Equals(otpInput);
         }
 
 
-        public string GetLastPasswordOtpByEmail(string correo) {
+        public RecuperarPasswordOtp GetLastPasswordOtpByEmail(string correo) {
 
             return otpCrud.GetPasswordOtpByEmail(correo);
         }

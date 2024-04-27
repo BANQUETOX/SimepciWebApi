@@ -15,6 +15,7 @@ namespace DataAccess.Mapper
         {
             RecuperarPasswordOtp recuperarPasswordOtp = new RecuperarPasswordOtp();
             recuperarPasswordOtp.codigo = row["Codigo"].ToString();
+            recuperarPasswordOtp.fechaCreacion = DateTime.Parse(row["FechaCreacion"].ToString());
             return recuperarPasswordOtp;
         }
 

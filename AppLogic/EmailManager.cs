@@ -42,10 +42,10 @@ namespace AppLogic
         public async Task<string> SendOtp(string emailAddress) 
                                                                  
         {
-            if (usuarioCrud.GetUsuarioByEmail(emailAddress) != null)
+          /*  if (usuarioCrud.GetUsuarioByEmail(emailAddress) != null)
             {
                 return "El correo ya ha sido registrado";
-            }
+            }*/
 
             RegistroOtpManager loginOtpManager = new RegistroOtpManager();
             RegistroOtp loginOtp = new RegistroOtp();

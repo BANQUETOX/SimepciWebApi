@@ -28,8 +28,13 @@ namespace DataAccess.Crud
 
         public RegistroOtp GetOtpByEmail(string correoUsuario)
         {
+            RegistroOtp registroOtp = new RegistroOtp();
             SqlOperation operation = mapper.GetRetrieveByEmailStatement(correoUsuario);
-            RegistroOtp registroOtp = (RegistroOtp)mapper.BuildObject(sqlDao.ExecuteStoredProcedureWithQuery(operation)[0]);
+            var result = sqlDao.ExecuteStoredProcedureWithQuery(operation);
+            if (result.Count() > 0)
+            {
+                registroOtp = (RegistroOtp)mapper.BuildObject(result[0]);
+            }
             return registroOtp;
            
         }

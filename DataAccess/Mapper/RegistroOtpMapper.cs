@@ -18,6 +18,7 @@ namespace DataAccess.Mapper
             RegistroOtp registroOtp = new RegistroOtp();
             registroOtp.correoUsuario = row["Correo"].ToString() ;
             registroOtp.codigoOtp = row["Codigo"].ToString() ;
+            registroOtp.fechaCreacion = DateTime.Parse(row["FechaCreacion"].ToString());
             return registroOtp;
         }
 

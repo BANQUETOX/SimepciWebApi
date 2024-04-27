@@ -38,16 +38,19 @@ namespace DataAccess.Crud
 
         }
 
-        public string GetPasswordOtpByEmail(string correo)
+        public RecuperarPasswordOtp GetPasswordOtpByEmail(string correo)
         {
             UsuarioCrud usuarioCrud = new UsuarioCrud();    
             Usuario usuario = usuarioCrud.GetUsuarioByEmail(correo);
             SqlOperation operation = mapper.GetByUserIdStatement(usuario.Id);
+            RecuperarPasswordOtp otp = new RecuperarPasswordOtp();
             var dataResult = sqlDao.ExecuteStoredProcedureWithQuery(operation);
-         
-           
-       
-            return dataResult.First()["codigo"].ToString();
+            if (dataResult.Count()> 0) { 
+                otp = (RecuperarPasswordOtp)mapper.BuildObject(dataResult[0]);
+            
+            }
+
+            return otp;
 
         }
 
